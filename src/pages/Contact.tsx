@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Linkedin, Send, CheckCircle } from "lucide-react";
+import { Mail, Linkedin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,43 +7,73 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { z } from "zod";
 
 const Contact = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: ""
+  });
+
+  const contactSchema = z.object({
+    name: z.string().trim().min(1, t("Nama wajib diisi", "Name is required")).max(100, t("Nama terlalu panjang", "Name is too long")),
+    email: z.string().trim().email(t("Alamat email tidak valid", "Invalid email address")).max(255, t("Email terlalu panjang", "Email is too long")),
+    subject: z.string().max(200, t("Subjek terlalu panjang", "Subject is too long")).optional(),
+    message: z.string().trim().min(1, t("Pesan wajib diisi", "Message is required")).max(2000, t("Pesan terlalu panjang", "Message is too long"))
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simulate form submission - will be replaced with actual email sending
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     setIsSubmitting(false);
     setIsSubmitted(true);
     toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
+      title: t("Pesan terkirim!", "Message sent!"),
+      description: t(
+        "Terima kasih telah menghubungi. Saya akan segera membalas.",
+        "Thank you for reaching out. I'll get back to you soon."
+      ),
     });
     
     // Reset form after delay
     setTimeout(() => {
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "" });
       setIsSubmitted(false);
     }, 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   return (
@@ -53,14 +83,16 @@ const Contact = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl">
             <span className="inline-block px-3 py-1 text-xs font-medium tracking-wider uppercase text-primary bg-accent rounded-full mb-6 opacity-0 animate-fade-in">
-              Contact
+              {t("Kontak", "Contact")}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6 opacity-0 animate-fade-in-up animate-delay-100">
-              Get in Touch
+              {t("Hubungi Saya", "Get in Touch")}
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed opacity-0 animate-fade-in-up animate-delay-200">
-              Have a question or want to discuss a potential opportunity? 
-              I'd be happy to hear from you.
+              {t(
+                "Punya pertanyaan atau ingin membahas peluang potensial? Saya dengan senang hati mendengar dari Anda.",
+                "Have a question or want to discuss a potential opportunity? I'd be happy to hear from you."
+              )}
             </p>
           </div>
         </div>
@@ -73,9 +105,12 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="opacity-0 animate-fade-in-up">
               <SectionHeader
-                label="Contact Info"
-                title="Let's Connect"
-                description="Feel free to reach out through email or connect with me on LinkedIn."
+                label={t("Info Kontak", "Contact Info")}
+                title={t("Mari Terhubung", "Let's Connect")}
+                description={t(
+                  "Silakan hubungi melalui email atau terhubung dengan saya di LinkedIn.",
+                  "Feel free to reach out through email or connect with me on LinkedIn."
+                )}
               />
 
               <div className="space-y-6">
@@ -93,7 +128,7 @@ const Contact = () => {
                 </a>
 
                 <a 
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/suryani-lestari"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-colors group"
@@ -103,18 +138,20 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">LinkedIn</p>
-                    <p className="font-medium text-foreground">Connect on LinkedIn</p>
+                    <p className="font-medium text-foreground">{t("Terhubung di LinkedIn", "Connect on LinkedIn")}</p>
                   </div>
                 </a>
               </div>
 
               <div className="mt-10 p-6 rounded-xl bg-accent/50 border border-primary/10">
                 <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                  Response Time
+                  {t("Waktu Respons", "Response Time")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  I typically respond to messages within 1-2 business days. 
-                  For urgent matters, please indicate so in your message.
+                  {t(
+                    "Saya biasanya merespons pesan dalam 1-2 hari kerja. Untuk hal mendesak, silakan sebutkan di pesan Anda.",
+                    "I typically respond to messages within 1-2 business days. For urgent matters, please indicate so in your message."
+                  )}
                 </p>
               </div>
             </div>
@@ -123,7 +160,7 @@ const Contact = () => {
             <div className="opacity-0 animate-fade-in-up animate-delay-200">
               <div className="bg-card border border-border/50 rounded-2xl p-8 shadow-card">
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-6">
-                  Send a Message
+                  {t("Kirim Pesan", "Send a Message")}
                 </h2>
 
                 {isSubmitted ? (
@@ -132,54 +169,93 @@ const Contact = () => {
                       <CheckCircle className="h-8 w-8 text-primary" />
                     </div>
                     <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                      Message Sent!
+                      {t("Pesan Terkirim!", "Message Sent!")}
                     </h3>
                     <p className="text-muted-foreground">
-                      Thank you for reaching out. I'll get back to you soon.
+                      {t(
+                        "Terima kasih telah menghubungi. Saya akan segera membalas.",
+                        "Thank you for reaching out. I'll get back to you soon."
+                      )}
                     </p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">
+                        {t("Nama Lengkap", "Full Name")} <span className="text-primary">*</span>
+                      </Label>
                       <Input
                         id="name"
                         name="name"
                         type="text"
-                        placeholder="Your name"
+                        placeholder={t("Nama Anda", "Your name")}
                         value={formData.name}
                         onChange={handleChange}
-                        required
-                        className="bg-background"
+                        className={`bg-background ${errors.name ? "border-destructive" : ""}`}
                       />
+                      {errors.name && (
+                        <p className="text-sm text-destructive flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">
+                        {t("Alamat Email", "Email Address")} <span className="text-primary">*</span>
+                      </Label>
                       <Input
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="your.email@example.com"
+                        placeholder="email@example.com"
                         value={formData.email}
                         onChange={handleChange}
-                        required
+                        className={`bg-background ${errors.email ? "border-destructive" : ""}`}
+                      />
+                      {errors.email && (
+                        <p className="text-sm text-destructive flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="subject">
+                        {t("Subjek", "Subject")} <span className="text-muted-foreground text-sm">({t("opsional", "optional")})</span>
+                      </Label>
+                      <Input
+                        id="subject"
+                        name="subject"
+                        type="text"
+                        placeholder={t("Tentang apa pesan ini?", "What is this about?")}
+                        value={formData.subject}
+                        onChange={handleChange}
                         className="bg-background"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">Message</Label>
+                      <Label htmlFor="message">
+                        {t("Pesan", "Message")} <span className="text-primary">*</span>
+                      </Label>
                       <Textarea
                         id="message"
                         name="message"
-                        placeholder="How can I help you?"
+                        placeholder={t("Apa yang ingin Anda sampaikan?", "What would you like to say?")}
                         value={formData.message}
                         onChange={handleChange}
-                        required
                         rows={5}
-                        className="bg-background resize-none"
+                        className={`bg-background resize-none ${errors.message ? "border-destructive" : ""}`}
                       />
+                      {errors.message && (
+                        <p className="text-sm text-destructive flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" />
+                          {errors.message}
+                        </p>
+                      )}
                     </div>
 
                     <Button 
@@ -189,10 +265,10 @@ const Contact = () => {
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
-                        "Sending..."
+                        t("Mengirim...", "Sending...")
                       ) : (
                         <>
-                          Send Message
+                          {t("Kirim Pesan", "Send Message")}
                           <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </>
                       )}
