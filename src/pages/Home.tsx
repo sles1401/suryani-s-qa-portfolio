@@ -1,10 +1,19 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Download, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Home = () => {
+  const { t } = useLanguage();
+
+  const highlights = [
+    t("Manual Testing", "Manual Testing"),
+    t("Regression Testing", "Regression Testing"),
+    t("Bug Reporting", "Bug Reporting"),
+  ];
+
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -14,7 +23,7 @@ const Home = () => {
             {/* Content */}
             <div className="order-2 lg:order-1 opacity-0 animate-fade-in-up">
               <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full mb-6">
-                Quality Assurance Professional
+                {t("Quality Assurance", "Quality Assurance")}
               </span>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-tight">
                 Suryani Lestari
@@ -23,37 +32,38 @@ const Home = () => {
                 Software Quality Assurance
               </p>
               <p className="text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed">
-                Helping teams deliver reliable software through thorough manual testing, 
-                clear documentation, and attention to detail.
+                {t(
+                  "QA pemula yang berfokus pada manual testing, dokumentasi yang jelas, dan pembelajaran berkelanjutan.",
+                  "Early-career QA focused on manual testing, clear documentation, and continuous learning."
+                )}
               </p>
               
               {/* Quick highlights */}
               <div className="flex flex-col sm:flex-row gap-3 mb-10">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Manual Testing</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Regression Testing</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>Bug Reporting</span>
-                </div>
+                {highlights.map((item) => (
+                  <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="group">
-                  <Link to="/experience">
-                    View Experience
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <Link to="/resume">
+                    <Download className="mr-2 h-4 w-4" />
+                    {t("Unduh Resume / CV", "Download Resume / CV")}
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link to="/contact">
-                    Get in Touch
-                  </Link>
+                  <a 
+                    href="https://www.linkedin.com/in/suryani-lestari" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Linkedin className="mr-2 h-4 w-4" />
+                    {t("Lihat Profil LinkedIn", "View LinkedIn Profile")}
+                  </a>
                 </Button>
               </div>
             </div>
@@ -64,7 +74,7 @@ const Home = () => {
                 <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-soft border-4 border-card">
                   <img
                     src={profilePhoto}
-                    alt="Suryani Lestari - Software Quality Assurance Professional"
+                    alt="Suryani Lestari - Software Quality Assurance"
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
@@ -82,17 +92,20 @@ const Home = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center opacity-0 animate-fade-in-up animate-delay-300">
             <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
-              Ensuring Quality, One Test at a Time
+              {t(
+                "Memastikan Kualitas, Satu Tes Pada Satu Waktu",
+                "Ensuring Quality, One Test at a Time"
+              )}
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              With a focus on manual testing and quality assurance, I help development teams 
-              identify issues early, document findings clearly, and deliver products that 
-              meet user expectations. My approach is thorough, systematic, and always 
-              centered on improving the end-user experience.
+              {t(
+                "Dengan fokus pada manual testing dan quality assurance, saya membantu tim pengembangan mengidentifikasi masalah lebih awal, mendokumentasikan temuan dengan jelas, dan memberikan produk yang memenuhi harapan pengguna.",
+                "With a focus on manual testing and quality assurance, I help development teams identify issues early, document findings clearly, and deliver products that meet user expectations."
+              )}
             </p>
             <Button asChild variant="link" className="text-primary">
               <Link to="/about">
-                Learn more about me
+                {t("Pelajari lebih lanjut tentang saya", "Learn more about me")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

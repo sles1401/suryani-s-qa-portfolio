@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Mail, Linkedin } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-muted/30 border-t border-border/50">
@@ -31,7 +33,7 @@ const Footer = () => {
               <Mail className="h-4 w-4" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/suryani-lestari"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"

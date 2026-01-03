@@ -1,29 +1,49 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Target, Users } from "lucide-react";
+import { ArrowRight, Heart, Target, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import profilePhoto from "@/assets/profile-photo.jpg";
-
-const values = [
-  {
-    icon: Target,
-    title: "Attention to Detail",
-    description: "I believe thorough testing comes from carefully examining every aspect of a product, leaving no stone unturned."
-  },
-  {
-    icon: Users,
-    title: "Clear Communication",
-    description: "Effective bug reports and documentation help teams understand issues quickly and fix them efficiently."
-  },
-  {
-    icon: Heart,
-    title: "User-Centered Mindset",
-    description: "Quality assurance is ultimately about ensuring users have a positive, reliable experience with the product."
-  }
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
+  const { t } = useLanguage();
+
+  const values = [
+    {
+      icon: Target,
+      title: t("Ketelitian", "Attention to Detail"),
+      description: t(
+        "Saya percaya bahwa pengujian yang menyeluruh berasal dari pemeriksaan setiap aspek produk dengan cermat.",
+        "I believe thorough testing comes from carefully examining every aspect of a product."
+      )
+    },
+    {
+      icon: Users,
+      title: t("Komunikasi yang Jelas", "Clear Communication"),
+      description: t(
+        "Laporan bug dan dokumentasi yang efektif membantu tim memahami masalah dengan cepat dan memperbaikinya dengan efisien.",
+        "Effective bug reports and documentation help teams understand issues quickly and fix them efficiently."
+      )
+    },
+    {
+      icon: Heart,
+      title: t("Fokus pada Pengguna", "User-Centered Mindset"),
+      description: t(
+        "Quality assurance pada akhirnya adalah tentang memastikan pengguna memiliki pengalaman yang positif dengan produk.",
+        "Quality assurance is ultimately about ensuring users have a positive experience with the product."
+      )
+    },
+    {
+      icon: BookOpen,
+      title: t("Semangat Belajar", "Willingness to Learn"),
+      description: t(
+        "Saya selalu terbuka untuk mempelajari hal-hal baru dan meningkatkan kemampuan QA saya secara berkelanjutan.",
+        "I'm always open to learning new things and continuously improving my QA skills."
+      )
+    }
+  ];
+
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -31,14 +51,19 @@ const About = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl">
             <span className="inline-block px-3 py-1 text-xs font-medium tracking-wider uppercase text-primary bg-accent rounded-full mb-6 opacity-0 animate-fade-in">
-              About Me
+              {t("Tentang Saya", "About Me")}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6 opacity-0 animate-fade-in-up animate-delay-100">
-              A QA Professional Focused on Quality
+              {t(
+                "Membangun Karir di Quality Assurance",
+                "Building a Career in Quality Assurance"
+              )}
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed opacity-0 animate-fade-in-up animate-delay-200">
-              I'm Suryani Lestari, a Software Quality Assurance professional specializing in manual testing. 
-              My work centers on helping teams build reliable software through systematic testing and clear documentation.
+              {t(
+                "Saya Suryani Lestari, saat ini sedang membangun karir sebagai Software Quality Assurance dengan spesialisasi manual testing.",
+                "I'm Suryani Lestari, currently building my career as a Software Quality Assurance specializing in manual testing."
+              )}
             </p>
           </div>
         </div>
@@ -50,23 +75,27 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="opacity-0 animate-fade-in-up">
               <SectionHeader
-                label="Background"
-                title="Professional Journey"
+                label={t("Latar Belakang", "Background")}
+                title={t("Perjalanan Profesional", "Professional Journey")}
               />
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  My journey in quality assurance began with a genuine interest in understanding how 
-                  software works and how to make it better for users. Over time, I've developed a 
-                  systematic approach to testing that helps teams catch issues early in the development cycle.
+                  {t(
+                    "Saat ini saya sedang membangun karir sebagai Software Quality Assurance. Saya memiliki pengalaman praktis dalam manual testing, bug reporting, dan regression testing.",
+                    "I'm currently building my career as a Software Quality Assurance. I have hands-on experience in manual testing, bug reporting, and regression testing."
+                  )}
                 </p>
                 <p>
-                  I focus on manual testing because I believe there's no substitute for thinking like a user 
-                  and exploring software the way real people would use it. This approach often uncovers 
-                  issues that automated tests might miss.
+                  {t(
+                    "Saya fokus pada manual testing karena saya percaya tidak ada pengganti untuk berpikir seperti pengguna dan mengeksplorasi software seperti cara orang menggunakannya.",
+                    "I focus on manual testing because I believe there's no substitute for thinking like a user and exploring software the way real people would use it."
+                  )}
                 </p>
                 <p>
-                  My goal is simple: to help teams deliver software that works reliably and meets the 
-                  needs of the people who use it.
+                  {t(
+                    "Dengan pola pikir belajar dan rasa tanggung jawab yang tinggi, tujuan saya adalah membantu tim memberikan software yang handal dan memenuhi kebutuhan penggunanya.",
+                    "With a learning mindset and strong sense of responsibility, my goal is to help teams deliver reliable software that meets user needs."
+                  )}
                 </p>
               </div>
             </div>
@@ -90,24 +119,24 @@ const About = () => {
       <section className="py-20">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionHeader
-            label="Values"
-            title="What Guides My Work"
+            label={t("Nilai-nilai", "Values")}
+            title={t("Yang Memandu Pekerjaan Saya", "What Guides My Work")}
             centered
           />
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
               <div 
-                key={value.title}
-                className={`p-8 rounded-xl bg-card border border-border/50 shadow-card hover:shadow-soft transition-shadow opacity-0 animate-fade-in-up`}
+                key={index}
+                className="p-6 rounded-xl bg-card border border-border/50 shadow-card hover:shadow-soft transition-shadow opacity-0 animate-fade-in-up"
                 style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center mb-6">
+                <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center mb-4">
                   <value.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="font-display text-xl font-semibold text-foreground mb-3">
+                <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                   {value.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {value.description}
                 </p>
               </div>
@@ -120,11 +149,14 @@ const About = () => {
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-6 lg:px-8 text-center">
           <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
-            Want to Know More About My Experience?
+            {t(
+              "Ingin Tahu Lebih Lanjut Tentang Pengalaman Saya?",
+              "Want to Know More About My Experience?"
+            )}
           </h2>
           <Button asChild size="lg" className="group">
             <Link to="/experience">
-              View QA Experience
+              {t("Lihat Pengalaman QA", "View QA Experience")}
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>

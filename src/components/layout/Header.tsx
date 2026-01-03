@@ -2,18 +2,23 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Experience", href: "/experience" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Contact", href: "/contact" },
-];
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navigation = [
+    { name: t("Beranda", "Home"), href: "/" },
+    { name: t("Tentang", "About"), href: "/about" },
+    { name: t("Pengalaman", "Experience"), href: "/experience" },
+    { name: t("Keahlian", "Skills"), href: "/skills" },
+    { name: t("Portofolio", "Portfolio"), href: "/portfolio" },
+    { name: t("Resume", "Resume"), href: "/resume" },
+    { name: t("Kontak", "Contact"), href: "/contact" },
+  ];
 
   const isActive = (href: string) => location.pathname === href;
 
@@ -30,12 +35,12 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-1">
+          <div className="hidden lg:flex lg:items-center lg:gap-1">
             {navigation.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 to={item.href}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   isActive(item.href)
                     ? "text-primary bg-accent"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
@@ -46,25 +51,28 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          {/* Language Toggle + Mobile menu button */}
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
+          <div className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
             <div className="flex flex-col space-y-1">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
