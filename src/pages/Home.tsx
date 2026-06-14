@@ -25,16 +25,25 @@ const Home = () => {
               <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full mb-6">
                 {t("Quality Assurance", "Quality Assurance")}
               </span>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-6 leading-tight">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 leading-tight neon-glow">
                 Suryani Lestari
               </h1>
-              <p className="text-xl md:text-2xl text-secondary font-medium mb-4">
-                Software Quality Assurance
-              </p>
-              <p className="text-lg text-muted-foreground mb-8 max-w-lg leading-relaxed">
+              <p className="text-lg md:text-xl text-primary font-medium mb-5">
                 {t(
-                  "QA pemula yang berfokus pada manual testing, dokumentasi yang jelas, dan pembelajaran berkelanjutan.",
-                  "Early-career QA focused on manual testing, clear documentation, and continuous learning."
+                  "Manual QA Engineer — The Bug Detective",
+                  "Manual QA Engineer — The Bug Detective"
+                )}
+              </p>
+              <p className="text-lg md:text-xl text-foreground/90 mb-3 max-w-xl leading-relaxed font-display italic">
+                {t(
+                  "“Mengungkap bug tersembunyi, memastikan pengalaman yang mulus.”",
+                  "“Uncovering hidden bugs, ensuring seamless experiences.”"
+                )}
+              </p>
+              <p className="text-base text-muted-foreground mb-8 max-w-lg leading-relaxed">
+                {t(
+                  "QA manual yang teliti, melihat lebih dalam dari sekadar permukaan untuk menjaga kepercayaan pengguna.",
+                  "A detail-oriented Manual QA who looks beyond the surface to protect user trust."
                 )}
               </p>
               

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Bug, ClipboardCheck, FileText, RefreshCw, Search, TestTube } from "lucide-react";
+import { ArrowRight, Bug, ClipboardCheck, FileText, RefreshCw, Search, TestTube, WifiOff, ShieldAlert, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
@@ -66,6 +66,45 @@ const Experience = () => {
     t("Komunikasi efektif dengan tim pengembangan", "Effective communication with development teams"),
     t("Pemahaman perspektif pengguna", "Understanding of user perspective"),
     t("Dokumentasi dan pelaporan yang terorganisir", "Organized documentation and reporting")
+  ];
+
+  const caseStudies = [
+    {
+      icon: WifiOff,
+      title: t("Form Saat Koneksi Terputus", "Form Submission on Network Drop"),
+      finding: t(
+        "Menguji submit form saat koneksi internet tiba-tiba mati di tengah proses.",
+        "Tested form submission when the network suddenly dropped mid-request."
+      ),
+      result: t(
+        "Menemukan loading spinner yang berputar tanpa henti tanpa pesan error — pengguna tidak tahu harus melakukan apa.",
+        "Found an infinite loading spinner with no error message — users had no idea what to do next."
+      ),
+    },
+    {
+      icon: ShieldAlert,
+      title: t("Validasi Karakter Spesial", "Special Character Validation"),
+      finding: t(
+        "Mencoba input karakter unicode, emoji, dan pola mirip SQL di kolom nama dan pencarian.",
+        "Tried unicode characters, emoji, and SQL-like patterns in name and search fields."
+      ),
+      result: t(
+        "Beberapa kolom menerima string panjang tanpa batas dan menampilkan output yang rusak di daftar.",
+        "Several fields accepted unbounded strings and rendered as broken output in list views."
+      ),
+    },
+    {
+      icon: Sparkles,
+      title: t("Sesi Login Kadaluarsa", "Expired Login Session"),
+      finding: t(
+        "Mendiamkan tab selama lebih dari satu jam, lalu mencoba aksi seperti menyimpan data.",
+        "Left a tab idle for over an hour, then attempted actions like saving data."
+      ),
+      result: t(
+        "Aksi gagal diam-diam tanpa redirect ke halaman login — data pengguna hilang.",
+        "Action failed silently with no redirect to login — the user's draft was lost."
+      ),
+    },
   ];
 
   return (
@@ -150,6 +189,49 @@ const Experience = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Bug Hunting Case Studies */}
+      <section className="py-20 bg-card border-t border-border/50">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <SectionHeader
+              label={t("Studi Kasus", "Case Studies")}
+              title={t("Cerita Berburu Bug", "Bug Hunting Case Studies")}
+              description={t(
+                "Beberapa edge case yang saya kejar — cerita singkat tentang apa yang diuji dan apa yang ditemukan.",
+                "A few edge cases I chased — short stories of what was tested and what surfaced."
+              )}
+              centered
+            />
+            <div className="space-y-4">
+              {caseStudies.map((c, i) => (
+                <article
+                  key={i}
+                  className="p-6 rounded-xl bg-background border border-border/60 hover:border-primary/40 transition-colors opacity-0 animate-fade-in-up"
+                  style={{ animationDelay: `${(i + 1) * 100}ms` }}
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="flex-shrink-0 w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <c.icon className="h-5 w-5 text-primary" />
+                    </span>
+                    <div className="flex-1">
+                      <h3 className="font-display text-lg font-semibold text-foreground mb-3">{c.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        <span className="font-semibold text-foreground">{t("Yang diuji: ", "What was tested: ")}</span>
+                        {c.finding}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        <span className="font-semibold text-foreground">{t("Temuan: ", "Finding: ")}</span>
+                        {c.result}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
