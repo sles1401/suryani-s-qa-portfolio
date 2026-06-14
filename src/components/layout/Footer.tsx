@@ -48,6 +48,19 @@ const Footer = () => {
             © {currentYear} Suryani Lestari
           </p>
         </div>
+
+        {/* QA status line */}
+        <div className="mt-8 pt-6 border-t border-border/50 flex justify-center">
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono text-muted-foreground tracking-wide">
+            <span className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+            <span>
+              {t(
+                "Status: Sistem Diaudit. Tidak Ada Bug Kritis Ditemukan.",
+                "Status: Systems Audited. No Critical Bugs Found."
+              )}
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   );

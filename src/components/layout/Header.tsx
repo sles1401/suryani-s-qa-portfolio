@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LanguageToggle from "@/components/LanguageToggle";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
@@ -51,8 +52,9 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Language Toggle + Mobile menu button */}
-          <div className="flex items-center gap-3">
+          {/* Theme + Language Toggle + Mobile menu button */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <LanguageToggle />
             <Button
               variant="ghost"
