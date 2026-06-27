@@ -1,6 +1,31 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, FileText, Lock, Mail, Bug, AlertTriangle, Monitor, ListChecks } from "lucide-react";
+import {
+  ArrowRight,
+  FileText,
+  Mail,
+  Bug,
+  AlertTriangle,
+  Monitor,
+  ListChecks,
+  Download,
+  Github,
+  Linkedin,
+  ClipboardCheck,
+  Cpu,
+  Wrench,
+  Send,
+  AlertCircle,
+  CheckCircle,
+  GraduationCap,
+  Code2,
+} from "lucide-react";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -8,6 +33,96 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const Portfolio = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const prev = document.title;
+    document.title = "QA Portfolio - Suryani Lestari";
+    return () => {
+      document.title = prev;
+    };
+  }, []);
+
+  const GITHUB_URL = "https://github.com/sles1401";
+  const LINKEDIN_URL = "https://www.linkedin.com/in/suryani-lestari/";
+  const EMAIL = "suryanilestari123@gmail.com";
+
+  const skillGroups = [
+    {
+      icon: ClipboardCheck,
+      title: t("Manual Testing", "Manual Testing"),
+      items: [
+        "Test Planning",
+        "Test Case Design",
+        "Bug Reporting",
+        "Boundary Value Analysis",
+        "Equivalence Partitioning",
+        "UAT",
+      ],
+    },
+    {
+      icon: Cpu,
+      title: t("Automation & API Testing", "Automation & API Testing"),
+      items: [
+        "API Testing (Postman)",
+        "Web Automation",
+        "SQL Validation",
+        "Integration Testing",
+      ],
+    },
+    {
+      icon: Wrench,
+      title: t("Tools & Platforms", "Tools & Platforms"),
+      items: [
+        "Git",
+        "GitHub",
+        "VSCode",
+        "Google Cloud Platform (GCP)",
+        "Firebase",
+        "Redis",
+        "MySQL / MariaDB",
+      ],
+    },
+  ];
+
+  const deliverables = [
+    {
+      icon: ClipboardCheck,
+      title: t("Manual Testing Suite", "Manual Testing Suite"),
+      description: t(
+        "Merancang skenario pengujian menyeluruh: positive, negative, dan edge cases — lengkap dengan langkah reproduksi dan hasil yang diharapkan.",
+        "Designing thorough test scenarios: positive, negative, and edge cases — complete with reproduction steps and expected results."
+      ),
+      cta: t("Lihat Test Cases di GitHub", "View Test Cases on GitHub"),
+      href: GITHUB_URL,
+      Icon: Github,
+    },
+    {
+      icon: Code2,
+      title: t("API & Automated Testing", "API & Automated Testing"),
+      description: t(
+        "Pengujian endpoint API, validasi response code, dan otomatisasi alur sistem menggunakan Postman.",
+        "Endpoint API testing, response-code validation, and system flow automation using Postman."
+      ),
+      cta: t("Lihat Test Scripts", "View Test Scripts"),
+      href: GITHUB_URL,
+      Icon: Github,
+    },
+    {
+      icon: GraduationCap,
+      title: t(
+        "Educational Authority & QA Case Studies",
+        "Educational Authority & QA Case Studies"
+      ),
+      description: t(
+        "Pengalaman mengajar 25+ siswa di bidang QA dan pemrograman — membedah kesalahan logika aplikasi dan memimpin pemecahan masalah teknis.",
+        "Experience teaching 25+ students in QA and programming — dissecting application logic errors and leading technical problem-solving."
+      ),
+      cta: t("Lihat Kredensial di LinkedIn", "View Credentials on LinkedIn"),
+      href: LINKEDIN_URL,
+      Icon: Linkedin,
+    },
+  ];
 
   const portfolioItems = [
     {
@@ -87,6 +202,52 @@ const Portfolio = () => {
     ),
   };
 
+  // Contact form state
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sent, setSent] = useState(false);
+
+  const contactSchema = z.object({
+    name: z.string().trim().min(1, t("Nama wajib diisi", "Name is required")).max(100),
+    email: z.string().trim().email(t("Alamat email tidak valid", "Invalid email address")).max(255),
+    subject: z.string().trim().min(1, t("Subjek wajib diisi", "Subject is required")).max(200),
+    message: z.string().trim().min(1, t("Pesan wajib diisi", "Message is required")).max(2000),
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: "" }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fe: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) fe[err.path[0] as string] = err.message;
+      });
+      setErrors(fe);
+      return;
+    }
+    const subject = `Website Contact — ${formData.name} — ${formData.subject}`;
+    const body =
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n\n` +
+      `${formData.message}`;
+    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    setSent(true);
+    toast({
+      title: t("Membuka klien email…", "Opening your email client…"),
+      description: t(
+        "Pesan Anda telah disiapkan. Silakan kirim dari aplikasi email Anda.",
+        "Your message is ready. Please send it from your email app."
+      ),
+    });
+  };
+
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -94,17 +255,124 @@ const Portfolio = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl">
             <span className="inline-block px-3 py-1 text-xs font-medium tracking-wider uppercase text-primary bg-accent rounded-full mb-6 opacity-0 animate-fade-in">
-              {t("Portofolio", "Portfolio")}
+              QA Portfolio
             </span>
-            <h1 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-6 opacity-0 animate-fade-in-up animate-delay-100">
-              {t("Berkas Kasus & Artefak QA", "Case Files & QA Artifacts")}
+            <h1 className="font-display text-4xl md:text-5xl font-semibold text-foreground mb-4 opacity-0 animate-fade-in-up animate-delay-100 neon-glow">
+              Suryani Lestari
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed opacity-0 animate-fade-in-up animate-delay-200">
+            <p className="text-lg md:text-xl text-primary font-medium mb-5 opacity-0 animate-fade-in-up animate-delay-100">
               {t(
-                "Cuplikan lembar kerja pengujian — bagaimana saya menyusun skenario dan membedah laporan bug.",
-                "A peek at testing worksheets — how I structure scenarios and dissect bug reports."
+                "Quality Assurance Engineer & Tech Educator",
+                "Quality Assurance Engineer & Tech Educator"
               )}
             </p>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mb-8 opacity-0 animate-fade-in-up animate-delay-200">
+              {t(
+                "Berfokus pada pengujian manual yang ketat, otomatisasi API/E2E, dan memastikan kualitas perangkat lunak terbaik melalui dokumentasi yang terstruktur.",
+                "Focused on rigorous manual testing, API/E2E automation, and ensuring the best software quality through structured documentation."
+              )}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 opacity-0 animate-fade-in-up animate-delay-300">
+              <Button asChild size="lg" className="group">
+                <Link to="/resume">
+                  <Download className="mr-2 h-4 w-4" />
+                  {t("Unduh CV", "Download CV")}
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <a href="#qa-deliverables">
+                  {t("Lihat Dokumentasi QA", "View QA Documentation")}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skill Set */}
+      <section className="py-20">
+        <div className="container mx-auto px-6 lg:px-8">
+          <SectionHeader
+            label={t("Keahlian", "Skill Set")}
+            title={t("Technical & QA Skill Set", "Technical & QA Skill Set")}
+            description={t(
+              "Kompetensi yang saya gunakan sehari-hari untuk merancang, menjalankan, dan mendokumentasikan pengujian.",
+              "The competencies I use day-to-day to design, execute, and document testing."
+            )}
+          />
+          <div className="grid md:grid-cols-3 gap-6">
+            {skillGroups.map((g, i) => {
+              const Icon = g.icon;
+              return (
+                <div
+                  key={i}
+                  className="p-6 rounded-2xl bg-card border border-border/60 shadow-card hover:border-primary/40 transition-colors"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-3">
+                    {g.title}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {g.items.map((it) => (
+                      <li
+                        key={it}
+                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted text-foreground/80 border border-border/50"
+                      >
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Deliverables */}
+      <section id="qa-deliverables" className="py-20 bg-card">
+        <div className="container mx-auto px-6 lg:px-8">
+          <SectionHeader
+            label={t("Deliverables", "Core Deliverables")}
+            title={t(
+              "Testing Framework & Core Deliverables",
+              "Testing Framework & Core Deliverables"
+            )}
+            description={t(
+              "Tiga area utama pekerjaan QA yang dapat ditinjau lebih lanjut.",
+              "Three core areas of QA work available for review."
+            )}
+          />
+          <div className="grid md:grid-cols-3 gap-6">
+            {deliverables.map((d, i) => {
+              const Icon = d.icon;
+              const CtaIcon = d.Icon;
+              return (
+                <article
+                  key={i}
+                  className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                    {d.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+                    {d.description}
+                  </p>
+                  <Button asChild variant="outline" className="w-full group">
+                    <a href={d.href} target="_blank" rel="noopener noreferrer">
+                      <CtaIcon className="mr-2 h-4 w-4" />
+                      {d.cta}
+                    </a>
+                  </Button>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -210,40 +478,10 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Portfolio Section */}
+      {/* Available materials */}
       <section className="py-20">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            {/* Notice Card */}
-            <div className="bg-accent/50 border border-primary/20 rounded-2xl p-8 mb-12 opacity-0 animate-fade-in-up">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Lock className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h2 className="font-display text-xl font-semibold text-foreground mb-2">
-                    {t(
-                      "Contoh Materi Tersedia Atas Permintaan",
-                      "Sample Materials Available Upon Request"
-                    )}
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
-                    {t(
-                      "Contoh test case, bug report, dan dokumentasi QA tersedia atas permintaan. Materi portofolio ini merupakan pekerjaan tahap awal karir dan pembelajaran.",
-                      "Sample test cases, bug reports, and QA documentation are available upon request. This portfolio represents early-career and learning-stage work."
-                    )}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Silakan hubungi saya untuk mendiskusikan contoh yang relevan.",
-                      "Please feel free to reach out to discuss relevant samples."
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* What's Available */}
+          <div className="max-w-5xl mx-auto">
             <SectionHeader
               label={t("Materi Tersedia", "Available Materials")}
               title={t("Yang Dapat Saya Bagikan", "What I Can Share")}
@@ -252,45 +490,160 @@ const Portfolio = () => {
                 "The following types of QA documentation are available upon request for review."
               )}
             />
-
-            <div className="grid sm:grid-cols-2 gap-4 mb-12">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {portfolioItems.map((item, index) => (
-                <div 
+                <div
                   key={index}
-                  className="p-6 rounded-xl bg-card border border-border/50 opacity-0 animate-fade-in-up"
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                  className="p-6 rounded-xl bg-card border border-border/50"
                 >
                   <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
                     <FileText className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                  <h3 className="font-display text-base font-semibold text-foreground mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {item.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* CTA */}
-            <div className="text-center bg-card border border-border/50 rounded-2xl p-8 opacity-0 animate-fade-in-up animate-delay-400">
-              <Mail className="h-10 w-10 text-primary mx-auto mb-4" />
-              <h3 className="font-display text-xl font-semibold text-foreground mb-3">
-                {t("Minta Materi Portofolio", "Request Portfolio Materials")}
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                {t(
-                  "Tertarik melihat contoh spesifik dari pekerjaan QA saya? Hubungi saya dan saya akan dengan senang hati berbagi sampel yang relevan.",
-                  "Interested in seeing specific examples of my QA work? Get in touch and I'll be happy to share relevant samples."
-                )}
-              </p>
-              <Button asChild size="lg" className="group">
-                <Link to="/contact">
-                  {t("Hubungi Saya", "Contact Me")}
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
+      {/* Contact / Let's Connect */}
+      <section id="contact" className="py-20 bg-card">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto">
+            <SectionHeader
+              label={t("Kontak", "Contact")}
+              title={t("Mari Terhubung", "Let's Connect")}
+              description={t(
+                "Punya pertanyaan atau peluang? Kirim pesan singkat dan saya akan membalas.",
+                "Have a question or an opportunity? Send a short message and I'll get back to you."
+              )}
+            />
+            <div className="bg-background border border-border/60 rounded-2xl p-8 shadow-card">
+              {sent ? (
+                <div className="text-center py-8">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                    {t("Klien email dibuka", "Email client opened")}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t(
+                      "Silakan kirim pesan dari aplikasi email Anda untuk menyelesaikan pengiriman.",
+                      "Please send the message from your email app to complete delivery."
+                    )}
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="mt-6"
+                    onClick={() => {
+                      setSent(false);
+                      setFormData({ name: "", email: "", subject: "", message: "" });
+                    }}
+                  >
+                    {t("Tulis pesan baru", "Write another message")}
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">
+                      {t("Nama", "Name")} <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder={t("Nama Anda", "Your name")}
+                      className={errors.name ? "border-destructive" : ""}
+                    />
+                    {errors.name && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.name}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">
+                      Email <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="email@example.com"
+                      className={errors.email ? "border-destructive" : ""}
+                    />
+                    {errors.email && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.email}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">
+                      {t("Subjek", "Subject")} <span className="text-primary">*</span>
+                    </Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      placeholder={t("Tentang apa pesan ini?", "What is this about?")}
+                      className={errors.subject ? "border-destructive" : ""}
+                    />
+                    {errors.subject && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.subject}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="message">
+                      {t("Pesan", "Message")} <span className="text-primary">*</span>
+                    </Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder={t("Tulis pesan Anda…", "Write your message…")}
+                      className={`resize-none ${errors.message ? "border-destructive" : ""}`}
+                    />
+                    {errors.message && (
+                      <p className="text-sm text-destructive flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
+                  <Button type="submit" size="lg" className="w-full group">
+                    {t("Kirim Pesan", "Send Message")}
+                    <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    {t(
+                      "Mengirim akan membuka klien email Anda dengan pesan yang sudah disiapkan untuk ",
+                      "Submitting opens your email client with a pre-filled message to "
+                    )}
+                    <a href={`mailto:${EMAIL}`} className="text-primary hover:underline">
+                      {EMAIL}
+                    </a>
+                    .
+                  </p>
+                </form>
+              )}
             </div>
           </div>
         </div>
