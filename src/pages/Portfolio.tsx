@@ -53,7 +53,7 @@ const Portfolio = () => {
   const CV_FILENAME = "Suryani-Lestari-QA-CV.pdf";
   const TEST_CASE_SHEET_URL = "https://github.com/sles1401";
   const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401";
-  const QA_HUB_URL = "https://hms-qa-hub-pro.vercel.app/";
+  const QA_HUB_URL = "https://suryani-s-tech-hub.vercel.app/";
 
   const skillGroups = [
     {
@@ -132,7 +132,7 @@ const Portfolio = () => {
         "Membangun sendiri hub QA internal (deploy di Vercel) untuk mempercepat alur pengujian dan memahami arsitektur web dari sisi developer: MPA, routing, dan state.",
         "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
       ),
-      cta: t("Launch QA Hub", "Launch QA Hub"),
+      cta: t("Launch Suryani's Tech Hub", "Launch Suryani's Tech Hub"),
       href: QA_HUB_URL,
       Icon: ExternalLink,
     },
