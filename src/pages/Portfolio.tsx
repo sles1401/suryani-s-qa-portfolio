@@ -95,51 +95,6 @@ const Portfolio = () => {
     },
   ];
 
-  const deliverables = [
-    {
-      icon: ClipboardCheck,
-      title: t(
-        "Manual Testing Suite & Live Test Case Matrix",
-        "Manual Testing Suite & Live Test Case Matrix"
-      ),
-      description: t(
-        "Membedah edge cases, boundary value analysis, dan skenario logis pengujian yang menyeluruh — didokumentasikan rapi agar mudah diaudit.",
-        "Dissecting edge cases, boundary value analysis, and thorough logical test scenarios — documented cleanly for easy audit."
-      ),
-      cta: t("Inspect Test Case Matrix", "Inspect Test Case Matrix"),
-      href: TEST_CASE_SHEET_URL,
-      Icon: FileSpreadsheet,
-    },
-    {
-      icon: Code2,
-      title: t(
-        "Automation Transition — Java Playwright & Postman",
-        "Automation Transition — Java Playwright & Postman"
-      ),
-      description: t(
-        "Transisi dari Manual ke otomasi: skrip E2E dengan Java Playwright (Page Object Model) dipadu otomatisasi API via Postman untuk pengujian yang cepat dan stabil.",
-        "Shifting from Manual to automation: E2E scripts in Java Playwright (Page Object Model) paired with Postman API automation for fast, stable checks."
-      ),
-      cta: t("Explore Playwright Codebase", "Explore Playwright Codebase"),
-      href: PLAYWRIGHT_REPO_URL,
-      Icon: Github,
-    },
-    {
-      icon: Rocket,
-      title: t(
-        "Internal Engineering Tools — My Productivity Web",
-        "Internal Engineering Tools — My Productivity Web"
-      ),
-      description: t(
-        "Membangun sendiri hub QA internal (deploy di Vercel) untuk mempercepat alur pengujian dan memahami arsitektur web dari sisi developer: MPA, routing, dan state.",
-        "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
-      ),
-      cta: t("Launch Suryani's Tech Hub", "Launch Suryani's Tech Hub"),
-      href: QA_HUB_URL,
-      Icon: ExternalLink,
-    },
-  ];
-
   const pomSnippet = `src/
 ├─ pages/
 │  ├─ BasePage.java
