@@ -140,6 +140,20 @@ const Portfolio = () => {
     },
   ];
 
+  const pomSnippet = `src/
+├─ pages/
+│  ├─ BasePage.java
+│  ├─ LoginPage.java
+│  └─ CheckoutPage.java
+├─ tests/
+│  ├─ LoginTests.java
+│  └─ CheckoutTests.java
+├─ utils/
+│  ├─ ConfigReader.java
+│  └─ TestDataFactory.java
+└─ resources/
+   └─ playwright.config.json`;
+
   const portfolioItems = [
     {
       title: t("Dokumentasi Test Case", "Test Case Documentation"),
