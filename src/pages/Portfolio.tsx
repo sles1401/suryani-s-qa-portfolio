@@ -95,7 +95,6 @@ const Portfolio = () => {
 
   const deliverables = [
     {
-    {
       icon: ClipboardCheck,
       title: t(
         "Manual Testing Suite & Live Test Case Matrix",
