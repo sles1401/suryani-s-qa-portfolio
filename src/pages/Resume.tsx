@@ -60,15 +60,22 @@ const Resume = () => {
                 )}
               </p>
               
-              <Button size="lg" className="group mb-4">
-                <Download className="mr-2 h-5 w-5" />
-                {t("Unduh Resume (PDF)", "Download Resume (PDF)")}
+              <Button asChild size="lg" className="group mb-4">
+                <a
+                  href="/cv/Suryani-Lestari-QA-CV.pdf"
+                  download="Suryani-Lestari-QA-CV.pdf"
+                  type="application/pdf"
+                  aria-label={t("Unduh Resume PDF Suryani Lestari", "Download Suryani Lestari Resume PDF")}
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  {t("Unduh Resume (PDF)", "Download Resume (PDF)")}
+                </a>
               </Button>
-              
+
               <p className="text-xs text-muted-foreground">
                 {t(
-                  "* File resume akan tersedia setelah diunggah",
-                  "* Resume file will be available once uploaded"
+                  "File: Suryani-Lestari-QA-CV.pdf",
+                  "File: Suryani-Lestari-QA-CV.pdf"
                 )}
               </p>
             </div>

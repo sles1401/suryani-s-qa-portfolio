@@ -19,6 +19,9 @@ import {
   CheckCircle,
   GraduationCap,
   Code2,
+  ExternalLink,
+  Rocket,
+  FileSpreadsheet,
 } from "lucide-react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -46,6 +49,11 @@ const Portfolio = () => {
   const GITHUB_URL = "https://github.com/sles1401";
   const LINKEDIN_URL = "https://www.linkedin.com/in/suryani-lestari/";
   const EMAIL = "suryanilestari123@gmail.com";
+  const CV_URL = "/cv/Suryani-Lestari-QA-CV.pdf";
+  const CV_FILENAME = "Suryani-Lestari-QA-CV.pdf";
+  const TEST_CASE_SHEET_URL = "https://github.com/sles1401";
+  const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401";
+  const QA_HUB_URL = "https://hms-qa-hub-pro.vercel.app/";
 
   const skillGroups = [
     {
@@ -88,39 +96,45 @@ const Portfolio = () => {
   const deliverables = [
     {
       icon: ClipboardCheck,
-      title: t("Manual Testing Suite", "Manual Testing Suite"),
-      description: t(
-        "Merancang skenario pengujian menyeluruh: positive, negative, dan edge cases — lengkap dengan langkah reproduksi dan hasil yang diharapkan.",
-        "Designing thorough test scenarios: positive, negative, and edge cases — complete with reproduction steps and expected results."
+      title: t(
+        "Manual Testing Suite & Live Test Case Matrix",
+        "Manual Testing Suite & Live Test Case Matrix"
       ),
-      cta: t("Lihat Test Cases di GitHub", "View Test Cases on GitHub"),
-      href: GITHUB_URL,
-      Icon: Github,
+      description: t(
+        "Membedah edge cases, boundary value analysis, dan skenario logis pengujian yang menyeluruh — didokumentasikan rapi agar mudah diaudit.",
+        "Dissecting edge cases, boundary value analysis, and thorough logical test scenarios — documented cleanly for easy audit."
+      ),
+      cta: t("Inspect Test Case Matrix", "Inspect Test Case Matrix"),
+      href: TEST_CASE_SHEET_URL,
+      Icon: FileSpreadsheet,
     },
     {
       icon: Code2,
-      title: t("API & Automated Testing", "API & Automated Testing"),
-      description: t(
-        "Pengujian endpoint API, validasi response code, dan otomatisasi alur sistem menggunakan Postman.",
-        "Endpoint API testing, response-code validation, and system flow automation using Postman."
+      title: t(
+        "Automation Transition — Java Playwright & Postman",
+        "Automation Transition — Java Playwright & Postman"
       ),
-      cta: t("Lihat Test Scripts", "View Test Scripts"),
-      href: GITHUB_URL,
+      description: t(
+        "Transisi dari Manual ke otomasi: skrip E2E dengan Java Playwright (Page Object Model) dipadu otomatisasi API via Postman untuk pengujian yang cepat dan stabil.",
+        "Shifting from Manual to automation: E2E scripts in Java Playwright (Page Object Model) paired with Postman API automation for fast, stable checks."
+      ),
+      cta: t("Explore Playwright Codebase", "Explore Playwright Codebase"),
+      href: PLAYWRIGHT_REPO_URL,
       Icon: Github,
     },
     {
-      icon: GraduationCap,
+      icon: Rocket,
       title: t(
-        "Educational Authority & QA Case Studies",
-        "Educational Authority & QA Case Studies"
+        "Internal Engineering Tools — My Productivity Web",
+        "Internal Engineering Tools — My Productivity Web"
       ),
       description: t(
-        "Pengalaman mengajar 25+ siswa di bidang QA dan pemrograman — membedah kesalahan logika aplikasi dan memimpin pemecahan masalah teknis.",
-        "Experience teaching 25+ students in QA and programming — dissecting application logic errors and leading technical problem-solving."
+        "Membangun sendiri hub QA internal (deploy di Vercel) untuk mempercepat alur pengujian dan memahami arsitektur web dari sisi developer: MPA, routing, dan state.",
+        "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
       ),
-      cta: t("Lihat Kredensial di LinkedIn", "View Credentials on LinkedIn"),
-      href: LINKEDIN_URL,
-      Icon: Linkedin,
+      cta: t("Launch QA Hub", "Launch QA Hub"),
+      href: QA_HUB_URL,
+      Icon: ExternalLink,
     },
   ];
 
@@ -208,10 +222,28 @@ const Portfolio = () => {
   const [sent, setSent] = useState(false);
 
   const contactSchema = z.object({
-    name: z.string().trim().min(1, t("Nama wajib diisi", "Name is required")).max(100),
-    email: z.string().trim().email(t("Alamat email tidak valid", "Invalid email address")).max(255),
-    subject: z.string().trim().min(1, t("Subjek wajib diisi", "Subject is required")).max(200),
-    message: z.string().trim().min(1, t("Pesan wajib diisi", "Message is required")).max(2000),
+    name: z
+      .string()
+      .trim()
+      .min(2, t("Nama minimal 2 karakter", "Name must be at least 2 characters"))
+      .max(100, t("Nama maksimal 100 karakter", "Name must be under 100 characters"))
+      .regex(/^[\p{L}\s.'-]+$/u, t("Nama hanya boleh berisi huruf", "Name may only contain letters")),
+    email: z
+      .string()
+      .trim()
+      .min(1, t("Email wajib diisi", "Email is required"))
+      .email(t("Format email tidak valid — contoh: nama@domain.com", "Invalid email format — e.g. name@domain.com"))
+      .max(255, t("Email terlalu panjang", "Email is too long")),
+    subject: z
+      .string()
+      .trim()
+      .min(3, t("Subjek minimal 3 karakter", "Subject must be at least 3 characters"))
+      .max(200, t("Subjek maksimal 200 karakter", "Subject must be under 200 characters")),
+    message: z
+      .string()
+      .trim()
+      .min(10, t("Pesan minimal 10 karakter agar konteksnya jelas", "Message must be at least 10 characters so context is clear"))
+      .max(2000, t("Pesan maksimal 2000 karakter", "Message must be under 2000 characters")),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -266,18 +298,18 @@ const Portfolio = () => {
                 "Quality Assurance Engineer & Tech Educator"
               )}
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mb-8 opacity-0 animate-fade-in-up animate-delay-200">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mb-8 opacity-0 animate-fade-in-up animate-delay-200">
               {t(
-                "Berfokus pada pengujian manual yang ketat, otomatisasi API/E2E, dan memastikan kualitas perangkat lunak terbaik melalui dokumentasi yang terstruktur.",
-                "Focused on rigorous manual testing, API/E2E automation, and ensuring the best software quality through structured documentation."
+                "Saya seorang QA yang dibesarkan oleh ketelitian Manual Testing, kini bertransisi membangun ekosistem otomasi yang kokoh menggunakan Java Playwright. Saya tidak hanya mencari di mana code itu rusak, tapi saya paham bagaimana code itu dibangun — karena saya juga merancang sistem web sendiri.",
+                "A QA professional raised on the rigor of Manual Testing, now transitioning into building robust automation ecosystems using Java Playwright. I don't just find where the code breaks; I understand how it's built — because I architect web systems myself."
               )}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 opacity-0 animate-fade-in-up animate-delay-300">
               <Button asChild size="lg" className="group">
-                <Link to="/resume">
+                <a href={CV_URL} download={CV_FILENAME} type="application/pdf">
                   <Download className="mr-2 h-4 w-4" />
-                  {t("Unduh CV", "Download CV")}
-                </Link>
+                  {t("Unduh CV (PDF)", "Download CV (PDF)")}
+                </a>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <a href="#qa-deliverables">
