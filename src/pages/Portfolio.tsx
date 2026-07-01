@@ -51,8 +51,10 @@ const Portfolio = () => {
   const EMAIL = "suryanilestari123@gmail.com";
   const CV_URL = "/cv/Suryani-Lestari-QA-CV.pdf";
   const CV_FILENAME = "Suryani-Lestari-QA-CV.pdf";
-  const TEST_CASE_SHEET_URL = "https://github.com/sles1401";
-  const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401";
+  const TEST_CASE_SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing";
+  const TEST_CASE_DOCS_REPO_URL = "https://github.com/sles1401/qa-test-documentation";
+  const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401/java-playwright-automation";
   const QA_HUB_URL = "https://suryani-s-tech-hub.vercel.app/";
 
   const skillGroups = [
@@ -93,50 +95,19 @@ const Portfolio = () => {
     },
   ];
 
-  const deliverables = [
-    {
-      icon: ClipboardCheck,
-      title: t(
-        "Manual Testing Suite & Live Test Case Matrix",
-        "Manual Testing Suite & Live Test Case Matrix"
-      ),
-      description: t(
-        "Membedah edge cases, boundary value analysis, dan skenario logis pengujian yang menyeluruh — didokumentasikan rapi agar mudah diaudit.",
-        "Dissecting edge cases, boundary value analysis, and thorough logical test scenarios — documented cleanly for easy audit."
-      ),
-      cta: t("Inspect Test Case Matrix", "Inspect Test Case Matrix"),
-      href: TEST_CASE_SHEET_URL,
-      Icon: FileSpreadsheet,
-    },
-    {
-      icon: Code2,
-      title: t(
-        "Automation Transition — Java Playwright & Postman",
-        "Automation Transition — Java Playwright & Postman"
-      ),
-      description: t(
-        "Transisi dari Manual ke otomasi: skrip E2E dengan Java Playwright (Page Object Model) dipadu otomatisasi API via Postman untuk pengujian yang cepat dan stabil.",
-        "Shifting from Manual to automation: E2E scripts in Java Playwright (Page Object Model) paired with Postman API automation for fast, stable checks."
-      ),
-      cta: t("Explore Playwright Codebase", "Explore Playwright Codebase"),
-      href: PLAYWRIGHT_REPO_URL,
-      Icon: Github,
-    },
-    {
-      icon: Rocket,
-      title: t(
-        "Internal Engineering Tools — My Productivity Web",
-        "Internal Engineering Tools — My Productivity Web"
-      ),
-      description: t(
-        "Membangun sendiri hub QA internal (deploy di Vercel) untuk mempercepat alur pengujian dan memahami arsitektur web dari sisi developer: MPA, routing, dan state.",
-        "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
-      ),
-      cta: t("Launch Suryani's Tech Hub", "Launch Suryani's Tech Hub"),
-      href: QA_HUB_URL,
-      Icon: ExternalLink,
-    },
-  ];
+  const pomSnippet = `src/
+├─ pages/
+│  ├─ BasePage.java
+│  ├─ LoginPage.java
+│  └─ CheckoutPage.java
+├─ tests/
+│  ├─ LoginTests.java
+│  └─ CheckoutTests.java
+├─ utils/
+│  ├─ ConfigReader.java
+│  └─ TestDataFactory.java
+└─ resources/
+   └─ playwright.config.json`;
 
   const portfolioItems = [
     {
@@ -378,33 +349,132 @@ const Portfolio = () => {
               "Three core areas of QA work available for review."
             )}
           />
-          <div className="grid md:grid-cols-3 gap-6">
-            {deliverables.map((d, i) => {
-              const Icon = d.icon;
-              const CtaIcon = d.Icon;
-              return (
-                <article
-                  key={i}
-                  className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all"
+          <div className="grid md:grid-cols-3 gap-6 items-stretch">
+            {/* Card 1 — Manual Testing Suite */}
+            <article className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
+              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                <ClipboardCheck className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                {t(
+                  "Manual Testing Suite & Live Test Case Matrix",
+                  "Manual Testing Suite & Live Test Case Matrix"
+                )}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                {t(
+                  "Membedah edge cases, boundary value analysis, dan skenario logis pengujian yang menyeluruh — didokumentasikan rapi agar mudah diaudit.",
+                  "Dissecting edge cases, boundary value analysis, and thorough logical test scenarios — documented cleanly for easy audit."
+                )}
+              </p>
+              <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
+                {t("Inspect Test Case Matrix", "Inspect Test Case Matrix")}
+              </p>
+              <div className="flex flex-col gap-2">
+                <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                  <a
+                    href={TEST_CASE_SHEET_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t(
+                      "Buka Live Test Case Dummy di Google Sheets",
+                      "Open Live Test Case Dummy on Google Sheets"
+                    )}
+                  >
+                    <FileSpreadsheet className="mr-2 h-4 w-4" />
+                    {t(
+                      "Buka Live Test Case Dummy (Google Sheets)",
+                      "Open Live Test Case Dummy (Google Sheets)"
+                    )}
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full border-primary/40 text-primary hover:bg-accent">
+                  <a
+                    href={TEST_CASE_DOCS_REPO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t(
+                      "Buka repositori dokumen test case di GitHub",
+                      "Open test case docs repository on GitHub"
+                    )}
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    {t("Repositori Dokumen (GitHub)", "Docs Repository (GitHub)")}
+                  </a>
+                </Button>
+              </div>
+            </article>
+
+            {/* Card 2 — Automation Transition */}
+            <article className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
+              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                <Code2 className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                {t(
+                  "Automation Transition — Java Playwright & Postman",
+                  "Automation Transition — Java Playwright & Postman"
+                )}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                {t(
+                  "Transisi dari Manual ke otomasi: skrip E2E dengan Java Playwright (Page Object Model) dipadu otomatisasi API via Postman untuk pengujian yang cepat dan stabil.",
+                  "Shifting from Manual to automation: E2E scripts in Java Playwright (Page Object Model) paired with Postman API automation for fast, stable checks."
+                )}
+              </p>
+              <div className="mb-5 flex-1">
+                <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
+                  {t("Struktur Framework (POM)", "Framework Structure (POM)")}
+                </p>
+                <pre className="text-[11px] leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 rounded-lg p-3 overflow-x-auto">
+{pomSnippet}
+                </pre>
+              </div>
+              <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <a
+                  href={PLAYWRIGHT_REPO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t(
+                    "Buka repositori Java Playwright di GitHub",
+                    "Open Java Playwright repository on GitHub"
+                  )}
                 >
-                  <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                    <Icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                    {d.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
-                    {d.description}
-                  </p>
-                  <Button asChild variant="outline" className="w-full group">
-                    <a href={d.href} target="_blank" rel="noopener noreferrer">
-                      <CtaIcon className="mr-2 h-4 w-4" />
-                      {d.cta}
-                    </a>
-                  </Button>
-                </article>
-              );
-            })}
+                  <Github className="mr-2 h-4 w-4" />
+                  {t("Explore Playwright Codebase", "Explore Playwright Codebase")}
+                </a>
+              </Button>
+            </article>
+
+            {/* Card 3 — Internal Engineering Tools */}
+            <article className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
+              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                <Rocket className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                {t(
+                  "Internal Engineering Tools — My Productivity Web",
+                  "Internal Engineering Tools — My Productivity Web"
+                )}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+                {t(
+                  "Membangun sendiri hub QA internal (deploy di Vercel) untuk mempercepat alur pengujian dan memahami arsitektur web dari sisi developer: MPA, routing, dan state.",
+                  "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
+                )}
+              </p>
+              <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <a
+                  href={QA_HUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t("Buka Suryani's Tech Hub", "Open Suryani's Tech Hub")}
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  {t("Launch Suryani's Tech Hub", "Launch Suryani's Tech Hub")}
+                </a>
+              </Button>
+            </article>
           </div>
         </div>
       </section>
