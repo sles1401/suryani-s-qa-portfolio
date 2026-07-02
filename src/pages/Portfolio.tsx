@@ -33,6 +33,14 @@ import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Portfolio = () => {
   const { t } = useLanguage();
@@ -191,6 +199,7 @@ const Portfolio = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const [pomOpen, setPomOpen] = useState(false);
 
   const contactSchema = z.object({
     name: z
@@ -426,9 +435,60 @@ const Portfolio = () => {
                 <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
                   {t("Struktur Framework (POM)", "Framework Structure (POM)")}
                 </p>
-                <pre className="text-[11px] leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 rounded-lg p-3 overflow-x-auto">
+                <Dialog open={pomOpen} onOpenChange={setPomOpen}>
+                  <DialogTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label={t(
+                        "Perbesar cuplikan struktur Page Object Model",
+                        "Expand Page Object Model structure snippet"
+                      )}
+                      className="group w-full text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    >
+                      <pre className="text-[11px] leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 group-hover:border-primary/60 group-focus-visible:border-primary rounded-lg p-3 overflow-x-auto transition-colors cursor-zoom-in">
 {pomSnippet}
-                </pre>
+                      </pre>
+                      <span className="mt-1 block text-[10px] uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
+                        {t("Klik untuk perbesar", "Click to expand")}
+                      </span>
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="font-display">
+                        {t(
+                          "Struktur Page Object Model — Java Playwright",
+                          "Page Object Model Structure — Java Playwright"
+                        )}
+                      </DialogTitle>
+                      <DialogDescription>
+                        {t(
+                          "Cuplikan struktur folder framework otomasi: pages, tests, utils, dan resources.",
+                          "Snippet of the automation framework folder structure: pages, tests, utils, and resources."
+                        )}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <pre className="text-xs leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 rounded-lg p-4 overflow-x-auto max-h-[60vh]">
+{pomSnippet}
+                    </pre>
+                    <div className="flex justify-end">
+                      <Button asChild variant="outline" className="border-primary/40 text-primary hover:bg-accent">
+                        <a
+                          href={PLAYWRIGHT_REPO_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={t(
+                            "Buka repositori Java Playwright di GitHub (tab baru)",
+                            "Open Java Playwright repository on GitHub (new tab)"
+                          )}
+                        >
+                          <Github className="mr-2 h-4 w-4" />
+                          {t("Buka Repositori GitHub", "Open GitHub Repository")}
+                        </a>
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
               <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                 <a
