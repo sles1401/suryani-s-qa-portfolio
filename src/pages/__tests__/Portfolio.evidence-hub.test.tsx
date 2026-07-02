@@ -48,7 +48,7 @@ describe("Portfolio · Evidence Hub CTAs", () => {
         <Portfolio />
       </AllProviders>
     );
-    const link = getLink(/Explore Playwright Codebase/i);
+    const link = getLink(/Open Java Playwright repository/i);
     expect(link.href).toBe(EXPECTED.playwright);
     expect(link.target).toBe("_blank");
     expect(link.rel).toMatch(/noopener/);
