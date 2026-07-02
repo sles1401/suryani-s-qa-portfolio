@@ -17,7 +17,15 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
+          ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
+          : undefined,
+      },
+    },
   ],
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER
     ? undefined
