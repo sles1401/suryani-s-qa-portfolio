@@ -3,6 +3,7 @@ import { Page } from "@playwright/test";
 export const setTheme = async (page: Page, theme: "light" | "dark") => {
   await page.addInitScript((t) => {
     localStorage.setItem("theme", t);
+    localStorage.setItem("theme-manual", "1");
     localStorage.setItem("language", "en");
   }, theme);
 };
