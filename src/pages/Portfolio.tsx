@@ -490,7 +490,7 @@ const Portfolio = () => {
                   </DialogContent>
                 </Dialog>
               </div>
-              <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button asChild className="w-full whitespace-normal text-center bg-primary text-primary-foreground hover:bg-primary/90">
                 <a
                   href={PLAYWRIGHT_REPO_URL}
                   target="_blank"
@@ -507,7 +507,7 @@ const Portfolio = () => {
             </article>
 
             {/* Card 3 — Internal Engineering Tools */}
-            <article className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
+            <article className="flex flex-col min-w-0 p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
               <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                 <Rocket className="h-5 w-5 text-primary" />
               </div>
@@ -523,7 +523,7 @@ const Portfolio = () => {
                   "Self-built internal QA hub (deployed on Vercel) that speeds up testing workflows and grounds me in web architecture from the developer side: MPA, routing, and state."
                 )}
               </p>
-              <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button asChild className="w-full whitespace-normal text-center bg-primary text-primary-foreground hover:bg-primary/90">
                 <a
                   href={QA_HUB_URL}
                   target="_blank"
