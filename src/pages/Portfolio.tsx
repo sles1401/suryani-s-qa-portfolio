@@ -415,7 +415,7 @@ const Portfolio = () => {
             </article>
 
             {/* Card 2 — Automation Transition */}
-            <article className="flex flex-col p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
+            <article className="flex flex-col min-w-0 p-6 rounded-2xl bg-background border border-border/60 shadow-card hover:shadow-soft hover:border-primary/40 transition-all">
               <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                 <Code2 className="h-5 w-5 text-primary" />
               </div>
@@ -431,7 +431,7 @@ const Portfolio = () => {
                   "Shifting from Manual to automation: E2E scripts in Java Playwright (Page Object Model) paired with Postman API automation for fast, stable checks."
                 )}
               </p>
-              <div className="mb-5 flex-1">
+              <div className="mb-5 flex-1 min-w-0">
                 <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
                   {t("Struktur Framework (POM)", "Framework Structure (POM)")}
                 </p>
@@ -443,9 +443,9 @@ const Portfolio = () => {
                         "Perbesar cuplikan struktur Page Object Model",
                         "Expand Page Object Model structure snippet"
                       )}
-                      className="group w-full text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      className="group w-full min-w-0 text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     >
-                      <pre className="text-[11px] leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 group-hover:border-primary/60 group-focus-visible:border-primary rounded-lg p-3 overflow-x-auto transition-colors cursor-zoom-in">
+                      <pre className="text-[11px] leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 group-hover:border-primary/60 group-focus-visible:border-primary rounded-lg p-3 max-w-full overflow-x-auto transition-colors cursor-zoom-in">
 {pomSnippet}
                       </pre>
                       <span className="mt-1 block text-[10px] uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
