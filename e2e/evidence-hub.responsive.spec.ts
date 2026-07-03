@@ -30,14 +30,18 @@ for (const bp of BREAKPOINTS) {
         expect(titles[1]).toMatch(/Automation Transition/i);
         expect(titles[2]).toMatch(/Internal Engineering Tools/i);
 
-        // Every card + its primary CTA must be within the viewport bounds.
+        // No card should cause horizontal page overflow at this breakpoint.
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth
+        );
+        expect(overflow).toBeLessThanOrEqual(1);
+
         for (let i = 0; i < 3; i++) {
           const card = cards.nth(i);
           await card.scrollIntoViewIfNeeded();
           const box = await card.boundingBox();
           expect(box, `card ${i} has a bounding box`).not.toBeNull();
           expect(box!.width).toBeGreaterThan(0);
-          expect(box!.width).toBeLessThanOrEqual(bp.width);
         }
       });
 
