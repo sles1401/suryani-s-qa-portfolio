@@ -47,10 +47,8 @@ test.describe("Top navigation — routing + persisted preferences", () => {
   }) => {
     await page.goto("/");
 
-    // Flip language EN → ID via the visible toggle (button reflects current lang).
-    await page
-      .getByRole("button", { name: /(Ganti bahasa|Switch language)/i })
-      .click();
+    // Flip language EN → ID via the visible toggle.
+    await page.getByRole("button", { name: "Bahasa Indonesia" }).click();
     // Flip theme light → dark.
     await page
       .getByRole("button", { name: /Switch to dark mode/i })
