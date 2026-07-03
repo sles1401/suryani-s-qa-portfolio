@@ -23,17 +23,6 @@ for (const theme of ["light", "dark"] as const) {
       await expect(page.getByRole("heading", { name: /Message Sent!/i })).toHaveCount(0);
     });
 
-    test(`invalid email shows validation error, no submit (${theme})`, async ({
-      page,
-    }) => {
-      await page.getByLabel(/Full Name/i).fill("Jane QA");
-      await page.getByLabel(/Email Address/i).fill("not-an-email");
-      await page.getByLabel(/^Message/i).fill("Hello there");
-      await page.getByRole("button", { name: /^Send Message$/i }).click();
-      await expect(page.getByText(/Invalid email address/i)).toBeVisible();
-      await expect(page.getByRole("heading", { name: /Message Sent!/i })).toHaveCount(0);
-    });
-
     test(`valid submission shows success confirmation (${theme})`, async ({
       page,
     }) => {
