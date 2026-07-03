@@ -18,10 +18,13 @@ const PAGES = [
 
 test.describe("Top navigation — routing + persisted preferences", () => {
   test.beforeEach(async ({ page }) => {
+    // Seed defaults only if the storage is empty — otherwise every
+    // page.goto would clobber the user's toggle choices under test.
     await page.addInitScript(() => {
-      localStorage.setItem("language", "en");
-      localStorage.setItem("theme", "light");
-      localStorage.setItem("theme-manual", "1");
+      if (!localStorage.getItem("language")) localStorage.setItem("language", "en");
+      if (!localStorage.getItem("theme")) localStorage.setItem("theme", "light");
+      if (!localStorage.getItem("theme-manual"))
+        localStorage.setItem("theme-manual", "1");
     });
   });
 
