@@ -799,7 +799,7 @@ const Portfolio = () => {
                       "Mengirim akan membuka klien email Anda dengan pesan yang sudah disiapkan untuk ",
                       "Submitting opens your email client with a pre-filled message to "
                     )}
-                    <a href={`mailto:${EMAIL}`} className="text-primary hover:underline">
+                    <a href={`mailto:${EMAIL}`} className="text-foreground font-medium underline underline-offset-2 decoration-primary hover:decoration-2">
                       {EMAIL}
                     </a>
                     .
