@@ -47,12 +47,13 @@ test.describe("Top navigation — routing + persisted preferences", () => {
   }) => {
     await page.goto("/");
 
-    // Flip language EN → ID via the visible toggle.
-    await page.getByRole("button", { name: "Bahasa Indonesia" }).click();
-    // Flip theme light → dark.
+    // Flip theme first — its aria-label is localised, so we click while
+    // the UI is still in English.
     await page
       .getByRole("button", { name: /Switch to dark mode/i })
       .click();
+    // Then flip language EN → ID via the visible toggle.
+    await page.getByRole("button", { name: "Bahasa Indonesia" }).click();
 
     // ID header labels appear (Beranda/Tentang/Kontak).
     await expect(
