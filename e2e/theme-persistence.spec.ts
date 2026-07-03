@@ -16,18 +16,35 @@ const gotoEvidenceHub = async (page: import("@playwright/test").Page) => {
   await page.locator("#qa-deliverables").scrollIntoViewIfNeeded();
 };
 
+// Seed localStorage once on the current origin, then reload so the app
+// re-hydrates from that state (unlike addInitScript, which would re-seed
+// on every navigation and mask the persistence being tested).
+const seedTheme = async (
+  page: import("@playwright/test").Page,
+  opts: { theme: "light" | "dark"; manual: boolean }
+) => {
+  await page.goto("/portfolio");
+  await page.evaluate(
+    ({ theme, manual }) => {
+      localStorage.setItem("theme", theme);
+      if (manual) localStorage.setItem("theme-manual", "1");
+      else localStorage.removeItem("theme-manual");
+      localStorage.setItem("language", "en");
+    },
+    opts
+  );
+  await page.reload();
+  await page.waitForLoadState("networkidle");
+  await page.locator("#qa-deliverables").scrollIntoViewIfNeeded();
+};
+
 test.describe("Theme persistence on the Evidence Hub page", () => {
   test("dark selection is written to localStorage and survives refresh", async ({
     page,
   }) => {
     // Force a predictable starting state without pre-marking a manual choice,
     // so the toggle itself is what promotes theme-manual.
-    await page.addInitScript(() => {
-      localStorage.setItem("theme", "light");
-      localStorage.removeItem("theme-manual");
-      localStorage.setItem("language", "en");
-    });
-    await gotoEvidenceHub(page);
+    await seedTheme(page, { theme: "light", manual: false });
 
     await expect
       .poll(async () => (await readTheme(page)).hasDarkClass)
@@ -64,12 +81,7 @@ test.describe("Theme persistence on the Evidence Hub page", () => {
   test("light selection is persisted and restored after refresh", async ({
     page,
   }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem("theme", "dark");
-      localStorage.setItem("theme-manual", "1");
-      localStorage.setItem("language", "en");
-    });
-    await gotoEvidenceHub(page);
+    await seedTheme(page, { theme: "dark", manual: true });
 
     await expect
       .poll(async () => (await readTheme(page)).hasDarkClass)
