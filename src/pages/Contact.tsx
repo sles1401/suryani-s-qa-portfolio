@@ -121,9 +121,9 @@ const Contact = () => {
                   <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                     <Mail className="h-5 w-5 text-primary" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium text-foreground">suryanilestari123@gmail.com</p>
+                    <p className="font-medium text-foreground break-all">suryanilestari123@gmail.com</p>
                   </div>
                 </a>
 
