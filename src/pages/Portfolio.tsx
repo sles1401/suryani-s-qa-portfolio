@@ -551,7 +551,7 @@ const Portfolio = () => {
                 "A sample of how I structure manual scenarios with boundary value analysis."
               )}
             />
-            <div className="rounded-xl border border-border/60 bg-background overflow-hidden shadow-card">
+            <div className="rounded-xl border border-border/60 bg-background overflow-x-auto shadow-card">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/40">

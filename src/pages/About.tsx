@@ -99,7 +99,7 @@ const About = () => {
                 </p>
               </div>
             </div>
-            <div className="flex justify-center opacity-0 animate-fade-in animate-delay-200">
+            <div className="flex justify-center opacity-0 animate-fade-in animate-delay-200 overflow-hidden">
               <div className="relative">
                 <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-soft">
                   <img
