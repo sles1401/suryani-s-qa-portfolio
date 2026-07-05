@@ -15,21 +15,27 @@ for (const theme of ["light", "dark"] as const) {
     test(`LinkedIn link opens in a new tab with safe rel values (${theme})`, async ({
       page,
     }) => {
+      // The LinkedIn URL appears in the contact card AND the footer — both
+      // must satisfy the safe-rel contract, so assert against every match.
       const linkedIn = page.locator(`a[href="${LINKEDIN_URL}"]`);
-      await expect(linkedIn).toHaveCount(1);
-      await expect(linkedIn).toBeVisible();
-      await expect(linkedIn).toHaveAttribute("target", "_blank");
-      const rel = (await linkedIn.getAttribute("rel")) ?? "";
-      expect(rel).toContain("noopener");
-      expect(rel).toContain("noreferrer");
+      const count = await linkedIn.count();
+      expect(count).toBeGreaterThan(0);
+      for (let i = 0; i < count; i++) {
+        const link = linkedIn.nth(i);
+        await expect(link).toHaveAttribute("target", "_blank");
+        const rel = (await link.getAttribute("rel")) ?? "";
+        expect(rel).toContain("noopener");
+        expect(rel).toContain("noreferrer");
+      }
+      // At least the in-page contact card link must be visible.
+      await expect(linkedIn.first()).toBeVisible();
     });
 
     test(`mailto link is present, points at the correct address, and opens a new tab (${theme})`, async ({
       page,
       context,
     }) => {
-      const mailto = page.locator(`a[href="mailto:${EMAIL}"]`);
-      await expect(mailto).toHaveCount(1);
+      const mailto = page.locator(`a[href="mailto:${EMAIL}"]`).first();
       await expect(mailto).toBeVisible();
       await expect(mailto).toHaveAttribute("href", `mailto:${EMAIL}`);
 
