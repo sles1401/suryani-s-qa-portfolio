@@ -7,6 +7,12 @@ for (const theme of ["light", "dark"] as const) {
       await setTheme(page, theme);
       await page.goto("/contact");
       await page.waitForLoadState("networkidle");
+      // Disable browser-native HTML5 constraint validation so our tests
+      // exercise the Zod schema instead of the built-in "Please fill out
+      // this field" tooltip on the <input type="email"> control.
+      await page.evaluate(() => {
+        document.querySelectorAll("form").forEach((f) => f.setAttribute("novalidate", ""));
+      });
     });
 
     test(`empty submit shows required-field errors, invalid email shows format error, and errors clear per field (${theme})`, async ({
@@ -27,7 +33,7 @@ for (const theme of ["light", "dark"] as const) {
       await expect(messageErr).toBeVisible();
 
       // 2) Invalid email keeps the email error after re-submit.
-      await email.fill("not-an-email");
+      await email.fill("invalid@bad");
       // Fixing email input should clear its inline error immediately
       // (handleChange resets errors[name] on edit).
       await expect(emailErr).toHaveCount(0);
