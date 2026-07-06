@@ -18,31 +18,35 @@ jobs:
       - run: bunx vitest run
 
   playwright:
-    name: Playwright + axe (a11y & visual)
+    name: Playwright + axe (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
-      - name: Install Playwright browsers
-        run: bunx playwright install --with-deps chromium
-      - name: Run Playwright suite (visual + focus + axe)
-        run: bunx playwright test
+      - name: Install Playwright browser (${{ matrix.browser }})
+        run: bunx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run Playwright suite (${{ matrix.browser }})
+        run: bunx playwright test --project=${{ matrix.browser }}
         env:
           CI: "1"
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report
           retention-days: 14
-      - name: Upload Playwright test-results (failure screenshots, traces, diffs)
+      - name: Upload Playwright failure artifacts (trace.zip, video, screenshots, diffs)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-test-results
+          name: playwright-test-results-${{ matrix.browser }}
           path: test-results
           retention-days: 14
