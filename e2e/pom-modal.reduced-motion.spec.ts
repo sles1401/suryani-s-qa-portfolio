@@ -58,6 +58,15 @@ for (const theme of ["light", "dark"] as const) {
       await page.keyboard.press("Escape");
       await expect(dialog).toBeHidden();
       await expect(trigger).toBeFocused();
+
+      // Stronger assertion: the exact trigger element (not just any element
+      // matching the accessible name) must be the active element.
+      const triggerHandle = await trigger.elementHandle();
+      const isExactTrigger = await page.evaluate(
+        (el) => el === document.activeElement,
+        triggerHandle
+      );
+      expect(isExactTrigger).toBe(true);
     });
   });
 }
