@@ -13,6 +13,7 @@ const VISUAL_ONLY_CHROMIUM = [
   /pages\.visual\.reduced-motion\.spec\.ts/,
   /pages\.visual\.mobile-reduced-motion\.spec\.ts/,
   /pom-modal\.visual\.mobile-reduced-motion\.spec\.ts/,
+  /pom-modal\.visual\.tablet-desktop-reduced-motion\.spec\.ts/,
   /evidence-hub\.visual\.spec\.ts/,
   /evidence-hub\.responsive\.spec\.ts/,
   /evidence-hub\.states\.visual\.spec\.ts/,
