@@ -32,13 +32,13 @@ for (const theme of ["light", "dark"] as const) {
       const labelledBy = await dialog.getAttribute("aria-labelledby");
       expect(labelledBy, "dialog must have aria-labelledby").toBeTruthy();
       const labelText = await page
-        .locator(`#${labelledBy}`)
+        .locator(`[id="${labelledBy}"]`)
         .innerText();
       expect(labelText.trim().length).toBeGreaterThan(0);
 
       const describedBy = await dialog.getAttribute("aria-describedby");
       if (describedBy) {
-        const descText = await page.locator(`#${describedBy}`).innerText();
+        const descText = await page.locator(`[id="${describedBy}"]`).innerText();
         expect(descText.trim().length).toBeGreaterThan(0);
       }
 
