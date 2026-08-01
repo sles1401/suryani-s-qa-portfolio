@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -199,6 +199,8 @@ const Portfolio = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const pomTriggerRef = useRef<HTMLButtonElement>(null);
+  const pomScrollYRef = useRef(0);
   const [pomOpen, setPomOpen] = useState(false);
 
   const contactSchema = z.object({
@@ -435,9 +437,25 @@ const Portfolio = () => {
                 <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
                   {t("Struktur Framework (POM)", "Framework Structure (POM)")}
                 </p>
-                <Dialog open={pomOpen} onOpenChange={setPomOpen}>
+                <Dialog
+                  open={pomOpen}
+                  onOpenChange={(open) => {
+                    // Remember the reader's scroll position while the modal's
+                    // scroll-lock is active, and restore it exactly on close.
+                    if (open) {
+                      pomScrollYRef.current = window.scrollY;
+                    } else {
+                      const y = pomScrollYRef.current;
+                      requestAnimationFrame(() =>
+                        window.scrollTo({ top: y, behavior: "auto" })
+                      );
+                    }
+                    setPomOpen(open);
+                  }}
+                >
                   <DialogTrigger asChild>
                     <button
+                      ref={pomTriggerRef}
                       type="button"
                       aria-label={t(
                         "Perbesar cuplikan struktur Page Object Model",
@@ -453,7 +471,16 @@ const Portfolio = () => {
                       </span>
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl" aria-modal="true">
+                  <DialogContent
+                    className="max-w-2xl"
+                    aria-modal="true"
+                    onCloseAutoFocus={(event) => {
+                      // Return focus to the trigger without scrolling the page,
+                      // so the original scroll position is preserved.
+                      event.preventDefault();
+                      pomTriggerRef.current?.focus({ preventScroll: true });
+                    }}
+                  >
                     <DialogHeader>
                       <DialogTitle className="font-display">
                         {t(

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { gotoPortfolio, setTheme } from "./helpers";
+import { enableReducedMotion, gotoPortfolio, setTheme } from "./helpers";
 
 // Same keyboard-a11y contract as pom-modal.themes.spec.ts, but with
 // prefers-reduced-motion forced on. Radix animates the dialog on mount;
@@ -11,6 +11,7 @@ for (const theme of ["light", "dark"] as const) {
 
     test.beforeEach(async ({ page }) => {
       await setTheme(page, theme);
+      await enableReducedMotion(page);
       await gotoPortfolio(page);
     });
 

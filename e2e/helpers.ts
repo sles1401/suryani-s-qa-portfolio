@@ -15,3 +15,11 @@ export const gotoPortfolio = async (page: Page) => {
   await page.locator("#qa-deliverables").scrollIntoViewIfNeeded();
   await page.waitForTimeout(300); // settle animations
 };
+/**
+ * Force prefers-reduced-motion at the page level. The `reducedMotion` test
+ * fixture alone is not always honoured by the launched browser build, so
+ * specs that assert on reduced motion emulate it explicitly.
+ */
+export const enableReducedMotion = async (page: Page) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+};
