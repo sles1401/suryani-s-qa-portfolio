@@ -20,6 +20,12 @@ const VISUAL_ONLY_CHROMIUM = [
   /evidence-hub\.states\.visual\.spec\.ts/,
 ];
 
+// Optional per-engine executable overrides. Unset in CI (Playwright uses the
+// browsers installed by `playwright install`), but lets constrained
+// environments point at a locally available build of each engine.
+const execOverride = (path?: string) =>
+  path ? { launchOptions: { executablePath: path } } : {};
+
 export default defineConfig({
   testDir: "./e2e",
   timeout: 30_000,
@@ -40,19 +46,23 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
-          ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
-          : undefined,
+        ...execOverride(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE),
       },
     },
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: {
+        ...devices["Desktop Firefox"],
+        ...execOverride(process.env.PLAYWRIGHT_FIREFOX_EXECUTABLE),
+      },
       testIgnore: VISUAL_ONLY_CHROMIUM,
     },
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: {
+        ...devices["Desktop Safari"],
+        ...execOverride(process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE),
+      },
       testIgnore: VISUAL_ONLY_CHROMIUM,
     },
   ],

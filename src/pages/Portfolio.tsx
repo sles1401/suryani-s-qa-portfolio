@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -438,6 +438,7 @@ const Portfolio = () => {
                 <Dialog open={pomOpen} onOpenChange={setPomOpen}>
                   <DialogTrigger asChild>
                     <button
+                      ref={pomTriggerRef}
                       type="button"
                       aria-label={t(
                         "Perbesar cuplikan struktur Page Object Model",
@@ -453,7 +454,16 @@ const Portfolio = () => {
                       </span>
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl" aria-modal="true">
+                  <DialogContent
+                    className="max-w-2xl"
+                    aria-modal="true"
+                    onCloseAutoFocus={(event) => {
+                      // Return focus to the trigger without scrolling the page,
+                      // so the original scroll position is preserved.
+                      event.preventDefault();
+                      pomTriggerRef.current?.focus({ preventScroll: true });
+                    }}
+                  >
                     <DialogHeader>
                       <DialogTitle className="font-display">
                         {t(

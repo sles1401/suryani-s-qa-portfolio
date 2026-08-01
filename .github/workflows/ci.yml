@@ -50,3 +50,38 @@ jobs:
           name: playwright-test-results-${{ matrix.browser }}
           path: test-results
           retention-days: 14
+
+  modal-cross-browser:
+    name: Portfolio modal suite (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      # Firefox/WebKit binaries are not preinstalled on the runner image.
+      - name: Install Playwright browser (${{ matrix.browser }})
+        run: bunx playwright install --with-deps ${{ matrix.browser }}
+      - name: Run POM modal specs (${{ matrix.browser }})
+        run: bunx playwright test --project=${{ matrix.browser }} e2e/pom-modal.*.spec.ts
+        env:
+          CI: "1"
+      - name: Upload modal report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: modal-report-${{ matrix.browser }}
+          path: playwright-report
+          retention-days: 14
+      - name: Upload modal failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: modal-test-results-${{ matrix.browser }}
+          path: test-results
+          retention-days: 14
