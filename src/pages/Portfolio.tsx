@@ -453,7 +453,7 @@ const Portfolio = () => {
                       </span>
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-2xl">
+                  <DialogContent className="max-w-2xl" aria-modal="true">
                     <DialogHeader>
                       <DialogTitle className="font-display">
                         {t(
