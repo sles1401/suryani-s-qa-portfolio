@@ -41,7 +41,7 @@ for (const theme of ["light", "dark"] as const) {
 
         // Exactly one dialog, correct semantics, every cycle.
         await expect(page.getByRole("dialog")).toHaveCount(1);
-        expect(await page.locator('[aria-modal="true"]').count()).toBe(1);
+        await expect(dialog).toHaveAttribute("aria-modal", "true");
         expect(await dialog.getAttribute("aria-labelledby")).toBeTruthy();
 
         // Focus trap still holds on cycle i.
@@ -73,7 +73,7 @@ for (const theme of ["light", "dark"] as const) {
         expect(isExact, `focus not returned on cycle ${i}`).toBe(true);
 
         // No lingering ARIA or inert artifacts.
-        expect(await page.locator('[aria-modal="true"]').count()).toBe(0);
+        await expect(page.locator('[aria-modal="true"]')).toHaveCount(0);
         expect(
           await page.locator('main[aria-hidden="true"], main[inert]').count()
         ).toBe(0);
