@@ -199,6 +199,7 @@ const Portfolio = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const pomTriggerRef = useRef<HTMLButtonElement>(null);
   const [pomOpen, setPomOpen] = useState(false);
 
   const contactSchema = z.object({
