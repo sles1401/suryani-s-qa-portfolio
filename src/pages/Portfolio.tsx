@@ -200,6 +200,7 @@ const Portfolio = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
   const pomTriggerRef = useRef<HTMLButtonElement>(null);
+  const pomScrollYRef = useRef(0);
   const [pomOpen, setPomOpen] = useState(false);
 
   const contactSchema = z.object({
@@ -436,7 +437,22 @@ const Portfolio = () => {
                 <p className="text-[11px] uppercase tracking-wider text-primary mb-2 font-semibold">
                   {t("Struktur Framework (POM)", "Framework Structure (POM)")}
                 </p>
-                <Dialog open={pomOpen} onOpenChange={setPomOpen}>
+                <Dialog
+                  open={pomOpen}
+                  onOpenChange={(open) => {
+                    // Remember the reader's scroll position while the modal's
+                    // scroll-lock is active, and restore it exactly on close.
+                    if (open) {
+                      pomScrollYRef.current = window.scrollY;
+                    } else {
+                      const y = pomScrollYRef.current;
+                      requestAnimationFrame(() =>
+                        window.scrollTo({ top: y, behavior: "auto" })
+                      );
+                    }
+                    setPomOpen(open);
+                  }}
+                >
                   <DialogTrigger asChild>
                     <button
                       ref={pomTriggerRef}
