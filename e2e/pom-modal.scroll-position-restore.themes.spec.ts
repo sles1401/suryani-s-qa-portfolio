@@ -35,8 +35,16 @@ for (const theme of ["light", "dark"] as const) {
           name: /Expand Page Object Model structure snippet/i,
         });
         await trigger.scrollIntoViewIfNeeded();
-        await page.evaluate(() => window.scrollBy(0, 120));
-        await page.waitForTimeout(150);
+        // The site intentionally uses smooth scrolling. Disable it only for
+        // fixture positioning so an in-flight smooth scroll cannot be mistaken
+        // for a modal-induced offset (the original 33px false signal).
+        await page.evaluate(() => {
+          const root = document.documentElement;
+          const previous = root.style.scrollBehavior;
+          root.style.scrollBehavior = "auto";
+          window.scrollTo(0, Math.min(window.scrollY + 120, root.scrollHeight - innerHeight - 150));
+          root.style.scrollBehavior = previous;
+        });
 
         // Keyboard focus itself may scroll a partly visible trigger. Establish
         // the contract at the exact offset from which activation occurs.
@@ -114,9 +122,16 @@ for (const theme of ["light", "dark"] as const) {
         expect(box!.y).toBeGreaterThan(-1);
         expect(box!.y).toBeLessThan(vh);
 
-        // Scrolling still works afterwards.
-        await page.evaluate(() => window.scrollBy(0, 100));
-        expect(await page.evaluate(() => Math.round(window.scrollY))).toBeGreaterThan(
+        // Scrolling still works afterwards. Move upward because this fixture is
+        // intentionally close to the document's maximum scroll position.
+        await page.evaluate(() => {
+          const root = document.documentElement;
+          const previous = root.style.scrollBehavior;
+          root.style.scrollBehavior = "auto";
+          window.scrollTo(0, window.scrollY - 100);
+          root.style.scrollBehavior = previous;
+        });
+        expect(await page.evaluate(() => Math.round(window.scrollY))).toBeLessThan(
           after.scrollY
         );
       });
