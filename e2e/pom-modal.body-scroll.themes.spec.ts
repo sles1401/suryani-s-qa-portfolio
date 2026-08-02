@@ -69,7 +69,10 @@ for (const theme of ["light", "dark"] as const) {
       expect(afterClose.computedPointerEvents).not.toBe("none");
 
       // Prove scroll actually works: scroll the window and confirm scrollY moves.
-      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.evaluate(() => {
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, 0);
+      });
       const startY = await page.evaluate(() => window.scrollY);
       await page.evaluate(() => window.scrollBy(0, 400));
       const endY = await page.evaluate(() => window.scrollY);
