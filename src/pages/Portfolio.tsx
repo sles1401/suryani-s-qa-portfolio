@@ -200,6 +200,7 @@ const Portfolio = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
   const pomTriggerRef = useRef<HTMLButtonElement>(null);
+  const pomDialogRef = useRef<HTMLDivElement>(null);
   const pomScrollYRef = useRef(0);
   const [pomOpen, setPomOpen] = useState(false);
 
@@ -472,8 +473,18 @@ const Portfolio = () => {
                     </button>
                   </DialogTrigger>
                   <DialogContent
+                     ref={pomDialogRef}
                     className="max-w-2xl"
                     aria-modal="true"
+                     tabIndex={-1}
+                     onOpenAutoFocus={(event) => {
+                       // Radix's default autofocus can scroll a partly visible
+                       // trigger by one line while the body lock is mounting.
+                       // Focus the dialog without scrolling instead so opening
+                       // the modal never changes the saved page offset.
+                       event.preventDefault();
+                       pomDialogRef.current?.focus({ preventScroll: true });
+                     }}
                     onCloseAutoFocus={(event) => {
                       // Return focus to the trigger without scrolling the page,
                       // so the original scroll position is preserved.
