@@ -200,8 +200,21 @@ const Portfolio = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
   const pomTriggerRef = useRef<HTMLButtonElement>(null);
+  const pomDialogRef = useRef<HTMLDivElement>(null);
   const pomScrollYRef = useRef(0);
   const [pomOpen, setPomOpen] = useState(false);
+
+  useEffect(() => {
+    if (!pomOpen) return;
+
+    // Radix mounts its body scroll lock after the open state changes. Pin the
+    // captured offset once that lock is in place so browser scroll anchoring
+    // cannot nudge the document while the portal/autofocus lifecycle settles.
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo({ top: pomScrollYRef.current, behavior: "auto" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [pomOpen]);
 
   const contactSchema = z.object({
     name: z
@@ -472,8 +485,22 @@ const Portfolio = () => {
                     </button>
                   </DialogTrigger>
                   <DialogContent
+                     ref={pomDialogRef}
                     className="max-w-2xl"
                     aria-modal="true"
+                     tabIndex={-1}
+                     onOpenAutoFocus={(event) => {
+                       // Radix's default autofocus can scroll a partly visible
+                       // trigger by one line while the body lock is mounting.
+                       // Focus the dialog without scrolling instead so opening
+                       // the modal never changes the saved page offset.
+                       event.preventDefault();
+                       pomDialogRef.current?.focus({ preventScroll: true });
+                       window.scrollTo({
+                         top: pomScrollYRef.current,
+                         behavior: "auto",
+                       });
+                     }}
                     onCloseAutoFocus={(event) => {
                       // Return focus to the trigger without scrolling the page,
                       // so the original scroll position is preserved.
