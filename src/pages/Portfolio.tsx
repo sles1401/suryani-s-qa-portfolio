@@ -204,6 +204,18 @@ const Portfolio = () => {
   const pomScrollYRef = useRef(0);
   const [pomOpen, setPomOpen] = useState(false);
 
+  useEffect(() => {
+    if (!pomOpen) return;
+
+    // Radix mounts its body scroll lock after the open state changes. Pin the
+    // captured offset once that lock is in place so browser scroll anchoring
+    // cannot nudge the document while the portal/autofocus lifecycle settles.
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo({ top: pomScrollYRef.current, behavior: "auto" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [pomOpen]);
+
   const contactSchema = z.object({
     name: z
       .string()
@@ -484,6 +496,10 @@ const Portfolio = () => {
                        // the modal never changes the saved page offset.
                        event.preventDefault();
                        pomDialogRef.current?.focus({ preventScroll: true });
+                       window.scrollTo({
+                         top: pomScrollYRef.current,
+                         behavior: "auto",
+                       });
                      }}
                     onCloseAutoFocus={(event) => {
                       // Return focus to the trigger without scrolling the page,
