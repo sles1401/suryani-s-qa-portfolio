@@ -40,7 +40,10 @@ for (const theme of ["light", "dark"] as const) {
       await page.addStyleTag({
         content: `html, body { scroll-behavior: auto !important; }`,
       });
-      await page.evaluate(() => window.scrollTo(0, 600));
+      // Bring the trigger into view first so the later click cannot itself
+      // scroll the page (which would pollute the scroll-stability assertions).
+      const trigger = page.getByRole("button", { name: TRIGGER });
+      await trigger.scrollIntoViewIfNeeded();
       await page.waitForTimeout(300);
 
       const read = () =>
@@ -59,7 +62,7 @@ for (const theme of ["light", "dark"] as const) {
       });
       const before = await read();
 
-      await page.getByRole("button", { name: TRIGGER }).click();
+      await trigger.click();
       await expect(page.getByRole("dialog")).toBeVisible();
       await page.waitForTimeout(400);
       const during = await read();
