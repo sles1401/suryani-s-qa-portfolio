@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { setTheme } from "./helpers";
+import { setTheme, hideVolatileUI } from "./helpers";
 
 const PAGES = [
   { path: "/", name: "home" },
@@ -26,6 +26,7 @@ for (const theme of ["light", "dark"] as const) {
         await setTheme(page, theme);
         await page.goto(p.path);
         await page.waitForLoadState("networkidle");
+        await hideVolatileUI(page);
         await page.waitForTimeout(400);
 
         // Page-level guard: viewport must not scroll horizontally. Individual

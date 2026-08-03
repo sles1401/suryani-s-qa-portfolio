@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
-import { gotoPortfolio, setTheme } from "./helpers";
+import { gotoPortfolio, setTheme, hideVolatileUI } from "./helpers";
 
 type CtaSpec = {
   key: string;
@@ -43,6 +43,7 @@ for (const theme of ["light", "dark"] as const) {
     test.beforeEach(async ({ page }) => {
       await setTheme(page, theme);
       await gotoPortfolio(page);
+      await hideVolatileUI(page);
     });
 
     for (const cta of CTAS) {

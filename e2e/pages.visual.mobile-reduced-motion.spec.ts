@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { setTheme } from "./helpers";
+import { setTheme, hideVolatileUI } from "./helpers";
 
 // Mobile (375px, iPhone-class width) full-page snapshots with
 // prefers-reduced-motion enabled, in both themes. Guards against
@@ -30,6 +30,7 @@ for (const theme of ["light", "dark"] as const) {
         await setTheme(page, theme);
         await page.goto(p.path);
         await page.waitForLoadState("networkidle");
+        await hideVolatileUI(page);
         await page.waitForTimeout(200);
 
         const overflow = await page.evaluate(
