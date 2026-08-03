@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Download, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
+import KeyMetrics from "@/components/home/KeyMetrics";
+import FeaturedProjects from "@/components/home/FeaturedProjects";
+import ToolsGrid from "@/components/home/ToolsGrid";
+import ExperienceHighlights from "@/components/home/ExperienceHighlights";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -95,6 +99,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <KeyMetrics />
+      <FeaturedProjects />
+      <ToolsGrid />
+      <ExperienceHighlights />
 
       {/* Brief intro section */}
       <section className="py-20 bg-card">

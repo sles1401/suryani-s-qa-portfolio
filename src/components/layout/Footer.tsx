@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Linkedin } from "lucide-react";
+import { Mail, Linkedin, Github } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -40,6 +40,15 @@ const Footer = () => {
               aria-label="LinkedIn"
             >
               <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="https://github.com/sles1401"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="h-4 w-4" />
             </a>
           </div>
 
