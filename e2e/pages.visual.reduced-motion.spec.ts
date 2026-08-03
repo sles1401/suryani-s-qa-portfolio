@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { setTheme } from "./helpers";
+import { setTheme, hideVolatileUI } from "./helpers";
 
 // Snapshot every page at tablet + desktop breakpoints with prefers-reduced-motion
 // forced on. Catches animation-driven layout shifts (framer-motion fade/slide
@@ -33,6 +33,7 @@ for (const bp of BREAKPOINTS) {
           await setTheme(page, theme);
           await page.goto(p.path);
           await page.waitForLoadState("networkidle");
+        await hideVolatileUI(page);
           // With reduced motion, animations should be near-instant; small
           // settle window guards against layout-affecting mounts.
           await page.waitForTimeout(200);
