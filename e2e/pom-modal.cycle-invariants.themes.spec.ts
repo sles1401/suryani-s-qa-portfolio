@@ -19,6 +19,12 @@ for (const theme of ["light", "dark"] as const) {
       const trigger = page.getByRole("button", {
         name: /Expand Page Object Model structure snippet/i,
       });
+      // While the dialog is open Radix hides the rest of the page from the
+      // a11y tree, so role queries can't reach the trigger. Use a DOM
+      // locator for attribute assertions made during the open state.
+      const triggerDom = page.locator(
+        'button[aria-label="Expand Page Object Model structure snippet"]'
+      );
       await trigger.scrollIntoViewIfNeeded();
       await page.evaluate(() => {
         const root = document.documentElement;
@@ -46,11 +52,11 @@ for (const theme of ["light", "dark"] as const) {
 
         // Trigger relationship attributes stay stable cycle after cycle.
         expect(
-          await trigger.getAttribute("aria-expanded"),
+          await triggerDom.getAttribute("aria-expanded"),
           `aria-expanded wrong on cycle ${i}`
         ).toBe("true");
         expect(
-          await trigger.getAttribute("aria-controls"),
+          await triggerDom.getAttribute("aria-controls"),
           `aria-controls changed on cycle ${i}`
         ).toBe(controls);
         if (controls) {
