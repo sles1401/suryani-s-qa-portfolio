@@ -23,3 +23,14 @@ export const gotoPortfolio = async (page: Page) => {
 export const enableReducedMotion = async (page: Page) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
 };
+
+/**
+ * Hide inherently volatile UI (the ticking header clock, the animated custom
+ * cursor) so visual snapshots stay deterministic. Never use this in a11y
+ * specs — those must see the real DOM.
+ */
+export const hideVolatileUI = async (page: Page) => {
+  await page.addStyleTag({
+    content: `[data-testid="live-clock"], [data-testid="custom-cursor"] { visibility: hidden !important; }`,
+  });
+};
