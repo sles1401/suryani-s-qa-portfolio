@@ -71,7 +71,7 @@ for (const theme of ["light", "dark"] as const) {
       expect(onTop).toBe(true);
 
       // Clicks still reach real controls: activating the theme toggle works.
-      const themeToggle = page.getByRole("button", { name: /theme/i }).first();
+      const themeToggle = page.locator("header button[aria-label]").filter({ hasNot: page.locator("svg.lucide-menu") }).first();
       await themeToggle.click();
       await expect
         .poll(() =>
