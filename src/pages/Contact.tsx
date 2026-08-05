@@ -191,7 +191,7 @@ const Contact = () => {
                       <div
                         role="alert"
                         data-testid="form-error"
-                        className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+                        className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-text"
                       >
                         <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                         <span>{formError}</span>
@@ -213,7 +213,7 @@ const Contact = () => {
                         className={`bg-background ${errors.name ? "border-destructive" : ""}`}
                       />
                       {errors.name && (
-                        <p id="name-error" className="text-sm text-destructive flex items-center gap-1">
+                        <p id="name-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.name}
                         </p>
@@ -236,7 +236,7 @@ const Contact = () => {
                         className={`bg-background ${errors.email ? "border-destructive" : ""}`}
                       />
                       {errors.email && (
-                        <p id="email-error" className="text-sm text-destructive flex items-center gap-1">
+                        <p id="email-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.email}
                         </p>
@@ -274,7 +274,7 @@ const Contact = () => {
                         className={`bg-background resize-none ${errors.message ? "border-destructive" : ""}`}
                       />
                       {errors.message && (
-                        <p id="message-error" className="text-sm text-destructive flex items-center gap-1">
+                        <p id="message-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.message}
                         </p>

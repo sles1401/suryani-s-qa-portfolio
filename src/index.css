@@ -38,6 +38,8 @@
     /* Destructive */
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
+    /* AA-compliant destructive text on light surfaces */
+    --destructive-text: 0 74% 34%;
     
     /* Border and input */
     --border: 20 15% 90%;
@@ -89,6 +91,8 @@
     
     --destructive: 0 62% 40%;
     --destructive-foreground: 0 0% 100%;
+    /* AA-compliant destructive text on dark surfaces */
+    --destructive-text: 0 90% 80%;
     
     --border: 222 20% 18%;
     --input: 222 20% 18%;
