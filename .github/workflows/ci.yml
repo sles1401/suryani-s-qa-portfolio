@@ -6,6 +6,33 @@ on:
   pull_request:
 
 jobs:
+  performance:
+    name: Performance budgets (Lighthouse + bundle size)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Production build
+        run: bun run build
+      - name: Bundle size budget
+        run: bun run perf:bundle
+      - name: Lighthouse (light theme, all pages)
+        run: bunx @lhci/cli@0.14.x autorun --config=lighthouserc.json
+      - name: Lighthouse (dark theme, all pages)
+        run: bunx @lhci/cli@0.14.x autorun --config=lighthouserc.dark.json
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: |
+            .lighthouseci
+            .lighthouseci-dark
+          retention-days: 14
+
   vitest:
     name: Vitest (unit)
     runs-on: ubuntu-latest
