@@ -12,9 +12,9 @@ import path from "node:path";
 const DIST = path.resolve("dist");
 
 const BUDGETS_KB = {
-  totalJs: 600,
-  totalCss: 120,
-  largestJsChunk: 480,
+  totalJs: 220,
+  totalCss: 20,
+  largestJsChunk: 200,
 };
 
 const walk = (dir) =>
