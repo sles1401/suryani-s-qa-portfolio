@@ -39,9 +39,9 @@ for (const theme of ["light", "dark"] as const) {
     }) => {
       // Trigger empty-submit → required errors render.
       await page.getByRole("button", { name: /^Send Message$/i }).click();
-      await expect(page.getByText(/^Name is required$/i)).toBeVisible();
+      await expect(page.getByText(/Name must be at least 2 characters/i)).toBeVisible();
       await expect(page.getByText(/^Invalid email address$/i)).toBeVisible();
-      await expect(page.getByText(/^Message is required$/i)).toBeVisible();
+      await expect(page.getByText(/Message must be at least 10 characters/i)).toBeVisible();
 
       // Also exercise a format error to cover the "typed but invalid" path.
       await page.getByLabel(/Email Address/i).fill("not-an-email");

@@ -15,9 +15,9 @@ for (const theme of ["light", "dark"] as const) {
       await page.getByRole("button", { name: /^Send Message$/i }).click();
 
       // Zod-driven inline errors under Name / Email / Message.
-      await expect(page.getByText(/Name is required/i)).toBeVisible();
+      await expect(page.getByText(/Name must be at least 2 characters/i)).toBeVisible();
       await expect(page.getByText(/Invalid email address/i)).toBeVisible();
-      await expect(page.getByText(/Message is required/i)).toBeVisible();
+      await expect(page.getByText(/Message must be at least 10 characters/i)).toBeVisible();
 
       // No success state yet.
       await expect(page.getByRole("heading", { name: /Message Sent!/i })).toHaveCount(0);

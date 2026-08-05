@@ -24,7 +24,9 @@ for (const theme of ["light", "dark"] as const) {
 
       // Click the title, then any non-interactive text inside the dialog,
       // then the dialog surface itself. None of these should close it.
-      const title = dialog.locator(`#${await dialog.getAttribute("aria-labelledby")}`);
+      const labelledBy = await dialog.getAttribute("aria-labelledby");
+      // Radix ids contain colons, which are invalid in raw CSS selectors.
+      const title = dialog.locator(`[id="${labelledBy}"]`);
       await title.click();
       await expect(dialog).toBeVisible();
 

@@ -8,14 +8,19 @@ import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { z } from "zod";
+import {
+  validateContact,
+  submitContactMessage,
+  type FieldErrors,
+} from "@/lib/contact-validation";
 
 const Contact = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,35 +28,36 @@ const Contact = () => {
     message: ""
   });
 
-  const contactSchema = z.object({
-    name: z.string().trim().min(1, t("Nama wajib diisi", "Name is required")).max(100, t("Nama terlalu panjang", "Name is too long")),
-    email: z.string().trim().email(t("Alamat email tidak valid", "Invalid email address")).max(255, t("Email terlalu panjang", "Email is too long")),
-    subject: z.string().max(200, t("Subjek terlalu panjang", "Subject is too long")).optional(),
-    message: z.string().trim().min(1, t("Pesan wajib diisi", "Message is required")).max(2000, t("Pesan terlalu panjang", "Message is too long"))
-  });
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setFormError("");
 
-    const result = contactSchema.safeParse(formData);
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          fieldErrors[err.path[0] as string] = err.message;
-        }
-      });
-      setErrors(fieldErrors);
+    // 1. Client-side validation
+    const clientCheck = validateContact(formData, t);
+    if (clientCheck.ok === false) {
+      setErrors(clientCheck.fieldErrors);
+      setFormError(
+        t(
+          "Mohon perbaiki kolom yang ditandai di bawah.",
+          "Please fix the highlighted fields below."
+        )
+      );
       return;
     }
 
     setIsSubmitting(true);
-    
-    // Simulate form submission - will be replaced with actual email sending
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
+    // 2. Submission-layer validation (independent of form state) + send
+    const result = await submitContactMessage(formData, t);
     setIsSubmitting(false);
+
+    if (result.status === "invalid") {
+      setErrors(result.fieldErrors);
+      setFormError(result.formError);
+      return;
+    }
+
     setIsSubmitted(true);
     toast({
       title: t("Pesan terkirim!", "Message sent!"),
@@ -71,8 +77,9 @@ const Contact = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (formError) setFormError("");
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors(prev => ({ ...prev, [name]: undefined }));
     }
   };
 
@@ -179,7 +186,17 @@ const Contact = () => {
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                    {formError && (
+                      <div
+                        role="alert"
+                        data-testid="form-error"
+                        className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-text"
+                      >
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                        <span>{formError}</span>
+                      </div>
+                    )}
                     <div className="space-y-2">
                       <Label htmlFor="name">
                         {t("Nama Lengkap", "Full Name")} <span className="text-primary">*</span>
@@ -191,10 +208,12 @@ const Contact = () => {
                         placeholder={t("Nama Anda", "Your name")}
                         value={formData.name}
                         onChange={handleChange}
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? "name-error" : undefined}
                         className={`bg-background ${errors.name ? "border-destructive" : ""}`}
                       />
                       {errors.name && (
-                        <p className="text-sm text-destructive flex items-center gap-1">
+                        <p id="name-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.name}
                         </p>
@@ -212,10 +231,12 @@ const Contact = () => {
                         placeholder="email@example.com"
                         value={formData.email}
                         onChange={handleChange}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? "email-error" : undefined}
                         className={`bg-background ${errors.email ? "border-destructive" : ""}`}
                       />
                       {errors.email && (
-                        <p className="text-sm text-destructive flex items-center gap-1">
+                        <p id="email-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.email}
                         </p>
@@ -248,10 +269,12 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         rows={5}
+                        aria-invalid={!!errors.message}
+                        aria-describedby={errors.message ? "message-error" : undefined}
                         className={`bg-background resize-none ${errors.message ? "border-destructive" : ""}`}
                       />
                       {errors.message && (
-                        <p className="text-sm text-destructive flex items-center gap-1">
+                        <p id="message-error" className="text-sm text-destructive-text flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           {errors.message}
                         </p>
