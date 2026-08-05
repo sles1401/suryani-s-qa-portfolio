@@ -70,7 +70,7 @@ export const submitContactMessage = async (
   t: Translate
 ): Promise<SubmitResult> => {
   const verdict = validateContact(values, t);
-  if (!verdict.ok) {
+  if (verdict.ok === false) {
     return {
       status: "invalid",
       fieldErrors: verdict.fieldErrors,
