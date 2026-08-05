@@ -14,12 +14,20 @@ for (const theme of ["light", "dark"] as const) {
 
       const skip = page.getByTestId("skip-link");
 
-      // Visually hidden until focused.
-      await expect(skip).not.toBeVisible();
+      // Visually hidden until focused: sr-only keeps it in the a11y tree but
+      // clipped to a 1px box, so assert on geometry rather than visibility.
+      const hiddenBox = await skip.boundingBox();
+      expect(hiddenBox!.width).toBeLessThanOrEqual(2);
+      expect(hiddenBox!.height).toBeLessThanOrEqual(2);
 
       await page.keyboard.press("Tab");
       await expect(skip).toBeFocused();
       await expect(skip).toBeVisible();
+
+      // On focus it becomes a real, readable target.
+      const shownBox = await skip.boundingBox();
+      expect(shownBox!.width).toBeGreaterThan(80);
+      expect(shownBox!.height).toBeGreaterThan(20);
 
       // Has a real focus indicator (outline or ring box-shadow) in this theme.
       const indicator = await skip.evaluate((el) => {
