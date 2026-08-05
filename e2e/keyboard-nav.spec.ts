@@ -32,9 +32,12 @@ for (const theme of ["light", "dark"] as const) {
       await page.goto("/");
       await page.waitForLoadState("networkidle");
 
-      // Focus the document body then Tab into the header. The logo link
-      // is the first focusable element inside <nav>.
+      // Focus the document body then Tab into the header. The first tab stop
+      // is the "Skip to main content" link, so the logo (first focusable
+      // element inside <nav>) is reached on the second Tab.
       await page.evaluate(() => (document.activeElement as HTMLElement)?.blur());
+      await page.keyboard.press("Tab");
+      await expect(page.getByTestId("skip-link")).toBeFocused();
       await page.keyboard.press("Tab");
 
       const nav = page.getByRole("navigation");
