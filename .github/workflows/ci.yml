@@ -85,3 +85,45 @@ jobs:
           name: modal-test-results-${{ matrix.browser }}
           path: test-results
           retention-days: 14
+
+  stability-cross-browser:
+    name: Stability / cursor / clock suite (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Install Playwright browser (${{ matrix.browser }})
+        run: bunx playwright install --with-deps ${{ matrix.browser }}
+      # Pixel-snapshot specs stay Chromium-only (font/AA differences across
+      # engines); everything below is functional/DOM/metric based.
+      - name: Run modal stability + cursor a11y + LiveClock + social focus specs
+        run: |
+          bunx playwright test --project=${{ matrix.browser }} \
+            e2e/pom-modal.cls-stability.themes.spec.ts \
+            e2e/pom-modal.cycle-invariants.themes.spec.ts \
+            e2e/custom-cursor.a11y.spec.ts \
+            e2e/live-clock.spec.ts \
+            e2e/social-links.focus.spec.ts
+        env:
+          CI: "1"
+      - name: Upload stability report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stability-report-${{ matrix.browser }}
+          path: playwright-report
+          retention-days: 14
+      - name: Upload stability failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stability-test-results-${{ matrix.browser }}
+          path: test-results
+          retention-days: 14
