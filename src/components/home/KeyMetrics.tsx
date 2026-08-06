@@ -44,7 +44,7 @@ const KeyMetrics = () => {
   ];
 
   return (
-    <section id="key-metrics" className="py-16 border-y border-border/50 bg-muted/20">
+    <section id="key-metrics" className="py-16 scroll-mt-28 border-y border-border/50 bg-muted/20">
       <div className="container mx-auto px-6 lg:px-8">
         <h2 className="sr-only">{t("Metrik Utama", "Key Metrics")}</h2>
         <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8">

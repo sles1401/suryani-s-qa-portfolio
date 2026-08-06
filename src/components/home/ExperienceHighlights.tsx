@@ -78,7 +78,7 @@ const ExperienceHighlights = () => {
   ];
 
   return (
-    <section id="experience-highlights" className="py-20">
+    <section id="experience-highlights" className="py-20 scroll-mt-28">
       <div className="container mx-auto px-6 lg:px-8">
         <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
           {t("Pengalaman & Sorotan", "Experience & Highlights")}
