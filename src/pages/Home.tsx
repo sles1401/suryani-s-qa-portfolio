@@ -6,6 +6,7 @@ import KeyMetrics from "@/components/home/KeyMetrics";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import ToolsGrid from "@/components/home/ToolsGrid";
 import ExperienceHighlights from "@/components/home/ExperienceHighlights";
+import SectionNav from "@/components/home/SectionNav";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -21,14 +22,28 @@ const Home = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="hero-gradient min-h-[calc(100vh-4rem)] flex items-center">
+      <SectionNav />
+
+      <section id="hero" className="hero-gradient min-h-[calc(100vh-4rem)] flex items-center scroll-mt-28">
         <div className="container mx-auto px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Content */}
             <div className="order-2 lg:order-1 opacity-0 animate-fade-in-up">
-              <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full mb-6">
-                {t("Quality Assurance", "Quality Assurance")}
-              </span>
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full">
+                  {t("Quality Assurance", "Quality Assurance")}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                  <span
+                    aria-hidden="true"
+                    className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500"
+                  />
+                  {t(
+                    "Terbuka untuk peluang kerja — Full-time / Freelance",
+                    "Open for Work — Full-time / Freelance"
+                  )}
+                </span>
+              </div>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 leading-tight neon-glow">
                 Suryani Lestari
               </h1>
