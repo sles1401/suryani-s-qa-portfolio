@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Linkedin, Github } from "lucide-react";
+import { Menu, X, Linkedin, Github, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import LanguageToggle from "@/components/LanguageToggle";
 import ThemeToggle from "@/components/ThemeToggle";
 import LiveClock from "@/components/LiveClock";
@@ -56,26 +61,46 @@ const Header = () => {
           {/* Theme + Language Toggle + Mobile menu button */}
           <div className="flex items-center gap-2 sm:gap-3">
             <LiveClock />
-            <a
-              href="https://www.linkedin.com/in/suryani-lestari"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-            >
-              <Linkedin className="h-4 w-4" />
-            </a>
-            <a
-              href="https://github.com/sles1401"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-            >
-              <Github className="h-4 w-4" />
-            </a>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="https://www.linkedin.com/in/suryani-lestari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                {t("Profil LinkedIn", "LinkedIn profile")}
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="https://github.com/sles1401"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                {t("Repositori GitHub", "GitHub repositories")}
+              </TooltipContent>
+            </Tooltip>
             <ThemeToggle />
             <LanguageToggle />
+            <Button asChild size="sm" className="hidden sm:inline-flex">
+              <Link to="/contact">
+                <Mail className="mr-2 h-4 w-4" />
+                {t("Hubungi Saya", "Hire Me")}
+              </Link>
+            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -106,6 +131,12 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              <Button asChild className="mt-3">
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  <Mail className="mr-2 h-4 w-4" />
+                  {t("Hubungi Saya", "Hire Me")}
+                </Link>
+              </Button>
             </div>
           </div>
         )}
