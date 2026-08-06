@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Mail, Linkedin, Github } from "lucide-react";
+import { Mail, Linkedin, Github, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import FooterContactForm from "@/components/FooterContactForm";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,6 +10,41 @@ const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t border-border/50">
       <div className="container mx-auto px-6 lg:px-8 py-12">
+        {/* Quick contact */}
+        <div className="mb-12 grid gap-10 lg:grid-cols-2">
+          <div className="min-w-0">
+            <h2 className="font-display text-2xl font-semibold text-foreground">
+              {t("Kirim Pesan Cepat", "Send a Quick Message")}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              {t(
+                "Tulis pesan langsung dari halaman ini — tanpa perlu membuka aplikasi email.",
+                "Write a message straight from this page — no email app needed."
+              )}
+            </p>
+            <ul className="mt-6 space-y-3 text-sm">
+              <li className="flex items-center gap-3 min-w-0">
+                <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
+                <a
+                  href="mailto:suryanilestari123@gmail.com"
+                  className="break-all text-foreground hover:text-primary transition-colors"
+                >
+                  suryanilestari123@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <MapPin aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
+                <span className="text-muted-foreground">
+                  {t("Bandung, Indonesia (WIB)", "Bandung, Indonesia (WIB)")}
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="min-w-0">
+            <FooterContactForm />
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
           <div className="text-center md:text-left">
