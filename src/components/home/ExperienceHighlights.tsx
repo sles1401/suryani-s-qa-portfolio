@@ -24,6 +24,16 @@ const ExperienceHighlights = () => {
           "Wrote bug reports with reproduction steps and evidence."
         ),
       ],
+      achievements: [
+        t(
+          "Menemukan bug kritis pada validasi master data sebelum rilis produksi.",
+          "Caught a critical master-data validation bug before the production release."
+        ),
+        t(
+          "Menambah cakupan test case modul hauling dari ~60 menjadi 100+ kasus.",
+          "Grew hauling-module test case coverage from ~60 to 100+ cases."
+        ),
+      ],
     },
     {
       role: t("Pengajar / Mentor Teknologi", "Technology Teacher / Mentor"),
@@ -38,6 +48,12 @@ const ExperienceHighlights = () => {
           "Built practical exercise material and assessments."
         ),
       ],
+      achievements: [
+        t(
+          "25+ siswa menyelesaikan proyek web pertamanya dengan checklist pengujian mandiri.",
+          "25+ students shipped their first web project with a self-testing checklist."
+        ),
+      ],
     },
     {
       role: t("Belajar Mandiri QA & Otomasi", "Self-Directed QA & Automation"),
@@ -50,6 +66,12 @@ const ExperienceHighlights = () => {
         t(
           "Membangun QA Hub pribadi untuk merapikan alur pengujian.",
           "Built a personal QA Hub to streamline testing workflows."
+        ),
+      ],
+      achievements: [
+        t(
+          "Memangkas waktu penyusunan laporan pengujian dengan template siap pakai di QA Hub.",
+          "Cut test-report preparation time using ready-made templates in the QA Hub."
         ),
       ],
     },
@@ -83,6 +105,23 @@ const ExperienceHighlights = () => {
                   </li>
                 ))}
               </ul>
+              {item.achievements && (
+                <div className="mt-4 rounded-md border border-primary/30 bg-accent/40 p-4">
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-primary">
+                    {t("Pencapaian Utama", "Key Achievements")}
+                  </h4>
+                  <ul className="mt-2 space-y-1.5">
+                    {item.achievements.map((a) => (
+                      <li
+                        key={a}
+                        className="text-sm text-foreground/90 leading-relaxed before:mr-2 before:text-primary before:content-['✓']"
+                      >
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ol>
