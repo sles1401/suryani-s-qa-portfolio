@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Lock } from "lucide-react";
+import { ExternalLink, FileText, Github, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import hmsPreview from "@/assets/project-hms.jpg";
@@ -14,7 +14,25 @@ const QA_HUB_REPO_URL = "https://github.com/sles1401";
 const FeaturedProjects = () => {
   const { t } = useLanguage();
 
-  const projects = [
+  interface Project {
+    title: string;
+    image: string;
+    imageAlt: string;
+    tags: string[];
+    method: string;
+    description: string;
+    cta: string;
+    href: string;
+    confidential?: boolean;
+    confidentialLabel?: string;
+    note?: string;
+    internalHref?: boolean;
+    repoHref?: string;
+    repoCta?: string;
+    repoInternalHref?: boolean;
+  }
+
+  const projects: Project[] = [
     {
       title: "HMS Project — Hauling Management System",
       image: hmsPreview,
@@ -158,7 +176,11 @@ const FeaturedProjects = () => {
                   rel={p.internalHref ? undefined : "noopener noreferrer"}
                   aria-label={`${p.cta} — ${p.title}`}
                 >
-                  <ExternalLink className="mr-2 h-4 w-4" />
+                  {p.internalHref ? (
+                    <FileText className="mr-2 h-4 w-4" />
+                  ) : (
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                  )}
                   {p.cta}
                 </a>
               </Button>
@@ -170,7 +192,11 @@ const FeaturedProjects = () => {
                     rel={p.repoInternalHref ? undefined : "noopener noreferrer"}
                     aria-label={`${p.repoCta} — ${p.title}`}
                   >
-                    <Github className="mr-2 h-4 w-4" />
+                    {p.repoInternalHref ? (
+                      <FileText className="mr-2 h-4 w-4" />
+                    ) : (
+                      <Github className="mr-2 h-4 w-4" />
+                    )}
                     {p.repoCta}
                   </a>
                 </Button>
