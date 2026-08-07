@@ -6,6 +6,7 @@ const SECTION_IDS = [
   "hero",
   "key-metrics",
   "featured-projects",
+  "sanitized-evidence",
   "tools-technologies",
   "experience-highlights",
 ];
@@ -18,6 +19,7 @@ const SectionNav = () => {
     hero: t("Profil", "Profile"),
     "key-metrics": t("Metrik", "Metrics"),
     "featured-projects": t("Proyek", "Projects"),
+    "sanitized-evidence": t("Bukti", "Evidence"),
     "tools-technologies": t("Tools", "Tools"),
     "experience-highlights": t("Pengalaman", "Experience"),
   };
