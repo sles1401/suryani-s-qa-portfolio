@@ -59,10 +59,10 @@ const KeyMetrics = () => {
                 <span className="block font-display text-4xl md:text-5xl font-bold text-primary tabular-nums">
                   {m.value}
                 </span>
-                <span className="mt-2 block text-sm font-medium text-foreground">
+                <span className="mt-2 block text-base font-semibold text-foreground">
                   {m.label}
                 </span>
-                <span className="mt-1 block text-xs text-muted-foreground leading-relaxed">
+                <span className="mt-1.5 block text-sm text-foreground/75 leading-relaxed">
                   {m.context}
                 </span>
               </dd>
