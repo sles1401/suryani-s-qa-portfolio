@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import hmsPreview from "@/assets/project-hms.jpg";
@@ -18,6 +18,8 @@ const FeaturedProjects = () => {
     {
       title: "HMS Project — Hauling Management System",
       image: hmsPreview,
+      confidential: true,
+      confidentialLabel: t("Internal Project — NDA", "Internal Project — NDA"),
       imageAlt: t(
         "Pratinjau antarmuka dashboard Hauling Management System",
         "Preview of the Hauling Management System dashboard interface"
@@ -28,11 +30,19 @@ const FeaturedProjects = () => {
         "Methodology: Black Box Testing, Equivalence Partitioning, Boundary Value Analysis, Regression Testing."
       ),
       description: t(
-        "Menguji modul master data dan alur hauling end-to-end: validasi input, konfirmasi flow data antar modul, dan regression test setelah perbaikan. Temuan didokumentasikan agar developer bisa reproduksi dengan cepat.",
-        "Tested master data modules and the end-to-end hauling flow: input validation, cross-module data flow confirmation, and regression testing after fixes. Findings were documented so developers could reproduce them quickly."
+        "Ruang lingkup: modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase. Pengujian: fungsional, batas nilai (tonase & tanggal), negatif, serta regresi setelah perbaikan. Dampak: menemukan bug kritis pada perhitungan ritase dan duplikasi data master sebelum rilis produksi, dengan langkah reproduksi yang bisa langsung dipakai developer.",
+        "Scope: master data modules (units, drivers, locations), hauling transaction forms, and trip reports. Testing: functional, boundary value (tonnage & dates), negative, and regression after fixes. Impact: caught critical bugs in trip calculation and master-data duplication before the production release, with reproduction steps developers could use directly."
       ),
-      cta: t("Lihat Laporan Bug", "View Bug Report"),
-      href: DOCS_REPO_URL,
+      note: t(
+        "Repositori dan data proyek tidak dapat dibagikan karena kerahasiaan klien. Contoh artefak di bawah sudah disamarkan.",
+        "The repository and project data cannot be shared due to client confidentiality. The sample artifacts below are sanitized."
+      ),
+      cta: t("Lihat Sanitized Sample Bug Report", "View Sanitized Sample Bug Report"),
+      href: "#sanitized-evidence",
+      internalHref: true,
+      repoHref: "#sanitized-evidence",
+      repoCta: t("Detail Study Case", "Case Study Details"),
+      repoInternalHref: true,
     },
     {
       title: t(
@@ -55,6 +65,8 @@ const FeaturedProjects = () => {
       ),
       cta: t("Lihat Test Case", "View Test Cases"),
       href: TEST_CASE_SHEET_URL,
+      repoHref: DOCS_REPO_URL,
+      repoCta: t("Repositori Dokumentasi", "Documentation Repository"),
     },
     {
       title: t("QA Tech Hub (Proyek Pribadi)", "QA Tech Hub (Personal Project)"),
@@ -109,6 +121,12 @@ const FeaturedProjects = () => {
                 className="aspect-[16/10] w-full border-b border-border object-cover"
               />
               <div className="flex flex-1 flex-col p-6">
+              {p.confidential && (
+                <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-2.5 py-1 text-xs font-semibold text-primary">
+                  <Lock aria-hidden="true" className="h-3 w-3" />
+                  {p.confidentialLabel}
+                </span>
+              )}
               <h3 className="font-display text-lg font-semibold text-foreground">
                 {p.title}
               </h3>
@@ -128,11 +146,16 @@ const FeaturedProjects = () => {
               <p className="mt-3 text-xs font-mono text-primary leading-relaxed">
                 {p.method}
               </p>
+              {p.note && (
+                <p className="mt-3 rounded-md border border-border bg-muted/40 p-3 text-xs text-foreground/80 leading-relaxed">
+                  {p.note}
+                </p>
+              )}
               <Button asChild variant="outline" className="mt-6 w-full">
                 <a
                   href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={p.internalHref ? undefined : "_blank"}
+                  rel={p.internalHref ? undefined : "noopener noreferrer"}
                   aria-label={`${p.cta} — ${p.title}`}
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
@@ -143,8 +166,8 @@ const FeaturedProjects = () => {
                 <Button asChild variant="ghost" className="mt-2 w-full">
                   <a
                     href={p.repoHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={p.repoInternalHref ? undefined : "_blank"}
+                    rel={p.repoInternalHref ? undefined : "noopener noreferrer"}
                     aria-label={`${p.repoCta} — ${p.title}`}
                   >
                     <Github className="mr-2 h-4 w-4" />

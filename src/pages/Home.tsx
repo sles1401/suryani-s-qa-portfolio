@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import KeyMetrics from "@/components/home/KeyMetrics";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
+import SanitizedEvidence from "@/components/home/SanitizedEvidence";
 import ToolsGrid from "@/components/home/ToolsGrid";
 import ExperienceHighlights from "@/components/home/ExperienceHighlights";
 import SectionNav from "@/components/home/SectionNav";
@@ -117,6 +118,7 @@ const Home = () => {
 
       <KeyMetrics />
       <FeaturedProjects />
+      <SanitizedEvidence />
       <ToolsGrid />
       <ExperienceHighlights />
 
