@@ -5,77 +5,79 @@ const ExperienceHighlights = () => {
 
   const timeline = [
     {
-      role: t(
-        "Manual Quality Assurance Engineer — HMS Project",
-        "Manual Quality Assurance Engineer — HMS Project"
-      ),
-      period: t("2024 — Sekarang", "2024 — Present"),
+      role: t("Software Quality Assurance (SQA)", "Software Quality Assurance (SQA)"),
+      entity: "PT. SCBD",
+      period: t("Januari 2026 — Sekarang", "January 2026 — Present"),
       points: [
         t(
-          "Konfirmasi alur data antar modul master data dan hauling.",
-          "Confirmed data flow across master data and hauling modules."
+          "Merancang, mendokumentasikan, dan mengeksekusi Test Plan, Test Case, dan skenario pengujian untuk aplikasi web.",
+          "Designing, documenting, and executing test plans, test cases, and test scenarios for web applications."
         ),
         t(
-          "Eksekusi regression test setiap rilis perbaikan.",
-          "Executed regression tests on every fix release."
-        ),
-        t(
-          "Menyusun laporan bug dengan langkah reproduksi dan bukti.",
-          "Wrote bug reports with reproduction steps and evidence."
+          "Membangun dan merawat skrip pengujian otomatis dengan Playwright + Java.",
+          "Building and maintaining automated test scripts using Playwright with Java."
         ),
       ],
       achievements: [
         t(
-          "Menemukan bug kritis pada validasi master data sebelum rilis produksi.",
-          "Caught a critical master-data validation bug before the production release."
-        ),
-        t(
-          "Menambah cakupan test case modul hauling dari ~60 menjadi 100+ kasus.",
-          "Grew hauling-module test case coverage from ~60 to 100+ cases."
+          "Meningkatkan efisiensi regression testing dan mempercepat siklus rilis produk.",
+          "Improved regression testing efficiency and accelerated product release cycles."
         ),
       ],
     },
     {
-      role: t("Pengajar / Mentor Teknologi", "Technology Teacher / Mentor"),
-      period: t("2023 — 2024", "2023 — 2024"),
+      role: t("Facilitator", "Facilitator"),
+      entity: "Kaizen Collaborative Impact",
+      period: t("Agustus 2025 — Oktober 2025", "August 2025 — October 2025"),
       points: [
         t(
-          "Membimbing 25+ siswa pada dasar web dan pola pikir pengujian.",
-          "Guided 25+ students on web basics and a testing mindset."
+          "Memfasilitasi pembelajaran dasar pemrograman dan AI melalui program Hour of Code.",
+          "Facilitated learning of basic programming and AI through the Hour of Code program."
         ),
         t(
-          "Menyusun materi latihan praktis dan penilaian.",
-          "Built practical exercise material and assessments."
-        ),
-      ],
-      achievements: [
-        t(
-          "25+ siswa menyelesaikan proyek web pertamanya dengan checklist pengujian mandiri.",
-          "25+ students shipped their first web project with a self-testing checklist."
+          "Membimbing peserta dengan pendekatan interaktif dan inklusif sesuai standar global.",
+          "Guided participants with an interactive, inclusive approach aligned with global standards."
         ),
       ],
     },
     {
-      role: t("Belajar Mandiri QA & Otomasi", "Self-Directed QA & Automation"),
-      period: t("Berkelanjutan", "Ongoing"),
+      role: t("Mentor Coding Camp", "Mentor Coding Camp"),
+      entity: "Dicoding Indonesia x DBS",
+      period: t("Februari 2025 — Juli 2025", "February 2025 — July 2025"),
       points: [
         t(
-          "Latihan Playwright dengan Java memakai Page Object Model.",
-          "Practicing Playwright with Java using the Page Object Model."
+          "Mereview dan mengevaluasi progres belajar mentee pada HTML, CSS, JavaScript, dan React.",
+          "Reviewed and evaluated mentees' progress on HTML, CSS, JavaScript, and React."
         ),
         t(
-          "Membangun QA Hub pribadi untuk merapikan alur pengujian.",
-          "Built a personal QA Hub to streamline testing workflows."
+          "Memberi umpan balik rutin serta membantu penyelesaian dan penilaian proyek akhir.",
+          "Provided regular feedback and helped mentees complete and evaluate their final projects."
+        ),
+      ],
+    },
+    {
+      role: t("Frontend Developer", "Frontend Developer"),
+      entity: "Waizly Technology",
+      period: t("Agustus 2024 — Januari 2025", "August 2024 — January 2025"),
+      points: [
+        t(
+          "Melanjutkan pengembangan dan perawatan fitur aplikasi Warehouse Management System (WMS) dengan React JS.",
+          "Continued development and maintenance of Warehouse Management System (WMS) features using React JS."
+        ),
+        t(
+          "Memperbaiki bug dan menyesuaikan komponen UI.",
+          "Fixed bugs and adjusted UI components."
         ),
       ],
       achievements: [
         t(
-          "Memangkas waktu penyusunan laporan pengujian dengan template siap pakai di QA Hub.",
-          "Cut test-report preparation time using ready-made templates in the QA Hub."
+          "Pengalaman sisi developer ini mempertajam pengujian UI/UX pada peran QA.",
+          "This developer-side experience sharpened UI/UX testing in the QA role."
         ),
       ],
     },
   ];
+
 
   return (
     <section id="experience-highlights" className="py-20 scroll-mt-28">
@@ -94,7 +96,9 @@ const ExperienceHighlights = () => {
               <h3 className="font-display text-lg font-semibold text-foreground">
                 {item.role}
               </h3>
+              <p className="text-sm text-muted-foreground">{item.entity}</p>
               <p className="mt-1 text-xs font-mono text-primary">{item.period}</p>
+
               <ul className="mt-3 space-y-2">
                 {item.points.map((p) => (
                   <li

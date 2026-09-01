@@ -5,11 +5,13 @@ import hmsPreview from "@/assets/project-hms.jpg";
 import testCasesPreview from "@/assets/project-testcases.jpg";
 import qaHubPreview from "@/assets/project-qahub.jpg";
 
-const DOCS_REPO_URL = "https://github.com/sles1401/qa-test-documentation";
-const TEST_CASE_SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing";
-const QA_HUB_URL = "https://suryani-s-tech-hub.vercel.app/";
-const QA_HUB_REPO_URL = "https://github.com/sles1401";
+import {
+  TEST_CASE_DOCS_REPO_URL as DOCS_REPO_URL,
+  TEST_CASE_SHEET_URL,
+  QA_HUB_URL,
+  QA_HUB_REPO_URL,
+} from "@/lib/links";
+
 
 const FeaturedProjects = () => {
   const { t } = useLanguage();
