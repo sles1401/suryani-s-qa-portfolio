@@ -1,5 +1,4 @@
 import {
-  BarChart3,
   ClipboardList,
   Table2,
   KanbanSquare,
@@ -9,6 +8,7 @@ import {
   Rocket,
   Bug,
 } from "lucide-react";
+
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ToolsGrid = () => {
