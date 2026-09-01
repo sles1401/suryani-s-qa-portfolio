@@ -15,14 +15,8 @@ const ToolsGrid = () => {
   const { t } = useLanguage();
 
   const groups = [
-    {
-      title: t("Visualisasi Data", "Data Visualization"),
-      usage: t(
-        "Merangkum hasil eksekusi tes menjadi dashboard yang mudah dibaca tim.",
-        "Turning test execution results into dashboards the team can read quickly."
-      ),
-      items: [{ name: "Looker Studio", icon: BarChart3 }],
-    },
+    // Looker Studio card removed — no longer part of the active toolset.
+
     {
       title: t("Pelacakan & Dokumentasi", "Tracking & Documentation"),
       usage: t(
