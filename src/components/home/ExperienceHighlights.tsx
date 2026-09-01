@@ -96,7 +96,9 @@ const ExperienceHighlights = () => {
               <h3 className="font-display text-lg font-semibold text-foreground">
                 {item.role}
               </h3>
+              <p className="text-sm text-muted-foreground">{item.entity}</p>
               <p className="mt-1 text-xs font-mono text-primary">{item.period}</p>
+
               <ul className="mt-3 space-y-2">
                 {item.points.map((p) => (
                   <li
