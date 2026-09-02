@@ -36,8 +36,9 @@ const pages: Page[] = [
   {
     name: "Portfolio",
     Component: Portfolio,
-    id: "Unduh CV (PDF)",
-    en: "Download CV (PDF)",
+    id: "Lihat Resume & CV",
+    en: "View Resume & CV",
+
   },
   {
     name: "Contact",

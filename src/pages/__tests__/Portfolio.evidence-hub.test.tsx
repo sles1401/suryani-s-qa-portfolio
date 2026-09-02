@@ -3,12 +3,14 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AllProviders } from "@/test/utils";
 import Portfolio from "@/pages/Portfolio";
+import {
+  LIVE_TEST_CASE_SHEET_URL,
+  TEST_CASE_DOCS_REPO_URL,
+} from "@/lib/links";
 
 const EXPECTED = {
-  sheet:
-    "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing",
-  docsRepo: "https://github.com/sles1401/qa-test-documentation",
-  playwright: "https://github.com/sles1401/java-playwright-automation",
+  sheet: LIVE_TEST_CASE_SHEET_URL,
+  docsRepo: TEST_CASE_DOCS_REPO_URL,
 };
 
 const getLink = (name: RegExp) =>
@@ -42,16 +44,16 @@ describe("Portfolio · Evidence Hub CTAs", () => {
     expect(link.rel).toMatch(/noopener/);
   });
 
-  it("Card 2 opens the Java Playwright repo in a new tab", () => {
+  it("Card 2 marks the Playwright codebase as NDA without a public repo link", () => {
     render(
       <AllProviders>
         <Portfolio />
       </AllProviders>
     );
-    const link = getLink(/Open Java Playwright repository/i);
-    expect(link.href).toBe(EXPECTED.playwright);
-    expect(link.target).toBe("_blank");
-    expect(link.rel).toMatch(/noopener/);
+    expect(screen.getByText(/Codebase — NDA/i)).toBeInTheDocument();
+    expect(
+      document.querySelector('a[href*="java-playwright-automation"]')
+    ).toBeNull();
   });
 
   it("POM snippet trigger has an accessible label and opens a focus-trapped modal", async () => {
@@ -79,12 +81,8 @@ describe("Portfolio · Evidence Hub CTAs", () => {
     const closeBtn = within(dialog).getByRole("button", { name: /close/i });
     expect(closeBtn).toBeInTheDocument();
 
-    // Modal contains a GitHub CTA that opens in a new tab.
-    const repoLink = within(dialog).getByRole("link", {
-      name: /Open Java Playwright repository on GitHub/i,
-    }) as HTMLAnchorElement;
-    expect(repoLink.href).toBe(EXPECTED.playwright);
-    expect(repoLink.target).toBe("_blank");
+    // The modal states the NDA constraint instead of linking a private repo.
+    expect(within(dialog).getByText(/under NDA|bersifat NDA/i)).toBeInTheDocument();
 
     // Close via keyboard (Escape) and confirm focus returns to trigger.
     await user.keyboard("{Escape}");

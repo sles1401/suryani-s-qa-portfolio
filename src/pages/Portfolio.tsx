@@ -8,27 +8,18 @@ import {
   AlertTriangle,
   Monitor,
   ListChecks,
-  Download,
   Github,
-  Linkedin,
   ClipboardCheck,
   Cpu,
   Wrench,
-  Send,
-  AlertCircle,
-  CheckCircle,
   GraduationCap,
   Code2,
   ExternalLink,
   Rocket,
   FileSpreadsheet,
+  Lock,
 } from "lucide-react";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -41,10 +32,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  LIVE_TEST_CASE_SHEET_URL,
+  TEST_CASE_DOCS_REPO_URL as DOCS_REPO_URL,
+  QA_HUB_URL,
+} from "@/lib/links";
 
 const Portfolio = () => {
   const { t } = useLanguage();
-  const { toast } = useToast();
 
   useEffect(() => {
     const prev = document.title;
@@ -54,16 +49,10 @@ const Portfolio = () => {
     };
   }, []);
 
-  const GITHUB_URL = "https://github.com/sles1401";
-  const LINKEDIN_URL = "https://www.linkedin.com/in/suryani-lestari/";
-  const EMAIL = "suryanilestari123@gmail.com";
-  const CV_URL = "/cv/Suryani-Lestari-QA-CV.pdf";
-  const CV_FILENAME = "Suryani-Lestari-QA-CV.pdf";
-  const TEST_CASE_SHEET_URL =
-    "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing";
-  const TEST_CASE_DOCS_REPO_URL = "https://github.com/sles1401/qa-test-documentation";
-  const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401/java-playwright-automation";
-  const QA_HUB_URL = "https://suryani-s-tech-hub.vercel.app/";
+  const TEST_CASE_SHEET_URL = LIVE_TEST_CASE_SHEET_URL;
+  const TEST_CASE_DOCS_REPO_URL = DOCS_REPO_URL;
+
+
 
   const skillGroups = [
     {
@@ -195,10 +184,6 @@ const Portfolio = () => {
     ),
   };
 
-  // Contact form state
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
   const pomTriggerRef = useRef<HTMLButtonElement>(null);
   const pomDialogRef = useRef<HTMLDivElement>(null);
   const pomScrollYRef = useRef(0);
@@ -216,64 +201,6 @@ const Portfolio = () => {
     return () => cancelAnimationFrame(frame);
   }, [pomOpen]);
 
-  const contactSchema = z.object({
-    name: z
-      .string()
-      .trim()
-      .min(2, t("Nama minimal 2 karakter", "Name must be at least 2 characters"))
-      .max(100, t("Nama maksimal 100 karakter", "Name must be under 100 characters"))
-      .regex(/^[\p{L}\s.'-]+$/u, t("Nama hanya boleh berisi huruf", "Name may only contain letters")),
-    email: z
-      .string()
-      .trim()
-      .min(1, t("Email wajib diisi", "Email is required"))
-      .email(t("Format email tidak valid — contoh: nama@domain.com", "Invalid email format — e.g. name@domain.com"))
-      .max(255, t("Email terlalu panjang", "Email is too long")),
-    subject: z
-      .string()
-      .trim()
-      .min(3, t("Subjek minimal 3 karakter", "Subject must be at least 3 characters"))
-      .max(200, t("Subjek maksimal 200 karakter", "Subject must be under 200 characters")),
-    message: z
-      .string()
-      .trim()
-      .min(10, t("Pesan minimal 10 karakter agar konteksnya jelas", "Message must be at least 10 characters so context is clear"))
-      .max(2000, t("Pesan maksimal 2000 karakter", "Message must be under 2000 characters")),
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
-    if (errors[name]) setErrors((p) => ({ ...p, [name]: "" }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = contactSchema.safeParse(formData);
-    if (!result.success) {
-      const fe: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) fe[err.path[0] as string] = err.message;
-      });
-      setErrors(fe);
-      return;
-    }
-    const subject = `Website Contact — ${formData.name} — ${formData.subject}`;
-    const body =
-      `Name: ${formData.name}\n` +
-      `Email: ${formData.email}\n\n` +
-      `${formData.message}`;
-    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSent(true);
-    toast({
-      title: t("Membuka klien email…", "Opening your email client…"),
-      description: t(
-        "Pesan Anda telah disiapkan. Silakan kirim dari aplikasi email Anda.",
-        "Your message is ready. Please send it from your email app."
-      ),
-    });
-  };
 
   return (
     <PageLayout>
@@ -301,11 +228,12 @@ const Portfolio = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 opacity-0 animate-fade-in-up animate-delay-300">
               <Button asChild size="lg" className="group">
-                <a href={CV_URL} download={CV_FILENAME} type="application/pdf">
-                  <Download className="mr-2 h-4 w-4" />
-                  {t("Unduh CV (PDF)", "Download CV (PDF)")}
-                </a>
+                <Link to="/resume">
+                  <FileText className="mr-2 h-4 w-4" />
+                  {t("Lihat Resume & CV", "View Resume & CV")}
+                </Link>
               </Button>
+
               <Button asChild variant="outline" size="lg">
                 <a href="#qa-deliverables">
                   {t("Lihat Dokumentasi QA", "View QA Documentation")}
@@ -525,39 +453,26 @@ const Portfolio = () => {
                     <pre className="text-xs leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 rounded-lg p-4 overflow-x-auto max-h-[60vh]">
 {pomSnippet}
                     </pre>
-                    <div className="flex justify-end">
-                      <Button asChild variant="outline" className="border-primary/40 text-primary hover:bg-accent">
-                        <a
-                          href={PLAYWRIGHT_REPO_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={t(
-                            "Buka repositori Java Playwright di GitHub (tab baru)",
-                            "Open Java Playwright repository on GitHub (new tab)"
-                          )}
-                        >
-                          <Github className="mr-2 h-4 w-4" />
-                          {t("Buka Repositori GitHub", "Open GitHub Repository")}
-                        </a>
-                      </Button>
+                    <div className="rounded-lg border border-border bg-muted/40 p-3 text-xs text-foreground/80 leading-relaxed">
+                      {t(
+                        "Codebase Playwright bersifat NDA — struktur di atas adalah representasi yang sudah disamarkan.",
+                        "The Playwright codebase is under NDA — the structure above is a sanitized representation."
+                      )}
                     </div>
                   </DialogContent>
                 </Dialog>
               </div>
-              <Button asChild className="w-full whitespace-normal text-center bg-primary text-primary-foreground hover:bg-primary/90">
-                <a
-                  href={PLAYWRIGHT_REPO_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t(
-                    "Buka repositori Java Playwright di GitHub",
-                    "Open Java Playwright repository on GitHub"
-                  )}
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  {t("Explore Playwright Codebase", "Explore Playwright Codebase")}
-                </a>
-              </Button>
+              <div className="flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-2.5 py-1 text-xs font-semibold text-primary">
+                <Lock aria-hidden="true" className="h-3 w-3" />
+                {t("Codebase — NDA", "Codebase — NDA")}
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                {t(
+                  "Repositori otomasi tidak dapat dibagikan publik karena kerahasiaan klien. Detail pendekatan dan struktur framework bisa saya jelaskan saat wawancara.",
+                  "The automation repository cannot be shared publicly due to client confidentiality. I can walk through the approach and framework structure in an interview."
+                )}
+              </p>
+
             </article>
 
             {/* Card 3 — Internal Engineering Tools */}
@@ -726,144 +641,29 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Contact / Let's Connect */}
-      <section id="contact" className="py-20 bg-card">
+      {/* Navigational CTA — contact lives on /contact only */}
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              label={t("Kontak", "Contact")}
-              title={t("Mari Terhubung", "Let's Connect")}
-              description={t(
-                "Punya pertanyaan atau peluang? Kirim pesan singkat dan saya akan membalas.",
-                "Have a question or an opportunity? Send a short message and I'll get back to you."
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-3">
+              {t("Tertarik berdiskusi?", "Interested in talking?")}
+            </h2>
+            <p className="text-muted-foreground mb-6">
+              {t(
+                "Saya terbuka untuk peluang QA dan diskusi seputar pengujian.",
+                "I'm open to QA opportunities and testing discussions."
               )}
-            />
-            <div className="bg-background border border-border/60 rounded-2xl p-8 shadow-card">
-              {sent ? (
-                <div className="text-center py-8">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                    {t("Klien email dibuka", "Email client opened")}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Silakan kirim pesan dari aplikasi email Anda untuk menyelesaikan pengiriman.",
-                      "Please send the message from your email app to complete delivery."
-                    )}
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="mt-6"
-                    onClick={() => {
-                      setSent(false);
-                      setFormData({ name: "", email: "", subject: "", message: "" });
-                    }}
-                  >
-                    {t("Tulis pesan baru", "Write another message")}
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                  <div className="space-y-2">
-                    <Label htmlFor="name">
-                      {t("Nama", "Name")} <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder={t("Nama Anda", "Your name")}
-                      className={errors.name ? "border-destructive" : ""}
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.name}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">
-                      Email <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="email@example.com"
-                      className={errors.email ? "border-destructive" : ""}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">
-                      {t("Subjek", "Subject")} <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      placeholder={t("Tentang apa pesan ini?", "What is this about?")}
-                      className={errors.subject ? "border-destructive" : ""}
-                    />
-                    {errors.subject && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.subject}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">
-                      {t("Pesan", "Message")} <span className="text-primary">*</span>
-                    </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder={t("Tulis pesan Anda…", "Write your message…")}
-                      className={`resize-none ${errors.message ? "border-destructive" : ""}`}
-                    />
-                    {errors.message && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-                  <Button type="submit" size="lg" className="w-full group">
-                    {t("Kirim Pesan", "Send Message")}
-                    <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                  <p className="text-xs text-muted-foreground text-center">
-                    {t(
-                      "Mengirim akan membuka klien email Anda dengan pesan yang sudah disiapkan untuk ",
-                      "Submitting opens your email client with a pre-filled message to "
-                    )}
-                    <a href={`mailto:${EMAIL}`} className="text-foreground font-medium underline underline-offset-2 decoration-primary hover:decoration-2">
-                      {EMAIL}
-                    </a>
-                    .
-                  </p>
-                </form>
-              )}
-            </div>
+            </p>
+            <Button asChild size="lg">
+              <Link to="/contact">
+                <Mail className="mr-2 h-4 w-4" />
+                {t("Hubungi Saya", "Contact Me")}
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
+
     </PageLayout>
   );
 };
