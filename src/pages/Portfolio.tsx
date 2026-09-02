@@ -726,144 +726,29 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Contact / Let's Connect */}
-      <section id="contact" className="py-20 bg-card">
+      {/* Navigational CTA — contact lives on /contact only */}
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              label={t("Kontak", "Contact")}
-              title={t("Mari Terhubung", "Let's Connect")}
-              description={t(
-                "Punya pertanyaan atau peluang? Kirim pesan singkat dan saya akan membalas.",
-                "Have a question or an opportunity? Send a short message and I'll get back to you."
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-3">
+              {t("Tertarik berdiskusi?", "Interested in talking?")}
+            </h2>
+            <p className="text-muted-foreground mb-6">
+              {t(
+                "Saya terbuka untuk peluang QA dan diskusi seputar pengujian.",
+                "I'm open to QA opportunities and testing discussions."
               )}
-            />
-            <div className="bg-background border border-border/60 rounded-2xl p-8 shadow-card">
-              {sent ? (
-                <div className="text-center py-8">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                    {t("Klien email dibuka", "Email client opened")}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {t(
-                      "Silakan kirim pesan dari aplikasi email Anda untuk menyelesaikan pengiriman.",
-                      "Please send the message from your email app to complete delivery."
-                    )}
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="mt-6"
-                    onClick={() => {
-                      setSent(false);
-                      setFormData({ name: "", email: "", subject: "", message: "" });
-                    }}
-                  >
-                    {t("Tulis pesan baru", "Write another message")}
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                  <div className="space-y-2">
-                    <Label htmlFor="name">
-                      {t("Nama", "Name")} <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder={t("Nama Anda", "Your name")}
-                      className={errors.name ? "border-destructive" : ""}
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.name}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">
-                      Email <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="email@example.com"
-                      className={errors.email ? "border-destructive" : ""}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">
-                      {t("Subjek", "Subject")} <span className="text-primary">*</span>
-                    </Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      placeholder={t("Tentang apa pesan ini?", "What is this about?")}
-                      className={errors.subject ? "border-destructive" : ""}
-                    />
-                    {errors.subject && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.subject}
-                      </p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">
-                      {t("Pesan", "Message")} <span className="text-primary">*</span>
-                    </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder={t("Tulis pesan Anda…", "Write your message…")}
-                      className={`resize-none ${errors.message ? "border-destructive" : ""}`}
-                    />
-                    {errors.message && (
-                      <p className="text-sm text-destructive flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-                  <Button type="submit" size="lg" className="w-full group">
-                    {t("Kirim Pesan", "Send Message")}
-                    <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                  <p className="text-xs text-muted-foreground text-center">
-                    {t(
-                      "Mengirim akan membuka klien email Anda dengan pesan yang sudah disiapkan untuk ",
-                      "Submitting opens your email client with a pre-filled message to "
-                    )}
-                    <a href={`mailto:${EMAIL}`} className="text-foreground font-medium underline underline-offset-2 decoration-primary hover:decoration-2">
-                      {EMAIL}
-                    </a>
-                    .
-                  </p>
-                </form>
-              )}
-            </div>
+            </p>
+            <Button asChild size="lg">
+              <Link to="/contact">
+                <Mail className="mr-2 h-4 w-4" />
+                {t("Hubungi Saya", "Contact Me")}
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
+
     </PageLayout>
   );
 };
