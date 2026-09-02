@@ -190,10 +190,6 @@ const Portfolio = () => {
     ),
   };
 
-  // Contact form state
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
   const pomTriggerRef = useRef<HTMLButtonElement>(null);
   const pomDialogRef = useRef<HTMLDivElement>(null);
   const pomScrollYRef = useRef(0);
@@ -211,64 +207,6 @@ const Portfolio = () => {
     return () => cancelAnimationFrame(frame);
   }, [pomOpen]);
 
-  const contactSchema = z.object({
-    name: z
-      .string()
-      .trim()
-      .min(2, t("Nama minimal 2 karakter", "Name must be at least 2 characters"))
-      .max(100, t("Nama maksimal 100 karakter", "Name must be under 100 characters"))
-      .regex(/^[\p{L}\s.'-]+$/u, t("Nama hanya boleh berisi huruf", "Name may only contain letters")),
-    email: z
-      .string()
-      .trim()
-      .min(1, t("Email wajib diisi", "Email is required"))
-      .email(t("Format email tidak valid — contoh: nama@domain.com", "Invalid email format — e.g. name@domain.com"))
-      .max(255, t("Email terlalu panjang", "Email is too long")),
-    subject: z
-      .string()
-      .trim()
-      .min(3, t("Subjek minimal 3 karakter", "Subject must be at least 3 characters"))
-      .max(200, t("Subjek maksimal 200 karakter", "Subject must be under 200 characters")),
-    message: z
-      .string()
-      .trim()
-      .min(10, t("Pesan minimal 10 karakter agar konteksnya jelas", "Message must be at least 10 characters so context is clear"))
-      .max(2000, t("Pesan maksimal 2000 karakter", "Message must be under 2000 characters")),
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((p) => ({ ...p, [name]: value }));
-    if (errors[name]) setErrors((p) => ({ ...p, [name]: "" }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = contactSchema.safeParse(formData);
-    if (!result.success) {
-      const fe: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) fe[err.path[0] as string] = err.message;
-      });
-      setErrors(fe);
-      return;
-    }
-    const subject = `Website Contact — ${formData.name} — ${formData.subject}`;
-    const body =
-      `Name: ${formData.name}\n` +
-      `Email: ${formData.email}\n\n` +
-      `${formData.message}`;
-    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSent(true);
-    toast({
-      title: t("Membuka klien email…", "Opening your email client…"),
-      description: t(
-        "Pesan Anda telah disiapkan. Silakan kirim dari aplikasi email Anda.",
-        "Your message is ready. Please send it from your email app."
-      ),
-    });
-  };
 
   return (
     <PageLayout>
