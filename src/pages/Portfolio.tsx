@@ -22,6 +22,8 @@ import {
   ExternalLink,
   Rocket,
   FileSpreadsheet,
+  Lock,
+
 } from "lucide-react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
