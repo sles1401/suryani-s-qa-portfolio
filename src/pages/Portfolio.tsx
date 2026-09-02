@@ -296,11 +296,12 @@ const Portfolio = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 opacity-0 animate-fade-in-up animate-delay-300">
               <Button asChild size="lg" className="group">
-                <a href={CV_URL} download={CV_FILENAME} type="application/pdf">
-                  <Download className="mr-2 h-4 w-4" />
-                  {t("Unduh CV (PDF)", "Download CV (PDF)")}
-                </a>
+                <Link to="/resume">
+                  <FileText className="mr-2 h-4 w-4" />
+                  {t("Lihat Resume & CV", "View Resume & CV")}
+                </Link>
               </Button>
+
               <Button asChild variant="outline" size="lg">
                 <a href="#qa-deliverables">
                   {t("Lihat Dokumentasi QA", "View QA Documentation")}
