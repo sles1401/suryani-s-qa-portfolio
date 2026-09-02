@@ -56,16 +56,9 @@ const Portfolio = () => {
     };
   }, []);
 
-  const GITHUB_URL = "https://github.com/sles1401";
-  const LINKEDIN_URL = "https://www.linkedin.com/in/suryani-lestari/";
-  const EMAIL = "suryanilestari123@gmail.com";
-  const CV_URL = "/cv/Suryani-Lestari-QA-CV.pdf";
-  const CV_FILENAME = "Suryani-Lestari-QA-CV.pdf";
-  const TEST_CASE_SHEET_URL =
-    "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing";
-  const TEST_CASE_DOCS_REPO_URL = "https://github.com/sles1401/qa-test-documentation";
-  const PLAYWRIGHT_REPO_URL = "https://github.com/sles1401/java-playwright-automation";
-  const QA_HUB_URL = "https://suryani-s-tech-hub.vercel.app/";
+  const TEST_CASE_SHEET_URL = LIVE_TEST_CASE_SHEET_URL;
+  const TEST_CASE_DOCS_REPO_URL = DOCS_REPO_URL;
+
 
   const skillGroups = [
     {
