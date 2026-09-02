@@ -42,7 +42,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        </div>
+
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand */}
