@@ -1,18 +1,18 @@
 import { test, expect } from "@playwright/test";
 import { gotoPortfolio, setTheme } from "./helpers";
+import {
+  LIVE_TEST_CASE_SHEET_URL,
+  TEST_CASE_DOCS_REPO_URL,
+} from "../src/lib/links";
 
 const EXPECTED = [
   {
     name: /Open Live Test Case Dummy on Google Sheets/i,
-    href: "https://docs.google.com/spreadsheets/d/1WQq0nQmS3f7-Live-Test-Case-Dummy/edit?usp=sharing",
+    href: LIVE_TEST_CASE_SHEET_URL,
   },
   {
     name: /Open test case docs repository on GitHub/i,
-    href: "https://github.com/sles1401/qa-test-documentation",
-  },
-  {
-    name: /Open Java Playwright repository on GitHub$/i,
-    href: "https://github.com/sles1401/java-playwright-automation",
+    href: TEST_CASE_DOCS_REPO_URL,
   },
 ];
 
@@ -32,4 +32,13 @@ test.describe("Evidence Hub CTAs open in new tab with safe rel", () => {
       expect(rel).toMatch(/noreferrer/);
     });
   }
+
+  test("Playwright codebase is marked NDA with no public repo link", async ({
+    page,
+  }) => {
+    await expect(page.getByText(/Codebase — NDA/i)).toBeVisible();
+    await expect(
+      page.locator('a[href*="java-playwright-automation"]')
+    ).toHaveCount(0);
+  });
 });
