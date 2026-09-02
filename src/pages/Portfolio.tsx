@@ -8,29 +8,18 @@ import {
   AlertTriangle,
   Monitor,
   ListChecks,
-  Download,
   Github,
-  Linkedin,
   ClipboardCheck,
   Cpu,
   Wrench,
-  Send,
-  AlertCircle,
-  CheckCircle,
   GraduationCap,
   Code2,
   ExternalLink,
   Rocket,
   FileSpreadsheet,
   Lock,
-
 } from "lucide-react";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -43,10 +32,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  LIVE_TEST_CASE_SHEET_URL,
+  TEST_CASE_DOCS_REPO_URL as DOCS_REPO_URL,
+  QA_HUB_URL,
+} from "@/lib/links";
 
 const Portfolio = () => {
   const { t } = useLanguage();
-  const { toast } = useToast();
 
   useEffect(() => {
     const prev = document.title;
@@ -58,6 +51,7 @@ const Portfolio = () => {
 
   const TEST_CASE_SHEET_URL = LIVE_TEST_CASE_SHEET_URL;
   const TEST_CASE_DOCS_REPO_URL = DOCS_REPO_URL;
+
 
 
   const skillGroups = [
