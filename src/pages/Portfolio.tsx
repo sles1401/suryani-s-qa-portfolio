@@ -525,39 +525,26 @@ const Portfolio = () => {
                     <pre className="text-xs leading-relaxed font-mono bg-muted/60 text-foreground/90 border border-border/60 rounded-lg p-4 overflow-x-auto max-h-[60vh]">
 {pomSnippet}
                     </pre>
-                    <div className="flex justify-end">
-                      <Button asChild variant="outline" className="border-primary/40 text-primary hover:bg-accent">
-                        <a
-                          href={PLAYWRIGHT_REPO_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={t(
-                            "Buka repositori Java Playwright di GitHub (tab baru)",
-                            "Open Java Playwright repository on GitHub (new tab)"
-                          )}
-                        >
-                          <Github className="mr-2 h-4 w-4" />
-                          {t("Buka Repositori GitHub", "Open GitHub Repository")}
-                        </a>
-                      </Button>
+                    <div className="rounded-lg border border-border bg-muted/40 p-3 text-xs text-foreground/80 leading-relaxed">
+                      {t(
+                        "Codebase Playwright bersifat NDA — struktur di atas adalah representasi yang sudah disamarkan.",
+                        "The Playwright codebase is under NDA — the structure above is a sanitized representation."
+                      )}
                     </div>
                   </DialogContent>
                 </Dialog>
               </div>
-              <Button asChild className="w-full whitespace-normal text-center bg-primary text-primary-foreground hover:bg-primary/90">
-                <a
-                  href={PLAYWRIGHT_REPO_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t(
-                    "Buka repositori Java Playwright di GitHub",
-                    "Open Java Playwright repository on GitHub"
-                  )}
-                >
-                  <Github className="mr-2 h-4 w-4" />
-                  {t("Explore Playwright Codebase", "Explore Playwright Codebase")}
-                </a>
-              </Button>
+              <div className="flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-2.5 py-1 text-xs font-semibold text-primary">
+                <Lock aria-hidden="true" className="h-3 w-3" />
+                {t("Codebase — NDA", "Codebase — NDA")}
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                {t(
+                  "Repositori otomasi tidak dapat dibagikan publik karena kerahasiaan klien. Detail pendekatan dan struktur framework bisa saya jelaskan saat wawancara.",
+                  "The automation repository cannot be shared publicly due to client confidentiality. I can walk through the approach and framework structure in an interview."
+                )}
+              </p>
+
             </article>
 
             {/* Card 3 — Internal Engineering Tools */}
