@@ -61,10 +61,16 @@ const Contact = () => {
     setIsSubmitted(true);
     toast({
       title: t("Pesan terkirim!", "Message sent!"),
-      description: t(
-        "Terima kasih telah menghubungi. Saya akan segera membalas.",
-        "Thank you for reaching out. I'll get back to you soon."
-      ),
+      description:
+        result.delivery === "email"
+          ? t(
+              "Pesan Anda sudah dikirim ke email saya. Saya akan segera membalas.",
+              "Your message has been delivered to my inbox. I'll get back to you soon."
+            )
+          : t(
+              "Aplikasi email Anda dibuka untuk menyelesaikan pengiriman.",
+              "Your email app was opened to finish sending the message."
+            ),
     });
     
     // Reset form after delay
