@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { EMAIL } from "@/lib/links";
 
 export type ContactFormValues = {
   name: string;
@@ -58,12 +59,23 @@ export const validateContact = (
 };
 
 export type SubmitResult =
-  | { status: "ok" }
+  | { status: "ok"; delivery: "email" | "mailto" }
   | { status: "invalid"; fieldErrors: FieldErrors; formError: string };
+
+// Delivery endpoint: forwards the message straight to the professional inbox.
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
+
+const buildMailto = (values: ContactFormValues) => {
+  const subject = values.subject?.trim() || "Portfolio contact";
+  const body = `Name: ${values.name}\nEmail: ${values.email}\n\n${values.message}`;
+  return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+};
 
 /**
  * Submission layer. Re-validates the payload independently of the form state
  * before performing the send, and returns structured errors the UI renders.
+ * The message is delivered to the professional inbox; if the delivery service
+ * is unreachable the user's mail client is opened as a fallback.
  */
 export const submitContactMessage = async (
   values: ContactFormValues,
@@ -81,7 +93,29 @@ export const submitContactMessage = async (
     };
   }
 
-  // Simulated network round-trip for the send.
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  return { status: "ok" };
+  try {
+    const response = await fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: values.name.trim(),
+        email: values.email.trim(),
+        _subject: values.subject?.trim()
+          ? `[Portfolio] ${values.subject.trim()}`
+          : "[Portfolio] New message from your website",
+        _replyto: values.email.trim(),
+        _template: "table",
+        message: values.message.trim(),
+      }),
+    });
+    if (!response.ok) throw new Error(`Delivery failed with status ${response.status}`);
+    return { status: "ok", delivery: "email" };
+  } catch {
+    // Network/service failure: hand the message to the visitor's mail client.
+    if (typeof window !== "undefined") {
+      window.location.href = buildMailto(values);
+    }
+    return { status: "ok", delivery: "mailto" };
+  }
 };
+
