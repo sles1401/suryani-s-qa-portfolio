@@ -14,6 +14,9 @@ import Skills from "./pages/Skills";
 import Portfolio from "./pages/Portfolio";
 import Resume from "./pages/Resume";
 import Contact from "./pages/Contact";
+import Projects from "./pages/Projects";
+import BugHunter from "./pages/BugHunter";
+import ApiConsole from "./pages/ApiConsole";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +39,9 @@ const App = () => (
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/bug-hunter" element={<BugHunter />} />
+            <Route path="/api-console" element={<ApiConsole />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

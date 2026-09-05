@@ -20,9 +20,11 @@ const Header = () => {
   const navigation = [
     { name: t("Beranda", "Home"), href: "/" },
     { name: t("Tentang", "About"), href: "/about" },
-    { name: t("Pengalaman", "Experience"), href: "/experience" },
+    { name: t("Proyek", "Projects"), href: "/projects" },
     { name: t("Keahlian", "Skills"), href: "/skills" },
     { name: t("Portofolio", "Portfolio"), href: "/portfolio" },
+    { name: "Bug Hunter", href: "/bug-hunter" },
+    { name: "API Console", href: "/api-console" },
     { name: t("Resume", "Resume"), href: "/resume" },
     { name: t("Kontak", "Contact"), href: "/contact" },
   ];
