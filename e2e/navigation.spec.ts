@@ -2,17 +2,8 @@ import { test, expect } from "@playwright/test";
 
 const PAGES = [
   { name: /^Home$/i, path: "/", heading: /Suryani Lestari/i },
-  {
-    name: /^About$/i,
-    path: "/about",
-    heading: /Building a Career in Quality Assurance/i,
-  },
-  {
-    name: /^Experience$/i,
-    path: "/experience",
-    heading: /Quality Assurance Experience/i,
-  },
-  { name: /^Portfolio$/i, path: "/portfolio", heading: /Suryani Lestari/i },
+  { name: /^Projects$/i, path: "/projects", heading: /Project Details & Testing Results/i },
+  { name: /^Resume$/i, path: "/resume", heading: /Resume \/ CV/i },
   { name: /^Contact$/i, path: "/contact", heading: /Get in Touch/i },
 ];
 
@@ -58,13 +49,13 @@ test.describe("Top navigation — routing + persisted preferences", () => {
     // Then flip language EN → ID via the visible toggle.
     await page.getByRole("button", { name: "Bahasa Indonesia" }).click();
 
-    // ID header labels appear (Beranda/Tentang/Kontak).
+    // ID header labels appear.
     await expect(
       page.getByRole("navigation").getByRole("link", { name: /^Beranda$/ })
     ).toBeVisible();
 
     // Navigate through several pages; state must survive.
-    for (const path of ["/about", "/experience", "/portfolio", "/contact"]) {
+    for (const path of ["/projects", "/resume", "/bug-hunter", "/api-console", "/contact"]) {
       await page.goto(path);
       const state = await page.evaluate(() => ({
         theme: localStorage.getItem("theme"),

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Mail, Linkedin, Github, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Linkedin, Github, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/links";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,20 +10,20 @@ const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t border-border/50">
       <div className="container mx-auto px-6 lg:px-8 py-12">
-        {/* Contact CTA (the form lives on /contact only) */}
-        <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-10 flex flex-col gap-6 border-b border-border/50 pb-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <h2 className="font-display text-xl font-semibold text-foreground">
-              {t("Tertarik berdiskusi?", "Interested in talking?")}
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+              <span aria-hidden="true" className="status-dot h-2 w-2 rounded-full bg-emerald-500" />
+              {t("Terbuka untuk peluang kerja", "Open for work")}
+            </div>
+            <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3 min-w-0">
                 <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
                 <a
-                  href="mailto:suryanilestari123@gmail.com"
+                  href={`mailto:${EMAIL}`}
                   className="break-all text-foreground hover:text-primary transition-colors"
                 >
-                  suryanilestari123@gmail.com
+                  {EMAIL}
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -33,12 +34,8 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <Link
-            to="/contact"
-            className="inline-flex w-fit items-center gap-2 rounded-md border border-primary/40 bg-accent px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-accent/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            {t("Hubungi Saya", "Contact Me")}
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          <Link to="/contact" className="text-sm font-medium text-primary hover:underline">
+            {t("Kirim pesan", "Send a message")}
           </Link>
         </div>
 
@@ -61,14 +58,14 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="mailto:suryanilestari123@gmail.com"
+               href={`mailto:${EMAIL}`}
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"
               aria-label="Email"
             >
               <Mail className="h-4 w-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/suryani-lestari"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -77,7 +74,7 @@ const Footer = () => {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href="https://github.com/sles1401"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"

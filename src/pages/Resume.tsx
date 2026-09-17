@@ -5,14 +5,13 @@ import {
   Download,
   FileText,
   GraduationCap,
-  Linkedin,
   Sparkles,
   Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CV_URL, LINKEDIN_URL } from "@/lib/links";
+import { CV_URL } from "@/lib/links";
 
 const Resume = () => {
   const { t } = useLanguage();
@@ -149,12 +148,6 @@ const Resume = () => {
                 >
                   <Download className="mr-2 h-5 w-5" />
                   {t("Unduh PDF", "Download PDF")}
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="mr-2 h-5 w-5" />
-                  LinkedIn
                 </a>
               </Button>
             </div>

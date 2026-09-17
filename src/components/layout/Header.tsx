@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Linkedin, Github, Mail } from "lucide-react";
+import { Bug, ChevronDown, Menu, Terminal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import LanguageToggle from "@/components/LanguageToggle";
 import ThemeToggle from "@/components/ThemeToggle";
 import LiveClock from "@/components/LiveClock";
@@ -19,14 +20,14 @@ const Header = () => {
 
   const navigation = [
     { name: t("Beranda", "Home"), href: "/" },
-    { name: t("Tentang", "About"), href: "/about" },
     { name: t("Proyek", "Projects"), href: "/projects" },
-    { name: t("Keahlian", "Skills"), href: "/skills" },
-    { name: t("Portofolio", "Portfolio"), href: "/portfolio" },
-    { name: "Bug Hunter", href: "/bug-hunter" },
-    { name: "API Console", href: "/api-console" },
     { name: t("Resume", "Resume"), href: "/resume" },
     { name: t("Kontak", "Contact"), href: "/contact" },
+  ];
+
+  const qaTools = [
+    { name: "Bug Hunter", href: "/bug-hunter", icon: Bug },
+    { name: "API Console", href: "/api-console", icon: Terminal },
   ];
 
   const isActive = (href: string) => location.pathname === href;
@@ -58,51 +59,39 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`gap-1 px-3 text-sm font-medium ${
+                    qaTools.some((item) => isActive(item.href))
+                      ? "bg-accent text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {t("Alat QA", "QA Tools")}
+                  <ChevronDown aria-hidden="true" className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                {qaTools.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <Link to={item.href} className="gap-2">
+                      <item.icon aria-hidden="true" className="h-4 w-4 text-primary" />
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
-          {/* Theme + Language Toggle + Mobile menu button */}
+          {/* Preferences + Mobile menu button */}
           <div className="flex items-center gap-2 sm:gap-3">
             <LiveClock />
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <a
-                  href="https://www.linkedin.com/in/suryani-lestari"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-              </TooltipTrigger>
-              <TooltipContent>
-                {t("Profil LinkedIn", "LinkedIn profile")}
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <a
-                  href="https://github.com/sles1401"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  <Github className="h-4 w-4" />
-                </a>
-              </TooltipTrigger>
-              <TooltipContent>
-                {t("Repositori GitHub", "GitHub repositories")}
-              </TooltipContent>
-            </Tooltip>
             <ThemeToggle />
             <LanguageToggle />
-            <Button asChild size="sm" className="hidden sm:inline-flex">
-              <Link to="/contact">
-                <Mail className="mr-2 h-4 w-4" />
-                {t("Hubungi Saya", "Hire Me")}
-              </Link>
-            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -133,12 +122,26 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button asChild className="mt-3">
-                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  <Mail className="mr-2 h-4 w-4" />
-                  {t("Hubungi Saya", "Hire Me")}
-                </Link>
-              </Button>
+              <div className="my-2 border-t border-border/50 pt-3">
+                <p className="px-4 pb-2 text-xs font-semibold uppercase text-muted-foreground">
+                  {t("Alat QA", "QA Tools")}
+                </p>
+                {qaTools.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 rounded-md px-4 py-3 text-sm font-medium transition-colors ${
+                      isActive(item.href)
+                        ? "bg-accent text-primary"
+                        : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                    }`}
+                  >
+                    <item.icon aria-hidden="true" className="h-4 w-4" />
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}

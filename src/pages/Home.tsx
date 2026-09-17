@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Download, Linkedin } from "lucide-react";
+import { ArrowRight, CheckCircle, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import KeyMetrics from "@/components/home/KeyMetrics";
@@ -85,14 +85,10 @@ const Home = () => {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <a 
-                    href="https://www.linkedin.com/in/suryani-lestari" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Linkedin className="mr-2 h-4 w-4" />
-                    {t("Lihat Profil LinkedIn", "View LinkedIn Profile")}
-                  </a>
+                  <Link to="/contact">
+                    <Mail className="mr-2 h-4 w-4" />
+                    {t("Hubungi Saya", "Contact Me")}
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -122,28 +118,20 @@ const Home = () => {
       <ToolsGrid />
       <ExperienceHighlights />
 
-      {/* Brief intro section */}
+      {/* Closing navigation */}
       <section className="py-20 bg-card">
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center opacity-0 animate-fade-in-up animate-delay-300">
-            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-6">
-              {t(
-                "Memastikan Kualitas, Satu Tes Pada Satu Waktu",
-                "Ensuring Quality, One Test at a Time"
-              )}
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-4">
+              {t("Ingin melihat rekam jejak lengkap?", "Want to see the full track record?")}
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              {t(
-                "Dengan fokus pada manual testing dan quality assurance, saya membantu tim pengembangan mengidentifikasi masalah lebih awal, mendokumentasikan temuan dengan jelas, dan memberikan produk yang memenuhi harapan pengguna.",
-                "With a focus on manual testing and quality assurance, I help development teams identify issues early, document findings clearly, and deliver products that meet user expectations."
-              )}
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+              {t("Buka Resume atau hubungi saya untuk berdiskusi.", "Open my Resume or contact me to talk.")}
             </p>
-            <Button asChild variant="link" className="text-primary">
-              <Link to="/about">
-                {t("Pelajari lebih lanjut tentang saya", "Learn more about me")}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild variant="outline"><Link to="/resume">{t("Buka Resume", "Open Resume")}</Link></Button>
+              <Button asChild><Link to="/contact">{t("Hubungi Saya", "Contact Me")}<ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+            </div>
           </div>
         </div>
       </section>
