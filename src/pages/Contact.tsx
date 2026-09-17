@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Linkedin, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -121,8 +121,8 @@ const Contact = () => {
                 label={t("Info Kontak", "Contact Info")}
                 title={t("Mari Terhubung", "Let's Connect")}
                 description={t(
-                  "Silakan hubungi melalui email atau terhubung dengan saya di LinkedIn.",
-                  "Feel free to reach out through email or connect with me on LinkedIn."
+                  "Silakan kirim email langsung atau gunakan formulir di halaman ini.",
+                  "Send an email directly or use the form on this page."
                 )}
               />
 
@@ -140,20 +140,6 @@ const Contact = () => {
                   </div>
                 </a>
 
-                <a 
-                  href="https://www.linkedin.com/in/suryani-lestari"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-colors group"
-                >
-                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                    <Linkedin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">LinkedIn</p>
-                    <p className="font-medium text-foreground">{t("Terhubung di LinkedIn", "Connect on LinkedIn")}</p>
-                  </div>
-                </a>
               </div>
 
               <div className="mt-10 p-6 rounded-xl bg-accent/50 border border-primary/10">

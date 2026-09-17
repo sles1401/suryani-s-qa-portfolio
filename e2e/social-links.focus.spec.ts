@@ -1,8 +1,7 @@
 import { test, expect, Locator, Page } from "@playwright/test";
 import { setTheme } from "./helpers";
 
-// Header + Footer social links (LinkedIn, GitHub) must be reachable by
-// keyboard in DOM order and show a visible focus indicator in both themes.
+// Social links live only in the footer and must be keyboard accessible.
 const assertVisibleFocus = async (locator: Locator) => {
   await expect(locator).toBeFocused();
   const style = await locator.evaluate((el) => {
@@ -38,31 +37,10 @@ for (const theme of ["light", "dark"] as const) {
       await page.waitForLoadState("networkidle");
     });
 
-    test(`header social links follow nav in tab order (${theme})`, async ({
-      page,
-    }) => {
+    test(`header contains no social links (${theme})`, async ({ page }) => {
       const header = page.getByRole("banner");
-      const linkedin = header.getByRole("link", { name: "LinkedIn" });
-      const github = header.getByRole("link", { name: "GitHub" });
-
-      await expect(linkedin).toBeVisible();
-      await expect(github).toBeVisible();
-
-      // Header links come after the last nav link ("Contact") in DOM order.
-      const contact = header
-        .getByRole("link", { name: /^Contact$/ })
-        .first();
-      await contact.focus();
-      await page.keyboard.press("Tab");
-      await assertVisibleFocus(linkedin);
-      await page.keyboard.press("Tab");
-      await assertVisibleFocus(github);
-
-      // Both are new-tab safe external links.
-      for (const link of [linkedin, github]) {
-        await expect(link).toHaveAttribute("target", "_blank");
-        await expect(link).toHaveAttribute("rel", /noopener/);
-      }
+      await expect(header.getByRole("link", { name: "LinkedIn" })).toHaveCount(0);
+      await expect(header.getByRole("link", { name: "GitHub" })).toHaveCount(0);
     });
 
     test(`footer social links are reachable and focus-visible (${theme})`, async ({
