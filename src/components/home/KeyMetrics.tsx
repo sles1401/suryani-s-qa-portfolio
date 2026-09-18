@@ -19,8 +19,8 @@ const KeyMetrics = () => {
       icon: ListChecks,
       label: t("Test Case Dieksekusi", "Test Cases Executed"),
       context: t(
-        "Test case manual fungsional & negatif pada proyek HMS",
-        "Functional & negative manual test cases on the HMS project"
+        "Test case manual fungsional & negatif pada proyek Hauling Management System",
+        "Functional & negative manual test cases on the Hauling Management System project"
       ),
     },
     {

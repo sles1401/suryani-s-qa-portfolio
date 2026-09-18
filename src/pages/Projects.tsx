@@ -44,12 +44,12 @@ const Projects = () => {
 
   const projects = [
     {
-      name: "HMS — Hospital Management System",
+      name: "HMS — Hauling Management System",
       nda: true,
       role: t("Manual QA (magang)", "Manual QA (internship)"),
       scope: t(
-        "Modul registrasi pasien, rawat jalan, dan billing.",
-        "Patient registration, outpatient, and billing modules."
+        "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase.",
+        "Master data modules (units, drivers, locations), hauling transaction forms, and trip reports."
       ),
       approach: [
         t("Test case design (BVA & equivalence partitioning)", "Test case design (BVA & equivalence partitioning)"),
@@ -85,7 +85,7 @@ const Projects = () => {
     {
       id: "BUG-114",
       severity: "Critical",
-      title: t("Total tagihan salah saat diskon ganda", "Billing total wrong with stacked discount"),
+      title: t("Perhitungan total ritase salah saat muatan ganda", "Trip total calculation wrong with double loads"),
       status: "Fixed",
       env: "Chrome 122 / Staging",
     },
@@ -99,14 +99,14 @@ const Projects = () => {
     {
       id: "BUG-088",
       severity: "Major",
-      title: t("Validasi tanggal lahir menerima tanggal masa depan", "Date of birth accepts future dates"),
+      title: t("Validasi tanggal hauling menerima tanggal masa depan", "Hauling date accepts future dates"),
       status: "Fixed",
       env: "Chrome 121 / QA",
     },
     {
       id: "BUG-061",
       severity: "Minor",
-      title: t("Label tidak konsisten pada form rawat jalan", "Inconsistent labels on outpatient form"),
+      title: t("Label tidak konsisten pada form transaksi hauling", "Inconsistent labels on hauling transaction form"),
       status: "Won't fix",
       env: "Chrome 121 / QA",
     },
