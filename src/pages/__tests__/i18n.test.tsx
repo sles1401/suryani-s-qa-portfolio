@@ -18,8 +18,8 @@ const pages: Page[] = [
   {
     name: "Home",
     Component: Home,
-    id: "Memastikan Kualitas, Satu Tes Pada Satu Waktu",
-    en: "Ensuring Quality, One Test at a Time",
+    id: "“Mengungkap bug tersembunyi, memastikan pengalaman yang mulus.”",
+    en: "“Uncovering hidden bugs, ensuring seamless experiences.”",
   },
   {
     name: "About",
