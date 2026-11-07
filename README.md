@@ -1,7 +1,11 @@
 # Suryani Lestari — QA Portfolio
 
 Personal portfolio for **Suryani Lestari**, QA Engineer (manual + automation).
-Live at **[suryani-lestari.my.id](https://suryani-lestari.my.id)**.
+
+[![CI](https://github.com/sles1401/suryani-s-qa-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/sles1401/suryani-s-qa-portfolio/actions/workflows/ci.yml)
+[![Live site](https://img.shields.io/badge/live-suryani--lestari.my.id-c26b5a?style=flat-square)](https://suryani-lestari.my.id)
+
+![Suryani Lestari — QA Portfolio](public/og-image.jpg)
 
 The site is a bilingual (ID/EN) single-page application with light/dark themes. It covers the
 profile, QA experience, selected projects, sanitized testing evidence, a downloadable CV, and two
@@ -18,6 +22,7 @@ interactive QA playgrounds.
 - **Accessibility** — skip link, keyboard-tested navigation, reduced-motion support, and axe checks in CI.
 - **Self-hosted fonts** — Source Sans 3 and Playfair Display are bundled, so the site makes no font requests to third parties.
 - **Privacy-friendly analytics** — Vercel Web Analytics (cookieless) tracks page views.
+- **Bilingual & theme-aware** — Indonesian/English copy and light/dark themes persist across visits, with visual tests covering both.
 
 ## Tech stack
 
@@ -46,17 +51,22 @@ bun run preview    # preview the production build
 
 `npm install` and `npm run ...` work as well.
 
-## Testing
+## Testing & quality gates
 
-```sh
-bunx vitest run                       # unit tests
-bunx playwright test                  # end-to-end + axe accessibility checks
-bun run perf:bundle                   # bundle-size budget
-bun run perf:lighthouse               # Lighthouse budgets (light theme)
-```
+- **50 Playwright specs** — navigation, keyboard activation, focus order, theme persistence, visual snapshots (desktop, mobile, reduced motion), evidence hub, contact validation, and axe scans on every page.
+- **Vitest unit tests** — language persistence, bilingual copy, and evidence-hub logic.
+- **Performance budgets** — bundle-size gate plus Lighthouse budgets for light and dark themes.
 
-CI (`.github/workflows/ci.yml`) runs Vitest, Playwright with axe across Chromium/Firefox/WebKit,
-bundle budgets, and Lighthouse on every push to `main`.
+| Command | Purpose |
+| --- | --- |
+| `bunx vitest run` | Unit tests |
+| `bunx playwright test` | End-to-end tests and axe accessibility checks |
+| `bun run lint` | ESLint |
+| `bun run perf:bundle` | Bundle-size budget |
+| `bun run perf:lighthouse` | Lighthouse budgets (light theme) |
+| `bun run perf:lighthouse:dark` | Lighthouse budgets (dark theme) |
+
+CI ([`ci.yml`](.github/workflows/ci.yml)) runs these checks on every push to `main`, with Playwright across Chromium, Firefox, and WebKit.
 
 ## Deployment
 
