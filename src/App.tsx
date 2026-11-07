@@ -3,7 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ScrollToTop from "./components/ScrollToTop";
@@ -14,10 +15,16 @@ import NotFound from "./pages/NotFound";
 const Resume = lazy(() => import("./pages/Resume"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Projects = lazy(() => import("./pages/Projects"));
+const CaseStudy = lazy(() => import("./pages/CaseStudy"));
 const BugHunter = lazy(() => import("./pages/BugHunter"));
 const ApiConsole = lazy(() => import("./pages/ApiConsole"));
 
 const queryClient = new QueryClient();
+
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  return <Analytics route={location.pathname} />;
+};
 
 const RouteFallback = () => (
   <div
@@ -43,6 +50,7 @@ const App = () => (
         <BrowserRouter>
           <ScrollToTop />
           <CustomCursor />
+          <AnalyticsTracker />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -53,6 +61,7 @@ const App = () => (
               <Route path="/resume" element={<Resume />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:slug" element={<CaseStudy />} />
               <Route path="/bug-hunter" element={<BugHunter />} />
               <Route path="/api-console" element={<ApiConsole />} />
               <Route path="*" element={<NotFound />} />

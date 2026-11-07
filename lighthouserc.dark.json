@@ -3,9 +3,9 @@
     "collect": {
       "url": [
         "http://localhost:4173/",
-        "http://localhost:4173/about",
-        "http://localhost:4173/experience",
-        "http://localhost:4173/portfolio",
+        "http://localhost:4173/projects",
+        "http://localhost:4173/projects/orangehrm-manual-testing",
+        "http://localhost:4173/resume",
         "http://localhost:4173/contact"
       ],
       "numberOfRuns": 1,

@@ -30,6 +30,7 @@ import {
   QA_HUB_URL,
   QA_HUB_REPO_URL,
 } from "@/lib/links";
+import { CASE_STUDIES } from "@/data/case-studies";
 
 const Projects = () => {
   const { t } = useLanguage();
@@ -37,7 +38,7 @@ const Projects = () => {
   usePageMeta({
     title: "Projects & Testing Evidence | Suryani Lestari",
     description:
-      "Testing scope, sanitized bug reports, and audit results for the Hauling Management System and QA Tech Hub projects.",
+      "Case studies, testing scope, sanitized bug reports, and audit results for the Hauling Management System, OrangeHRM, and this portfolio.",
     path: "/projects",
   });
 
@@ -217,8 +218,45 @@ const Projects = () => {
         </div>
       </section>
 
+      {/* Case studies */}
+      <section className="py-14">
+        <div className="container mx-auto px-6 lg:px-8">
+          <SectionHeader
+            label={t("Studi Kasus", "Case Studies")}
+            title={t("Proses, Bukan Hanya Hasil", "Process, Not Just Results")}
+            description={t(
+              "Tiga studi kasus yang menunjukkan konteks, risiko, pendekatan, dan batas antara klaim publik dan data internal.",
+              "Three case studies showing context, risks, approach, and the boundary between public claims and internal data."
+            )}
+          />
+          <div className="grid gap-6 md:grid-cols-3">
+            {CASE_STUDIES.map((study) => (
+              <Link
+                key={study.slug}
+                to={`/projects/${study.slug}`}
+                className="group flex flex-col rounded-2xl border border-border/50 bg-card p-6 shadow-card transition-colors hover:border-primary/40"
+              >
+                <span className="mb-3 inline-block self-start rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-primary">
+                  {t(study.tag.id, study.tag.en)}
+                </span>
+                <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
+                  {study.project}
+                </h3>
+                <p className="mb-5 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {t(study.summary.id, study.summary.en)}
+                </p>
+                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                  {t("Baca studi kasus", "Read case study")}
+                  <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Bug reports */}
-      <section className="py-14 bg-muted/30">
+      <section id="bug-reports" className="py-14 bg-muted/30 scroll-mt-28">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionHeader
             label={t("Laporan Bug", "Bug Reports")}

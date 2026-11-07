@@ -15,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['"Source Sans 3 Variable"', 'system-ui', 'sans-serif'],
+        display: ['"Playfair Display Variable"', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

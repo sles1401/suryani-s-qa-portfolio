@@ -33,7 +33,8 @@ const Contact = () => {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
+    company: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,7 +84,7 @@ const Contact = () => {
     
     // Reset form after delay
     setTimeout(() => {
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "", company: "" });
       setIsSubmitted(false);
     }, 3000);
   };
@@ -187,6 +188,18 @@ const Contact = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                    <div aria-hidden="true" className="hidden">
+                      <label htmlFor="company">Company</label>
+                      <Input
+                        id="company"
+                        name="company"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formData.company}
+                        onChange={handleChange}
+                      />
+                    </div>
                     {formError && (
                       <div
                         role="alert"

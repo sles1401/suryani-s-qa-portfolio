@@ -6,6 +6,8 @@ export type ContactFormValues = {
   email: string;
   subject: string;
   message: string;
+  /** Honeypot field: real visitors never see or fill it. */
+  company?: string;
 };
 
 export type Translate = (id: string, en: string) => string;
@@ -62,8 +64,27 @@ export type SubmitResult =
   | { status: "ok"; delivery: "email" | "mailto" }
   | { status: "invalid"; fieldErrors: FieldErrors; formError: string };
 
-// Delivery endpoint: forwards the message straight to the professional inbox.
+// Primary delivery: same-origin serverless function (no email address in the
+// client bundle). FormSubmit stays as a fallback when the function is not
+// configured or unavailable.
+const API_ENDPOINT = "/api/contact";
 const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
+const REQUEST_TIMEOUT_MS = 8000;
+
+const postJson = async (url: string, body: unknown) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  try {
+    return await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+};
 
 const buildMailto = (values: ContactFormValues) => {
   const subject = values.subject?.trim() || "Portfolio contact";
@@ -93,25 +114,42 @@ export const submitContactMessage = async (
     };
   }
 
+  // Honeypot hit: report success so automated senders do not retry.
+  if (values.company?.trim()) {
+    return { status: "ok", delivery: "email" };
+  }
+
+  const payload = {
+    name: values.name.trim(),
+    email: values.email.trim(),
+    subject: values.subject?.trim() ?? "",
+    message: values.message.trim(),
+  };
+
   try {
-    const response = await fetch(FORM_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        name: values.name.trim(),
-        email: values.email.trim(),
-        _subject: values.subject?.trim()
-          ? `[Portfolio] ${values.subject.trim()}`
-          : "[Portfolio] New message from your website",
-        _replyto: values.email.trim(),
-        _template: "table",
-        message: values.message.trim(),
-      }),
+    const response = await postJson(API_ENDPOINT, payload);
+    if (response.ok) {
+      const data = (await response.json()) as { ok?: boolean };
+      if (data.ok === true) return { status: "ok", delivery: "email" };
+    }
+  } catch {
+    // Function missing, offline, or timed out: try the fallback below.
+  }
+
+  try {
+    const response = await postJson(FORM_ENDPOINT, {
+      ...payload,
+      _subject: payload.subject
+        ? `[Portfolio] ${payload.subject}`
+        : "[Portfolio] New message from your website",
+      _replyto: payload.email,
+      _template: "table",
+      _honey: "",
     });
     if (!response.ok) throw new Error(`Delivery failed with status ${response.status}`);
     return { status: "ok", delivery: "email" };
   } catch {
-    // Network/service failure: hand the message to the visitor's mail client.
+    // Everything is unavailable: hand the message to the visitor's mail client.
     if (typeof window !== "undefined") {
       window.location.href = buildMailto(values);
     }
