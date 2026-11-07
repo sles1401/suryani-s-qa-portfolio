@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import {
   validateContact,
   submitContactMessage,
@@ -17,6 +18,13 @@ import {
 const Contact = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
+
+  usePageMeta({
+    title: "Contact | Suryani Lestari",
+    description:
+      "Get in touch with Suryani Lestari for QA roles, collaborations, or questions.",
+    path: "/contact",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});

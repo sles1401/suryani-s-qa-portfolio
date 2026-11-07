@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Bug, CheckCircle2, RotateCcw, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import {
   Dialog,
   DialogContent,
@@ -102,13 +103,12 @@ const BugHunter = () => {
   const [found, setFound] = useState<string[]>([]);
   const [active, setActive] = useState<Defect | null>(null);
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Bug Hunter — Interactive QA Challenge | Suryani Lestari";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
+  usePageMeta({
+    title: "Bug Hunter — Interactive QA Challenge | Suryani Lestari",
+    description:
+      "An interactive bug-hunting challenge: inspect the mock app, find the planted defects, and log them like a QA engineer.",
+    path: "/bug-hunter",
+  });
 
   const total = Object.keys(DEFECTS).length;
 

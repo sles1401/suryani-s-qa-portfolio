@@ -5,8 +5,8 @@ const ExperienceHighlights = () => {
 
   const timeline = [
     {
-      role: t("Software Quality Assurance (SQA)", "Software Quality Assurance (SQA)"),
-      entity: "PT. SCBD",
+      role: t("QA Engineer", "QA Engineer"),
+      entity: "PT Global Energi Lestari",
       period: t("Januari 2026 — Sekarang", "January 2026 — Present"),
       points: [
         t(

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,14 +9,29 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import ScrollToTop from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
 import Home from "./pages/Home";
-import Resume from "./pages/Resume";
-import Contact from "./pages/Contact";
-import Projects from "./pages/Projects";
-import BugHunter from "./pages/BugHunter";
-import ApiConsole from "./pages/ApiConsole";
 import NotFound from "./pages/NotFound";
 
+const Resume = lazy(() => import("./pages/Resume"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Projects = lazy(() => import("./pages/Projects"));
+const BugHunter = lazy(() => import("./pages/BugHunter"));
+const ApiConsole = lazy(() => import("./pages/ApiConsole"));
+
 const queryClient = new QueryClient();
+
+const RouteFallback = () => (
+  <div
+    role="status"
+    aria-live="polite"
+    className="flex min-h-[60vh] items-center justify-center"
+  >
+    <span className="sr-only">Loading page…</span>
+    <span
+      aria-hidden="true"
+      className="h-8 w-8 animate-spin rounded-full border-2 border-muted border-t-primary"
+    />
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -27,19 +43,21 @@ const App = () => (
         <BrowserRouter>
           <ScrollToTop />
           <CustomCursor />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<Navigate to="/resume" replace />} />
-            <Route path="/experience" element={<Navigate to="/resume" replace />} />
-            <Route path="/skills" element={<Navigate to="/resume" replace />} />
-            <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/bug-hunter" element={<BugHunter />} />
-            <Route path="/api-console" element={<ApiConsole />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<Navigate to="/resume" replace />} />
+              <Route path="/experience" element={<Navigate to="/resume" replace />} />
+              <Route path="/skills" element={<Navigate to="/resume" replace />} />
+              <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/bug-hunter" element={<BugHunter />} />
+              <Route path="/api-console" element={<ApiConsole />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
         </TooltipProvider>
       </LanguageProvider>

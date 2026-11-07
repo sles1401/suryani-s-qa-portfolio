@@ -3,9 +3,8 @@ export const EMAIL = "suryanilestari123@gmail.com";
 export const GITHUB_URL = "https://github.com/sles1401";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/suryani-lestari";
 
-// CV / Resume (Google Drive)
-export const CV_URL =
-  "https://drive.google.com/file/d/1ncx8ZKR2Gryyg-ppegUDbCKA4mEobzwi/view?usp=drive_link";
+// CV / Resume — hosted on the site so the download never depends on Drive access
+export const CV_URL = "/cv/Suryani-Lestari-QA-CV.pdf";
 
 // Manual test case documentation
 export const TEST_CASE_SHEET_URL =

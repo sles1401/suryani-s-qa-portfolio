@@ -1,73 +1,93 @@
-# Welcome to your Lovable project
+# Suryani Lestari — QA Portfolio
 
-## Project info
+Personal portfolio for **Suryani Lestari**, QA Engineer (manual + automation).
+Live at **[suryani-lestari.my.id](https://suryani-lestari.my.id)**.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+The site is a bilingual (ID/EN) single-page application with light/dark themes. It covers the
+profile, QA experience, selected projects, sanitized testing evidence, a downloadable CV, and two
+interactive QA playgrounds.
 
-## How can I edit this code?
+## Highlights
 
-There are several ways of editing your application.
+- **Featured projects** — Hauling Management System work, manual test-case documentation, and QA Tech Hub.
+- **Sanitized evidence** — test-management dashboard, bug-report, and regression-checklist samples with client data redacted.
+- **Bug Hunter** — an interactive challenge where visitors inspect a mock app and log the planted defects.
+- **API Console** — a simulated request/response console for methods, headers, payloads, and status codes (no network calls).
+- **Resume** — experience, education, skills, and a one-page ATS-friendly CV.
+- **Contact** — validated form delivered through FormSubmit, with a mailto fallback.
+- **Accessibility** — skip link, keyboard-tested navigation, reduced-motion support, and axe checks in CI.
 
-**Use Lovable**
+## Tech stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui · Radix UI · React Router · Framer Motion
 
-Changes made via Lovable will be committed automatically to this repo.
+## Routes
 
-**Use your preferred IDE**
+| Route | Description |
+| --- | --- |
+| `/` | Profile, metrics, featured projects, evidence, tools, experience |
+| `/projects` | Project details, sanitized bug reports, audit results |
+| `/resume` | Experience, education, skills, CV download |
+| `/contact` | Contact details and validated form |
+| `/bug-hunter` | Interactive bug-hunting challenge |
+| `/api-console` | Simulated API testing console |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+bun install
+bun run dev        # http://localhost:8080
+bun run build      # production build to dist/
+bun run preview    # preview the production build
 ```
 
-**Edit a file directly in GitHub**
+`npm install` and `npm run ...` work as well.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Testing
 
-**Use GitHub Codespaces**
+```sh
+bunx vitest run                       # unit tests
+bunx playwright test                  # end-to-end + axe accessibility checks
+bun run perf:bundle                   # bundle-size budget
+bun run perf:lighthouse               # Lighthouse budgets (light theme)
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+CI (`.github/workflows/ci.yml`) runs Vitest, Playwright with axe across Chromium/Firefox/WebKit,
+bundle budgets, and Lighthouse on every push to `main`.
 
-## What technologies are used for this project?
+## Deployment
 
-This project is built with:
+Deployed on Vercel. [`vercel.json`](vercel.json) provides the SPA fallback (so deep links such as
+`/resume` work on refresh), long-lived caching for hashed assets, and security headers (CSP, HSTS,
+`X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`).
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+SEO/share assets live in `public/`: `robots.txt`, `sitemap.xml`, and a 1200×630 `og-image.jpg`.
 
-## How can I deploy this project?
+## CV
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+The CV is generated from [`cv/cv.html`](cv/cv.html) and served at
+`/cv/Suryani-Lestari-QA-CV.pdf`. To regenerate after editing the HTML:
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+chrome --headless=new --no-pdf-header-footer \
+  --print-to-pdf=public/cv/Suryani-Lestari-QA-CV.pdf cv/cv.html
+```
 
-Yes, you can!
+## Project structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+cv/cv.html                     CV source (A4, one page)
+public/                        favicon, robots.txt, sitemap.xml, og-image.jpg, cv/
+src/components/home/           home sections (metrics, projects, evidence, tools, experience)
+src/components/layout/         header, footer, page shell
+src/contexts/                  language and theme providers
+src/hooks/use-page-meta.ts     per-route title, description, canonical, Open Graph
+src/pages/                     route pages
+e2e/                           Playwright + axe specs and visual snapshots
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Contact
+
+- Email: [suryanilestari123@gmail.com](mailto:suryanilestari123@gmail.com)
+- LinkedIn: [linkedin.com/in/suryani-lestari](https://www.linkedin.com/in/suryani-lestari)
+- GitHub: [github.com/sles1401](https://github.com/sles1401)

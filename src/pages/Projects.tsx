@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -24,8 +23,9 @@ import {
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import {
-  LIVE_TEST_CASE_SHEET_URL,
+  TEST_CASE_SHEET_URL,
   TEST_CASE_DOCS_REPO_URL,
   QA_HUB_URL,
   QA_HUB_REPO_URL,
@@ -34,19 +34,18 @@ import {
 const Projects = () => {
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Proyek QA — Detail, Bug Report & Audit | Suryani Lestari";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
+  usePageMeta({
+    title: "Projects & Testing Evidence | Suryani Lestari",
+    description:
+      "Testing scope, sanitized bug reports, and audit results for the Hauling Management System and QA Tech Hub projects.",
+    path: "/projects",
+  });
 
   const projects = [
     {
       name: "HMS — Hauling Management System",
       nda: true,
-      role: t("Manual QA (magang)", "Manual QA (internship)"),
+      role: t("QA Engineer", "QA Engineer"),
       scope: t(
         "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase.",
         "Master data modules (units, drivers, locations), hauling transaction forms, and trip reports."
@@ -57,7 +56,7 @@ const Projects = () => {
         t("Validasi data lewat query SQL", "Data validation via SQL queries"),
       ],
       links: [
-        { label: t("Contoh test case (Sheets)", "Sample test cases (Sheets)"), href: LIVE_TEST_CASE_SHEET_URL, icon: FileSpreadsheet },
+        { label: t("Contoh test case (Sheets)", "Sample test cases (Sheets)"), href: TEST_CASE_SHEET_URL, icon: FileSpreadsheet },
         { label: t("Dokumentasi manual test", "Manual test documentation"), href: TEST_CASE_DOCS_REPO_URL, icon: Github },
       ],
     },

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import PageLayout from "@/components/layout/PageLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { useToast } from "@/hooks/use-toast";
 import {
   ENDPOINTS,
@@ -60,13 +61,12 @@ const ApiConsole = () => {
   const [response, setResponse] = useState<SimResponse | null>(null);
   const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Mini API Console — Simulated API Testing | Suryani Lestari";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
+  usePageMeta({
+    title: "Mini API Console — Simulated API Testing | Suryani Lestari",
+    description:
+      "A simulated API console for practicing request methods, headers, payloads, and status codes — no network calls.",
+    path: "/api-console",
+  });
 
   const endpoint = ENDPOINTS.find((e) => e.path === endpointPath) ?? ENDPOINTS[0];
 

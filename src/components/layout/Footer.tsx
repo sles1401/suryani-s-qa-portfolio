@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="min-w-0">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
               <span aria-hidden="true" className="status-dot h-2 w-2 rounded-full bg-emerald-500" />
-              {t("Terbuka untuk peluang kerja", "Open for work")}
+              {t("Terbuka untuk kolaborasi QA", "Open to QA collaborations")}
             </div>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3 min-w-0">

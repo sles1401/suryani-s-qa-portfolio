@@ -11,17 +11,25 @@ import {
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { CV_URL } from "@/lib/links";
 
 const Resume = () => {
   const { t } = useLanguage();
 
+  usePageMeta({
+    title: "Resume & Experience | Suryani Lestari",
+    description:
+      "Experience and education timeline, core QA skills, and the latest CV download for Suryani Lestari.",
+    path: "/resume",
+  });
+
   const timeline = [
     {
       kind: "work" as const,
       period: t("Januari 2026 — Sekarang", "January 2026 — Present"),
-      role: t("Software Quality Assurance (SQA)", "Software Quality Assurance (SQA)"),
-      entity: "PT. SCBD",
+      role: t("QA Engineer", "QA Engineer"),
+      entity: "PT Global Energi Lestari",
       achievements: [
         t(
           "Merancang, mendokumentasikan, dan mengeksekusi Test Plan, Test Case, dan skenario pengujian untuk aplikasi web.",
@@ -105,11 +113,16 @@ const Resume = () => {
     t("Regression Testing", "Regression Testing"),
     t("Pengujian UI/UX", "UI/UX Testing"),
     t("Dokumentasi Test Plan", "Test Plan Documentation"),
+    t("API Testing (Postman)", "API Testing (Postman)"),
+    t("Test Automation (Playwright)", "Test Automation (Playwright)"),
   ];
 
   const technicalStack = [
     "Playwright (Java)",
     "Java",
+    "TestNG",
+    "Postman",
+    "API Testing",
     "JavaScript",
     "Git / GitHub",
     "MySQL",
@@ -139,8 +152,7 @@ const Resume = () => {
               <Button asChild size="lg">
                 <a
                   href={CV_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  download="Suryani-Lestari-QA-CV.pdf"
                   aria-label={t(
                     "Unduh CV PDF Suryani Lestari",
                     "Download Suryani Lestari CV PDF"
@@ -165,8 +177,8 @@ const Resume = () => {
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               {t(
-                "QA dengan fondasi Rekayasa Perangkat Lunak serta pengalaman di frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual sekaligus mengembangkan otomasi Playwright dengan Java.",
-                "A QA with a Software Engineering foundation plus experience in frontend development (React JS) and technology instruction. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases while building Playwright automation with Java."
+                "QA Engineer dengan fondasi Rekayasa Perangkat Lunak serta pengalaman di frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual, mengembangkan otomasi Playwright dengan Java, dan melakukan API testing dengan Postman.",
+                "A QA Engineer with a Software Engineering foundation plus experience in frontend development (React JS) and technology instruction. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases, building Playwright automation with Java, and performing API testing with Postman."
               )}
             </p>
           </div>

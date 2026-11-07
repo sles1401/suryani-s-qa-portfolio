@@ -50,6 +50,7 @@ const Header = () => {
               <Link
                 key={item.href}
                 to={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   isActive(item.href)
                     ? "text-primary bg-accent"
@@ -77,7 +78,11 @@ const Header = () => {
               <DropdownMenuContent align="end" className="w-44">
                 {qaTools.map((item) => (
                   <DropdownMenuItem key={item.href} asChild>
-                    <Link to={item.href} className="gap-2">
+                    <Link
+                      to={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                      className="gap-2"
+                    >
                       <item.icon aria-hidden="true" className="h-4 w-4 text-primary" />
                       {item.name}
                     </Link>
@@ -97,7 +102,9 @@ const Header = () => {
               size="icon"
               className="lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={t("Buka menu navigasi", "Toggle menu")}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -106,13 +113,14 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
+          <div id="mobile-navigation" className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
             <div className="flex flex-col space-y-1">
               {navigation.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                     isActive(item.href)
                       ? "text-primary bg-accent"

@@ -10,14 +10,22 @@ import ExperienceHighlights from "@/components/home/ExperienceHighlights";
 import SectionNav from "@/components/home/SectionNav";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 const Home = () => {
   const { t } = useLanguage();
 
+  usePageMeta({
+    title: "Suryani Lestari | QA Engineer — Manual & Automation Testing",
+    description:
+      "Manual and automated testing with Playwright (Java) and Postman. Explore projects, sanitized testing evidence, and QA documentation.",
+    path: "/",
+  });
+
   const highlights = [
     t("Manual Testing", "Manual Testing"),
-    t("Regression Testing", "Regression Testing"),
-    t("Bug Reporting", "Bug Reporting"),
+    t("Playwright Automation", "Playwright Automation"),
+    t("API Testing (Postman)", "API Testing (Postman)"),
   ];
 
   return (
@@ -40,8 +48,8 @@ const Home = () => {
                     className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500"
                   />
                   {t(
-                    "Terbuka untuk peluang kerja — Full-time / Freelance",
-                    "Open for Work — Full-time / Freelance"
+                    "Terbuka untuk kolaborasi QA",
+                    "Open to QA collaborations"
                   )}
                 </span>
               </div>
@@ -50,8 +58,8 @@ const Home = () => {
               </h1>
               <p className="text-lg md:text-xl text-primary font-medium mb-5">
                 {t(
-                  "Manual QA Engineer — The Bug Detective",
-                  "Manual QA Engineer — The Bug Detective"
+                  "QA Engineer — Manual & Automation · The Bug Detective",
+                  "QA Engineer — Manual & Automation · The Bug Detective"
                 )}
               </p>
               <p className="text-lg md:text-xl text-foreground/90 mb-3 max-w-xl leading-relaxed font-display italic">
@@ -62,8 +70,8 @@ const Home = () => {
               </p>
               <p className="text-base text-muted-foreground mb-8 max-w-lg leading-relaxed">
                 {t(
-                  "QA manual yang teliti, melihat lebih dalam dari sekadar permukaan untuk menjaga kepercayaan pengguna.",
-                  "A detail-oriented Manual QA who looks beyond the surface to protect user trust."
+                  "QA engineer yang teliti, melihat lebih dalam dari sekadar permukaan untuk menjaga kepercayaan pengguna.",
+                  "A detail-oriented QA engineer who looks beyond the surface to protect user trust."
                 )}
               </p>
               
