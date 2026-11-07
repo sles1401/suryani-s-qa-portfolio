@@ -6,6 +6,7 @@ import {
   ExternalLink,
   FileSpreadsheet,
   Github,
+  Lightbulb,
   Lock,
   ShieldCheck,
   Gauge,
@@ -53,6 +54,10 @@ const Projects = () => {
         "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase dengan data terpusat (centralized).",
         "Master data modules (units, drivers, locations), hauling transaction forms, and trip reports with centralized data."
       ),
+      proves: t(
+        "Desain test negatif, validasi data lintas modul, dan bug report yang bisa langsung dieksekusi developer.",
+        "Negative test design, cross-module data validation, and bug reports developers can act on directly."
+      ),
       approach: [
         t("Test case design (BVA & equivalence partitioning)", "Test case design (BVA & equivalence partitioning)"),
         t("Regression checklist tiap rilis", "Per-release regression checklist"),
@@ -72,6 +77,10 @@ const Projects = () => {
         "Sistem marketing dengan data terpusat (centralized); validasi alur dan konsistensi data antar-modul.",
         "Marketing system with centralized data; validation of flows and cross-module data consistency."
       ),
+      proves: t(
+        "Konsistensi data antar-modul pada sistem dengan satu sumber data.",
+        "Cross-module data consistency in a single-source system."
+      ),
       approach: [
         t("Desain test case fungsional & negatif untuk alur sistem", "Functional & negative test-case design for system flows"),
         t("Validasi konsistensi data pada sumber data terpusat", "Data-consistency validation against the centralized source"),
@@ -88,6 +97,10 @@ const Projects = () => {
         "Sistem perencanaan produksi dan pengendalian persediaan dengan data terpusat (centralized); fokus pada validasi perhitungan dan konsistensi stok.",
         "Production planning and inventory control system with centralized data; focus on calculation validation and stock consistency."
       ),
+      proves: t(
+        "Validasi perhitungan dan stok pada alur perencanaan produksi.",
+        "Calculation and stock validation in production planning flows."
+      ),
       approach: [
         t("Test case perhitungan, boundary, dan skenario negatif", "Test cases for calculations, boundaries, and negative scenarios"),
         t("Validasi data stok lewat query SQL", "Stock-data validation through SQL queries"),
@@ -103,6 +116,10 @@ const Projects = () => {
       scope: t(
         "Web produktivitas untuk kebutuhan dokumentasi QA harian.",
         "Productivity web app for day-to-day QA documentation needs."
+      ),
+      proves: t(
+        "Membangun sekaligus menguji produk sendiri, termasuk API dan aksesibilitas dasar.",
+        "Building and testing my own product, including API and basic accessibility checks."
       ),
       approach: [
         t("Pengujian fungsional lintas browser", "Cross-browser functional testing"),
@@ -197,6 +214,45 @@ const Projects = () => {
                 "Scope for each project, sanitized bug report samples, and audit results. Internal project material is only shown in sanitized form per NDA."
               )}
             </p>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-xl border border-border/60 bg-card p-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Lock aria-hidden="true" className="h-4 w-4 text-primary" />
+                  NDA
+                </div>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  {t(
+                    "Repo dan data klien tidak dibagikan; bukti berupa test case tersamarkan dan case study.",
+                    "Client repos and data are not shared; evidence is sanitized test cases and case studies."
+                  )}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-card p-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Database aria-hidden="true" className="h-4 w-4 text-primary" />
+                  Centralized
+                </div>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  {t(
+                    "Satu sumber data dipakai lintas modul; konsistensinya divalidasi lewat query SQL.",
+                    "One data source is shared across modules; consistency is validated through SQL queries."
+                  )}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-card p-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Github aria-hidden="true" className="h-4 w-4 text-primary" />
+                  {t("Publik", "Public")}
+                </div>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                  {t(
+                    "Artefak yang bisa dibuka dan diverifikasi langsung.",
+                    "Artifacts you can open and verify directly."
+                  )}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -234,6 +290,15 @@ const Projects = () => {
                 </p>
                 <p className="text-sm text-muted-foreground mb-4">
                   <span className="font-medium text-foreground">{t("Lingkup", "Scope")}:</span> {p.scope}
+                </p>
+                <p className="mb-5 flex gap-2 text-sm text-muted-foreground">
+                  <Lightbulb aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>
+                    <span className="font-medium text-foreground">
+                      {t("Yang dibuktikan", "What it proves")}:
+                    </span>{" "}
+                    {p.proves}
+                  </span>
                 </p>
                 <ul className="mb-5 space-y-2">
                   {p.approach.map((a) => (
@@ -374,6 +439,32 @@ const Projects = () => {
               </div>
             ))}
           </div>
+
+          <Link
+            to="/how-i-test"
+            className="group mt-10 block rounded-2xl border border-border/50 bg-card p-6 shadow-card transition-colors hover:border-primary/40"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="max-w-2xl">
+                <h3 className="font-display text-lg font-semibold text-foreground">
+                  {t("Cara saya menguji", "How I test")}
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  {t(
+                    "Proses lima langkah, anatomi bug report, glossary istilah QA, dan catatan teknis untuk developer.",
+                    "The five-step process, bug report anatomy, a QA glossary, and technical notes for developers."
+                  )}
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                {t("Buka proses", "Open the process")}
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                />
+              </span>
+            </div>
+          </Link>
 
           <div className="mt-10 rounded-2xl border border-primary/15 bg-accent/50 p-6">
             <p className="text-foreground">

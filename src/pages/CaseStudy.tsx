@@ -111,6 +111,32 @@ const CaseStudy = () => {
             <p className="text-lg leading-relaxed text-muted-foreground">
               {t(study.summary.id, study.summary.en)}
             </p>
+
+            <dl className="mt-8 grid gap-3 sm:grid-cols-2">
+              {study.facts.map((fact) => (
+                <div
+                  key={fact.label.id}
+                  className="rounded-xl border border-border/60 bg-card p-4"
+                >
+                  <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {t(fact.label.id, fact.label.en)}
+                  </dt>
+                  <dd className="mt-1 text-sm font-medium text-foreground">
+                    {t(fact.value.id, fact.value.en)}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-5 flex gap-3 rounded-xl border border-primary/20 bg-accent/60 p-4">
+              <Target aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-sm leading-relaxed text-foreground">
+                <span className="font-semibold">
+                  {t("Hasil singkat: ", "Short outcome: ")}
+                </span>
+                {t(study.outcomeShort.id, study.outcomeShort.en)}
+              </p>
+            </div>
           </div>
         </div>
       </section>

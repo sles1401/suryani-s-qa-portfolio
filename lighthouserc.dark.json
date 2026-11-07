@@ -5,6 +5,7 @@
         "http://localhost:4173/",
         "http://localhost:4173/projects",
         "http://localhost:4173/projects/orangehrm-manual-testing",
+        "http://localhost:4173/how-i-test",
         "http://localhost:4173/resume",
         "http://localhost:4173/contact"
       ],

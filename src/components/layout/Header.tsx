@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Bug, ChevronDown, Menu, Terminal, X } from "lucide-react";
+import { Bug, ChevronDown, Download, Menu, Terminal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,6 +12,8 @@ import LanguageToggle from "@/components/LanguageToggle";
 import ThemeToggle from "@/components/ThemeToggle";
 import LiveClock from "@/components/LiveClock";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { CV_URL } from "@/lib/links";
+import { trackEvent } from "@/lib/analytics";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,6 +23,7 @@ const Header = () => {
   const navigation = [
     { name: t("Beranda", "Home"), href: "/" },
     { name: t("Proyek", "Projects"), href: "/projects" },
+    { name: t("Proses", "Process"), href: "/how-i-test" },
     { name: t("Resume", "Resume"), href: "/resume" },
     { name: t("Kontak", "Contact"), href: "/contact" },
   ];
@@ -94,6 +97,16 @@ const Header = () => {
 
           {/* Preferences + Mobile menu button */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+              <a
+                href={CV_URL}
+                download="Suryani-Lestari-QA-CV.pdf"
+                onClick={() => trackEvent("cv_download", { location: "header" })}
+              >
+                <Download className="mr-1.5 h-4 w-4" />
+                CV
+              </a>
+            </Button>
             <LiveClock />
             <ThemeToggle />
             <LanguageToggle />
@@ -131,7 +144,19 @@ const Header = () => {
                 </Link>
               ))}
               <div className="my-2 border-t border-border/50 pt-3">
-                <p className="px-4 pb-2 text-xs font-semibold uppercase text-muted-foreground">
+                <a
+                  href={CV_URL}
+                  download="Suryani-Lestari-QA-CV.pdf"
+                  onClick={() => {
+                    trackEvent("cv_download", { location: "mobile_menu" });
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 rounded-md px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent/50"
+                >
+                  <Download aria-hidden="true" className="h-4 w-4 text-primary" />
+                  {t("Unduh CV (PDF)", "Download CV (PDF)")}
+                </a>
+                <p className="px-4 pb-2 pt-3 text-xs font-semibold uppercase text-muted-foreground">
                   {t("Alat QA", "QA Tools")}
                 </p>
                 {qaTools.map((item) => (

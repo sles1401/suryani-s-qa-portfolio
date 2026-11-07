@@ -36,8 +36,8 @@ const Resume = () => {
           "Designing, documenting, and executing test plans, test cases, and test scenarios for web applications."
         ),
         t(
-          "Membangun dan merawat skrip otomasi Playwright dengan Java untuk meningkatkan efisiensi regression dan mempercepat siklus rilis.",
-          "Building and maintaining Playwright automation scripts with Java to improve regression efficiency and accelerate release cycles."
+          "Membangun dan merawat skrip otomasi Playwright dengan Java dan JavaScript untuk meningkatkan efisiensi regression dan mempercepat siklus rilis.",
+          "Building and maintaining Playwright automation scripts with Java and JavaScript to improve regression efficiency and accelerate release cycles."
         ),
       ],
     },
@@ -119,11 +119,12 @@ const Resume = () => {
 
   const technicalStack = [
     "Playwright (Java)",
+    "Playwright (JavaScript)",
     "Java",
+    "JavaScript",
     "TestNG",
     "Postman",
     "API Testing",
-    "JavaScript",
     "Git / GitHub",
     "MySQL",
     "HTML / CSS",
@@ -148,6 +149,12 @@ const Resume = () => {
                 "Professional summary, experience & education timeline, and core skills — plus a single official PDF download."
               )}
             </p>
+            <p className="mt-4 text-sm font-medium text-foreground/80 opacity-0 animate-fade-in-up animate-delay-200">
+              {t(
+                "Bandung · Remote / On-site · Terbuka untuk peluang QA",
+                "Bandung · Remote / On-site · Open to QA opportunities"
+              )}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3 opacity-0 animate-fade-in-up animate-delay-300">
               <Button asChild size="lg">
                 <a
@@ -161,6 +168,9 @@ const Resume = () => {
                   <Download className="mr-2 h-5 w-5" />
                   {t("Unduh PDF", "Download PDF")}
                 </a>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/how-i-test">{t("Cara saya menguji", "How I test")}</Link>
               </Button>
             </div>
           </div>
@@ -177,8 +187,8 @@ const Resume = () => {
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               {t(
-                "QA Engineer dengan fondasi Rekayasa Perangkat Lunak serta pengalaman di frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual, mengembangkan otomasi Playwright dengan Java, dan melakukan API testing dengan Postman.",
-                "A QA Engineer with a Software Engineering foundation plus experience in frontend development (React JS) and technology instruction. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases, building Playwright automation with Java, and performing API testing with Postman."
+                "QA Engineer dengan ±10 bulan pengalaman (sejak Januari 2026), fondasi Rekayasa Perangkat Lunak, serta latar belakang frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual, mengembangkan otomasi Playwright dengan Java dan JavaScript, dan melakukan API testing dengan Postman.",
+                "A QA Engineer with ~10 months of experience (since January 2026), a Software Engineering foundation, plus frontend development (React JS) and technology instruction background. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases, building Playwright automation with Java and JavaScript, and performing API testing with Postman."
               )}
             </p>
           </div>

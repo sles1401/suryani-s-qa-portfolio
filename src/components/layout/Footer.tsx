@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Mail, Linkedin, Github, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/links";
+import { trackEvent } from "@/lib/analytics";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,13 +15,17 @@ const Footer = () => {
           <div className="min-w-0">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
               <span aria-hidden="true" className="status-dot h-2 w-2 rounded-full bg-emerald-500" />
-              {t("Terbuka untuk kolaborasi QA", "Open to QA collaborations")}
+              {t(
+                "Terbuka untuk peluang QA — remote / on-site",
+                "Open to QA opportunities — remote / on-site"
+              )}
             </div>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3 min-w-0">
                 <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
                 <a
                   href={`mailto:${EMAIL}`}
+                  onClick={() => trackEvent("email_click", { location: "footer" })}
                   className="break-all text-foreground hover:text-primary transition-colors"
                 >
                   {EMAIL}
@@ -34,9 +39,14 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <Link to="/contact" className="text-sm font-medium text-primary hover:underline">
-            {t("Kirim pesan", "Send a message")}
-          </Link>
+          <div className="flex flex-col gap-2 text-sm sm:items-end">
+            <Link to="/how-i-test" className="font-medium text-primary hover:underline">
+              {t("Cara saya menguji", "How I test")}
+            </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-primary hover:underline">
+              {t("Kirim pesan", "Send a message")}
+            </Link>
+          </div>
         </div>
 
 
@@ -59,6 +69,7 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <a
                href={`mailto:${EMAIL}`}
+              onClick={() => trackEvent("email_click", { location: "footer_icon" })}
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"
               aria-label="Email"
             >
@@ -68,6 +79,7 @@ const Footer = () => {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("linkedin_click", { location: "footer_icon" })}
               className="p-2 rounded-full bg-accent hover:bg-primary hover:text-primary-foreground transition-colors"
               aria-label="LinkedIn"
             >
@@ -96,8 +108,8 @@ const Footer = () => {
             <span className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
             <span>
               {t(
-                "Status: Sistem Diaudit. Tidak Ada Bug Kritis Ditemukan.",
-                "Status: Systems Audited. No Critical Bugs Found."
+                "Audit: axe-core 0 pelanggaran kritis · Lighthouse & budget bundle di CI",
+                "Audit: 0 critical axe violations · Lighthouse & bundle budgets in CI"
               )}
             </span>
           </div>

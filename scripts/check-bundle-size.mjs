@@ -12,7 +12,9 @@ import path from "node:path";
 const DIST = path.resolve("dist");
 
 const BUDGETS_KB = {
-  totalJs: 220,
+  // 230 accounts for the dedicated /how-i-test route (~6 kB gzipped);
+  // the largest single chunk still stays below 200 kB.
+  totalJs: 230,
   totalCss: 20,
   largestJsChunk: 200,
 };

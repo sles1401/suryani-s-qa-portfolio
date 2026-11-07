@@ -8,11 +8,18 @@ export type CaseStudyLink = {
   external: boolean;
 };
 
+export type CaseStudyFact = {
+  label: Bilingual;
+  value: Bilingual;
+};
+
 export type CaseStudy = {
   slug: string;
   project: string;
   tag: Bilingual;
   summary: Bilingual;
+  facts: CaseStudyFact[];
+  outcomeShort: Bilingual;
   context: Bilingual;
   risks: Bilingual[];
   approach: Bilingual[];
@@ -30,6 +37,31 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary: {
       id: "Pengujian manual modul master data, transaksi hauling, dan laporan ritase pada sistem operasi tambang dengan data terpusat.",
       en: "Manual testing of master data, hauling transactions, and trip reports in a centralized mining operations system.",
+    },
+    facts: [
+      {
+        label: { id: "Peran", en: "Role" },
+        value: { id: "QA Engineer (manual)", en: "QA Engineer (manual)" },
+      },
+      {
+        label: { id: "Periode", en: "Period" },
+        value: { id: "2026 — sekarang", en: "2026 — present" },
+      },
+      {
+        label: { id: "Tim", en: "Team" },
+        value: {
+          id: "Tim internal (detail saat wawancara)",
+          en: "Internal team (details on request)",
+        },
+      },
+      {
+        label: { id: "Tools", en: "Tools" },
+        value: { id: "Google Sheets · SQL", en: "Google Sheets · SQL" },
+      },
+    ],
+    outcomeShort: {
+      id: "BUG-114 (Critical) tertangkap sebelum rilis; 100+ test case dieksekusi.",
+      en: "BUG-114 (Critical) caught before release; 100+ test cases executed.",
     },
     context: {
       id: "HMS dipakai untuk mencatat unit, driver, lokasi, transaksi hauling, dan ritase pada sumber data terpusat. Kesalahan kecil pada data atau perhitungan langsung terlihat di laporan operasional, sehingga pengujian difokuskan pada integritas data dan alur antar-modul.",
@@ -119,6 +151,28 @@ export const CASE_STUDIES: CaseStudy[] = [
       id: "Perencanaan dan desain 62 test case manual untuk sembilan modul OrangeHRM Open Source Demo.",
       en: "Planning and designing 62 manual test cases across nine OrangeHRM Open Source Demo modules.",
     },
+    facts: [
+      {
+        label: { id: "Peran", en: "Role" },
+        value: { id: "Perancang test (individu)", en: "Test designer (solo)" },
+      },
+      {
+        label: { id: "Periode", en: "Period" },
+        value: { id: "2026", en: "2026" },
+      },
+      {
+        label: { id: "Tim", en: "Team" },
+        value: { id: "Individu", en: "Solo" },
+      },
+      {
+        label: { id: "Tools", en: "Tools" },
+        value: { id: "Markdown · GitHub", en: "Markdown · GitHub" },
+      },
+    ],
+    outcomeShort: {
+      id: "62 test case dan traceability selesai; eksekusi belum dijalankan.",
+      en: "62 test cases and traceability complete; execution not yet run.",
+    },
     context: {
       id: "OrangeHRM adalah aplikasi HRIS publik yang dipakai sebagai objek latihan. Tujuannya bukan mengejar angka, tetapi mendokumentasikan proses QA secara utuh: rencana, desain kasus uji, traceability, format bug, dan catatan eksplorasi.",
       en: "OrangeHRM is a public HRIS application used as a practice target. The goal was not to chase numbers but to document the full QA process: plan, test design, traceability, bug format, and exploratory notes.",
@@ -202,6 +256,31 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary: {
       id: "Mengaudit situs portofolio ini sendiri: routing, aksesibilitas, performa, SEO, dan ketahanan form kontak.",
       en: "Auditing this portfolio itself: routing, accessibility, performance, SEO, and contact-form resilience.",
+    },
+    facts: [
+      {
+        label: { id: "Peran", en: "Role" },
+        value: { id: "Auditor & developer", en: "Auditor & developer" },
+      },
+      {
+        label: { id: "Periode", en: "Period" },
+        value: { id: "2026", en: "2026" },
+      },
+      {
+        label: { id: "Tim", en: "Team" },
+        value: { id: "Individu", en: "Solo" },
+      },
+      {
+        label: { id: "Tools", en: "Tools" },
+        value: {
+          id: "Playwright · axe-core · Lighthouse · Vitest",
+          en: "Playwright · axe-core · Lighthouse · Vitest",
+        },
+      },
+    ],
+    outcomeShort: {
+      id: "0 pelanggaran axe kritis; budget performa berjalan di CI.",
+      en: "0 critical axe violations; performance budgets run in CI.",
     },
     context: {
       id: "Situs ini adalah produk yang saya kendalikan penuh, jadi cocok dijadikan objek audit end-to-end. Temuan dari audit ini langsung diperbaiki dan diverifikasi lewat build, test, dan CI.",

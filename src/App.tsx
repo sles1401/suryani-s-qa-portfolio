@@ -16,6 +16,7 @@ const Resume = lazy(() => import("./pages/Resume"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Projects = lazy(() => import("./pages/Projects"));
 const CaseStudy = lazy(() => import("./pages/CaseStudy"));
+const HowITest = lazy(() => import("./pages/HowITest"));
 const BugHunter = lazy(() => import("./pages/BugHunter"));
 const ApiConsole = lazy(() => import("./pages/ApiConsole"));
 
@@ -62,6 +63,7 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/projects/:slug" element={<CaseStudy />} />
+              <Route path="/how-i-test" element={<HowITest />} />
               <Route path="/bug-hunter" element={<BugHunter />} />
               <Route path="/api-console" element={<ApiConsole />} />
               <Route path="*" element={<NotFound />} />

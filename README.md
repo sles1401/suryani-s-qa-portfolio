@@ -32,9 +32,10 @@ React 18 · TypeScript · Vite · Tailwind CSS · shadcn/ui · Radix UI · React
 
 | Route | Description |
 | --- | --- |
-| `/` | Profile, metrics, featured projects, evidence, tools, experience |
+| `/` | 30-second recruiter summary, profile, metrics, featured projects, evidence, tools, experience |
 | `/projects` | Project details, case studies, sanitized bug reports, audit results |
 | `/projects/:slug` | Individual case study (HMS, OrangeHRM, portfolio audit) |
+| `/how-i-test` | Five-step testing process, bug report anatomy, QA glossary, developer notes |
 | `/resume` | Experience, education, skills, CV download |
 | `/contact` | Contact details and validated form |
 | `/bug-hunter` | Interactive bug-hunting challenge |

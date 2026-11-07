@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Download, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle, Download, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
+import RecruiterSnapshot from "@/components/home/RecruiterSnapshot";
 import KeyMetrics from "@/components/home/KeyMetrics";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import SanitizedEvidence from "@/components/home/SanitizedEvidence";
@@ -11,6 +12,8 @@ import SectionNav from "@/components/home/SectionNav";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { CV_URL, EMAIL, LINKEDIN_URL } from "@/lib/links";
+import { trackEvent } from "@/lib/analytics";
 
 const Home = () => {
   const { t } = useLanguage();
@@ -18,7 +21,7 @@ const Home = () => {
   usePageMeta({
     title: "Suryani Lestari | QA Engineer — Manual & Automation Testing",
     description:
-      "Manual and automated testing with Playwright (Java) and Postman. Explore projects, sanitized testing evidence, and QA documentation.",
+      "Junior QA Engineer with manual and automated testing experience using Playwright (Java & JavaScript) and Postman. Explore projects, sanitized testing evidence, and QA documentation.",
     path: "/",
   });
 
@@ -40,7 +43,7 @@ const Home = () => {
             <div className="order-2 lg:order-1 opacity-0 animate-fade-in-up">
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full">
-                  {t("Quality Assurance", "Quality Assurance")}
+                  {t("Junior QA Engineer", "Junior QA Engineer")}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
                   <span
@@ -48,8 +51,8 @@ const Home = () => {
                     className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500"
                   />
                   {t(
-                    "Terbuka untuk kolaborasi QA",
-                    "Open to QA collaborations"
+                    "Bandung · Remote / On-site",
+                    "Bandung · Remote / On-site"
                   )}
                 </span>
               </div>
@@ -68,10 +71,16 @@ const Home = () => {
                   "“Uncovering hidden bugs, ensuring seamless experiences.”"
                 )}
               </p>
-              <p className="text-base text-muted-foreground mb-8 max-w-lg leading-relaxed">
+              <p className="text-base text-muted-foreground mb-4 max-w-lg leading-relaxed">
                 {t(
                   "QA engineer yang teliti, melihat lebih dalam dari sekadar permukaan untuk menjaga kepercayaan pengguna.",
                   "A detail-oriented QA engineer who looks beyond the surface to protect user trust."
+                )}
+              </p>
+              <p className="mb-8 max-w-lg text-sm font-medium text-foreground/80">
+                {t(
+                  "±10 bulan pengalaman (sejak Januari 2026) · Playwright (Java & JavaScript) · Postman",
+                  "~10 months of experience (since January 2026) · Playwright (Java & JavaScript) · Postman"
                 )}
               </p>
               
@@ -87,10 +96,14 @@ const Home = () => {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="group">
-                  <Link to="/resume">
+                  <a
+                    href={CV_URL}
+                    download="Suryani-Lestari-QA-CV.pdf"
+                    onClick={() => trackEvent("cv_download", { location: "hero" })}
+                  >
                     <Download className="mr-2 h-4 w-4" />
-                    {t("Unduh Resume / CV", "Download Resume / CV")}
-                  </Link>
+                    {t("Unduh CV (PDF)", "Download CV (PDF)")}
+                  </a>
                 </Button>
                 <Button asChild variant="outline" size="lg">
                   <Link to="/contact">
@@ -98,6 +111,26 @@ const Home = () => {
                     {t("Hubungi Saya", "Contact Me")}
                   </Link>
                 </Button>
+              </div>
+              <div className="mt-5 flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-5">
+                <a
+                  href={`mailto:${EMAIL}`}
+                  onClick={() => trackEvent("email_click", { location: "hero" })}
+                  className="inline-flex min-w-0 items-center gap-2 text-foreground hover:text-primary"
+                >
+                  <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
+                  <span className="break-all">{EMAIL}</span>
+                </a>
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("linkedin_click", { location: "hero" })}
+                  className="inline-flex items-center gap-2 text-foreground hover:text-primary"
+                >
+                  <Linkedin aria-hidden="true" className="h-4 w-4 text-primary" />
+                  LinkedIn
+                </a>
               </div>
             </div>
 
@@ -120,6 +153,7 @@ const Home = () => {
         </div>
       </section>
 
+      <RecruiterSnapshot />
       <KeyMetrics />
       <FeaturedProjects />
       <SanitizedEvidence />
