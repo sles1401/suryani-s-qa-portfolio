@@ -47,16 +47,16 @@ const Projects = () => {
     {
       name: "HMS — Hauling Management System",
       nda: true,
-      centralized: false,
+      centralized: true,
       role: t("QA Engineer", "QA Engineer"),
       scope: t(
-        "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase.",
-        "Master data modules (units, drivers, locations), hauling transaction forms, and trip reports."
+        "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase dengan data terpusat (centralized).",
+        "Master data modules (units, drivers, locations), hauling transaction forms, and trip reports with centralized data."
       ),
       approach: [
         t("Test case design (BVA & equivalence partitioning)", "Test case design (BVA & equivalence partitioning)"),
         t("Regression checklist tiap rilis", "Per-release regression checklist"),
-        t("Validasi data lewat query SQL", "Data validation via SQL queries"),
+        t("Validasi konsistensi data terpusat lewat query SQL", "Centralized data-consistency validation via SQL queries"),
       ],
       links: [
         { label: t("Contoh test case (Sheets)", "Sample test cases (Sheets)"), href: TEST_CASE_SHEET_URL, icon: FileSpreadsheet },

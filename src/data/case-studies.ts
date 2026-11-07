@@ -26,14 +26,14 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "hauling-management-system",
     project: "HMS — Hauling Management System",
-    tag: { id: "Internal · NDA", en: "Internal · NDA" },
+    tag: { id: "Internal · NDA · Centralized", en: "Internal · NDA · Centralized" },
     summary: {
-      id: "Pengujian manual modul master data, transaksi hauling, dan laporan ritase pada sistem operasi tambang.",
-      en: "Manual testing of master data, hauling transactions, and trip reports in a mining operations system.",
+      id: "Pengujian manual modul master data, transaksi hauling, dan laporan ritase pada sistem operasi tambang dengan data terpusat.",
+      en: "Manual testing of master data, hauling transactions, and trip reports in a centralized mining operations system.",
     },
     context: {
-      id: "HMS dipakai untuk mencatat unit, driver, lokasi, transaksi hauling, dan ritase. Kesalahan kecil pada data atau perhitungan langsung terlihat di laporan operasional, sehingga pengujian difokuskan pada integritas data dan alur antar-modul.",
-      en: "HMS records units, drivers, locations, hauling transactions, and trip counts. Small data or calculation errors surface immediately in operational reports, so testing focused on data integrity and cross-module flows.",
+      id: "HMS dipakai untuk mencatat unit, driver, lokasi, transaksi hauling, dan ritase pada sumber data terpusat. Kesalahan kecil pada data atau perhitungan langsung terlihat di laporan operasional, sehingga pengujian difokuskan pada integritas data dan alur antar-modul.",
+      en: "HMS records units, drivers, locations, hauling transactions, and trip counts in a centralized data source. Small data or calculation errors surface immediately in operational reports, so testing focused on data integrity and cross-module flows.",
     },
     risks: [
       {
@@ -59,8 +59,8 @@ export const CASE_STUDIES: CaseStudy[] = [
         en: "Per-release regression checklist for master data and transaction modules.",
       },
       {
-        id: "Validasi hasil lewat query SQL, bukan hanya tampilan UI.",
-        en: "Result validation through SQL queries, not just the UI.",
+        id: "Validasi konsistensi data pada sumber terpusat lewat query SQL, bukan hanya tampilan UI.",
+        en: "Centralized data-consistency validation through SQL queries, not just the UI.",
       },
       {
         id: "Pelaporan bug dengan langkah reproduksi, bukti, severity, dan status.",
