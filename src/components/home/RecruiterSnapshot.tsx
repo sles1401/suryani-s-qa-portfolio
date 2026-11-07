@@ -22,7 +22,7 @@ const RecruiterSnapshot = () => {
       icon: BriefcaseBusiness,
       label: t("Level", "Level"),
       value: t("Junior QA Engineer", "Junior QA Engineer"),
-      detail: t("±10 bulan, sejak Januari 2026", "~10 months, since January 2026"),
+      detail: t("Sejak Januari 2026", "Since January 2026"),
     },
     {
       icon: Code2,

@@ -79,8 +79,8 @@ const Home = () => {
               </p>
               <p className="mb-8 max-w-lg text-sm font-medium text-foreground/80">
                 {t(
-                  "±10 bulan pengalaman (sejak Januari 2026) · Playwright (Java & JavaScript) · Postman",
-                  "~10 months of experience (since January 2026) · Playwright (Java & JavaScript) · Postman"
+                  "QA Engineer sejak Januari 2026 · Playwright (Java & JavaScript) · Postman",
+                  "QA Engineer since January 2026 · Playwright (Java & JavaScript) · Postman"
                 )}
               </p>
               

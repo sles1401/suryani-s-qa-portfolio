@@ -187,8 +187,8 @@ const Resume = () => {
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               {t(
-                "QA Engineer dengan ±10 bulan pengalaman (sejak Januari 2026), fondasi Rekayasa Perangkat Lunak, serta latar belakang frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual, mengembangkan otomasi Playwright dengan Java dan JavaScript, dan melakukan API testing dengan Postman.",
-                "A QA Engineer with ~10 months of experience (since January 2026), a Software Engineering foundation, plus frontend development (React JS) and technology instruction background. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases, building Playwright automation with Java and JavaScript, and performing API testing with Postman."
+                "QA Engineer sejak Januari 2026, dengan fondasi Rekayasa Perangkat Lunak serta latar belakang frontend development (React JS) dan pengajaran teknologi. Teliti dan berfokus pada pengujian, evaluasi, serta peningkatan kualitas produk. Saat ini merancang dan mengeksekusi test case manual, mengembangkan otomasi Playwright dengan Java dan JavaScript, dan melakukan API testing dengan Postman.",
+                "A QA Engineer since January 2026, with a Software Engineering foundation plus frontend development (React JS) and technology instruction background. Detail-oriented and focused on testing, evaluation, and improving product quality. Currently designing and executing manual test cases, building Playwright automation with Java and JavaScript, and performing API testing with Postman."
               )}
             </p>
           </div>
