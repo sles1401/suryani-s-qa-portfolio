@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {
   ArrowRight,
   Bug,
+  Database,
   ExternalLink,
   FileSpreadsheet,
   Github,
@@ -38,7 +39,7 @@ const Projects = () => {
   usePageMeta({
     title: "Projects & Testing Evidence | Suryani Lestari",
     description:
-      "Case studies, testing scope, sanitized bug reports, and audit results for the Hauling Management System, OrangeHRM, and this portfolio.",
+      "Case studies, testing scope, sanitized bug reports, and audit results for HMS, Marketing System, PPIC, OrangeHRM, and this portfolio.",
     path: "/projects",
   });
 
@@ -46,6 +47,7 @@ const Projects = () => {
     {
       name: "HMS — Hauling Management System",
       nda: true,
+      centralized: false,
       role: t("QA Engineer", "QA Engineer"),
       scope: t(
         "Modul master data (unit, driver, lokasi), form transaksi hauling, dan laporan ritase.",
@@ -62,8 +64,41 @@ const Projects = () => {
       ],
     },
     {
+      name: "Marketing System",
+      nda: true,
+      centralized: true,
+      role: t("QA Engineer", "QA Engineer"),
+      scope: t(
+        "Sistem marketing dengan data terpusat (centralized); validasi alur dan konsistensi data antar-modul.",
+        "Marketing system with centralized data; validation of flows and cross-module data consistency."
+      ),
+      approach: [
+        t("Desain test case fungsional & negatif untuk alur sistem", "Functional & negative test-case design for system flows"),
+        t("Validasi konsistensi data pada sumber data terpusat", "Data-consistency validation against the centralized source"),
+        t("Regression checklist tiap rilis", "Per-release regression checklist"),
+      ],
+      links: [],
+    },
+    {
+      name: "PPIC — Production Planning & Inventory Control",
+      nda: true,
+      centralized: true,
+      role: t("QA Engineer", "QA Engineer"),
+      scope: t(
+        "Sistem perencanaan produksi dan pengendalian persediaan dengan data terpusat (centralized); fokus pada validasi perhitungan dan konsistensi stok.",
+        "Production planning and inventory control system with centralized data; focus on calculation validation and stock consistency."
+      ),
+      approach: [
+        t("Test case perhitungan, boundary, dan skenario negatif", "Test cases for calculations, boundaries, and negative scenarios"),
+        t("Validasi data stok lewat query SQL", "Stock-data validation through SQL queries"),
+        t("Regression checklist tiap rilis", "Per-release regression checklist"),
+      ],
+      links: [],
+    },
+    {
       name: "QA Tech Hub",
       nda: false,
+      centralized: false,
       role: t("Perancang & penguji", "Builder & tester"),
       scope: t(
         "Web produktivitas untuk kebutuhan dokumentasi QA harian.",
@@ -187,6 +222,12 @@ const Projects = () => {
                       {t("Proyek Internal — NDA", "Internal Project — NDA")}
                     </Badge>
                   )}
+                  {p.centralized && (
+                    <Badge variant="outline" className="gap-1 border-border text-muted-foreground">
+                      <Database className="h-3 w-3" />
+                      {t("Centralized", "Centralized")}
+                    </Badge>
+                  )}
                 </div>
                 <p className="text-sm text-muted-foreground mb-1">
                   <span className="font-medium text-foreground">{t("Peran", "Role")}:</span> {p.role}
@@ -202,16 +243,18 @@ const Projects = () => {
                     </li>
                   ))}
                 </ul>
-                <div className="flex flex-wrap gap-2">
-                  {p.links.map((l) => (
-                    <Button key={l.href} asChild variant="outline" size="sm">
-                      <a href={l.href} target="_blank" rel="noopener noreferrer">
-                        <l.icon className="mr-2 h-4 w-4" />
-                        {l.label}
-                      </a>
-                    </Button>
-                  ))}
-                </div>
+                {p.links.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {p.links.map((l) => (
+                      <Button key={l.href} asChild variant="outline" size="sm">
+                        <a href={l.href} target="_blank" rel="noopener noreferrer">
+                          <l.icon className="mr-2 h-4 w-4" />
+                          {l.label}
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                )}
               </article>
             ))}
           </div>
