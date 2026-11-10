@@ -25,9 +25,14 @@ const HowITest = () => {
   const { t } = useLanguage();
 
   usePageMeta({
-    title: "Cara Saya Menguji | Suryani Lestari",
-    description:
-      "The five-step testing process, bug report anatomy, QA glossary, and technical notes for developers.",
+    title: t(
+      "Cara Saya Menguji | Suryani Lestari",
+      "How I Test | Suryani Lestari"
+    ),
+    description: t(
+      "Proses pengujian lima langkah, anatomi laporan bug, glossary QA, dan catatan teknis untuk developer.",
+      "The five-step testing process, bug report anatomy, QA glossary, and technical notes for developers."
+    ),
     path: "/how-i-test",
   });
 
