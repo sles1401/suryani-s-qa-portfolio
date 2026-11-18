@@ -32,8 +32,6 @@ const Home = () => {
   const photoY = useTransform(scrollYProgress, [0, 1], [0, 44]);
   const photoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
   const photoOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.35]);
-  const blobTopY = useTransform(scrollYProgress, [0, 1], [0, -36]);
-  const blobBottomY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   usePageMeta({
     title: "Suryani Lestari | QA Engineer — Manual & Automation Testing",
@@ -56,10 +54,10 @@ const Home = () => {
       <section
         ref={heroRef}
         id="hero"
-        className="hero-gradient min-h-[calc(100vh-4rem)] flex items-center scroll-mt-28 overflow-x-clip"
+        className="hero-gradient flex items-center py-14 lg:min-h-[calc(100dvh-4rem)] lg:py-20 scroll-mt-28 overflow-x-clip"
       >
-        <div className="container mx-auto px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Content */}
             <motion.div
               className="order-2 lg:order-1"
@@ -72,46 +70,37 @@ const Home = () => {
               }
               style={shouldReduceMotion ? undefined : { y: textY, opacity: textOpacity }}
             >
-              <div className="mb-6 flex flex-wrap items-center gap-3">
-                <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full">
-                  {t("Junior QA Engineer", "Junior QA Engineer")}
+              <div className="mb-5 flex flex-wrap items-center gap-3">
+                <span className="inline-block px-3.5 py-1.5 text-sm font-medium text-primary bg-accent rounded-full">
+                  QA Engineer
                 </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-400">
                   <span
                     aria-hidden="true"
                     className="status-dot inline-block h-2 w-2 rounded-full bg-emerald-500"
                   />
-                  {t(
-                    "Bandung · Remote / On-site",
-                    "Bandung · Remote / On-site"
-                  )}
+                  {t("Bandung — Remote atau On-site", "Bandung — Remote or On-site")}
                 </span>
               </div>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-4 leading-tight neon-glow">
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground mb-3 leading-tight">
                 Suryani Lestari
               </h1>
-              <p className="text-lg md:text-xl text-primary font-medium mb-5">
+              <p className="text-lg md:text-xl text-primary font-medium mb-4">
                 {t(
-                  "QA Engineer — Manual & Automation · The Bug Detective",
-                  "QA Engineer — Manual & Automation · The Bug Detective"
+                  "Manual & Playwright Automation (Java & JavaScript)",
+                  "Manual & Playwright Automation (Java & JavaScript)"
                 )}
               </p>
-              <p className="text-lg md:text-xl text-foreground/90 mb-3 max-w-xl leading-relaxed font-display italic">
+              <p className="text-base md:text-lg text-foreground/85 mb-4 max-w-xl leading-relaxed">
                 {t(
-                  "“Mengungkap bug tersembunyi, memastikan pengalaman yang mulus.”",
-                  "“Uncovering hidden bugs, ensuring seamless experiences.”"
+                  "Menemukan bug kritis pada alur bisnis, batas nilai, dan konsistensi data sebelum kode menyentuh pengguna.",
+                  "Catching critical bugs across business flows, boundary values, and data consistency before code reaches users."
                 )}
               </p>
-              <p className="text-base text-muted-foreground mb-4 max-w-lg leading-relaxed">
+              <p className="mb-8 max-w-lg text-sm font-medium text-muted-foreground">
                 {t(
-                  "QA engineer yang teliti, melihat lebih dalam dari sekadar permukaan untuk menjaga kepercayaan pengguna.",
-                  "A detail-oriented QA engineer who looks beyond the surface to protect user trust."
-                )}
-              </p>
-              <p className="mb-8 max-w-lg text-sm font-medium text-foreground/80">
-                {t(
-                  "QA Engineer sejak Januari 2026 · Playwright (Java & JavaScript) · Postman",
-                  "QA Engineer since January 2026 · Playwright (Java & JavaScript) · Postman"
+                  "Berpengalaman di sistem web internal sejak Januari 2026 dengan Postman & verifikasi SQL.",
+                  "Testing internal web applications since January 2026 with Postman & SQL verification."
                 )}
               </p>
               
@@ -182,24 +171,13 @@ const Home = () => {
               }
             >
               <div className="relative">
-                <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-soft border-4 border-card">
+                <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-soft border-4 border-card">
                   <img
                     src={profilePhoto}
                     alt="Suryani Lestari - Software Quality Assurance"
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
-                {/* Decorative elements with layered parallax */}
-                <motion.div
-                  aria-hidden="true"
-                  className="absolute -top-4 -right-4 w-20 h-20 bg-primary/20 rounded-full blur-2xl"
-                  style={shouldReduceMotion ? undefined : { y: blobTopY }}
-                />
-                <motion.div
-                  aria-hidden="true"
-                  className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent rounded-full blur-3xl"
-                  style={shouldReduceMotion ? undefined : { y: blobBottomY }}
-                />
               </div>
             </motion.div>
           </div>

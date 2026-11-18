@@ -7,6 +7,8 @@ import {
   Github,
   Rocket,
   Bug,
+  Database,
+  Send,
 } from "lucide-react";
 
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -16,8 +18,6 @@ const ToolsGrid = () => {
   const { t } = useLanguage();
 
   const groups = [
-    // Looker Studio card removed — no longer part of the active toolset.
-
     {
       title: t("Pelacakan & Dokumentasi", "Tracking & Documentation"),
       usage: t(
@@ -28,28 +28,23 @@ const ToolsGrid = () => {
         { name: "QA Hub", icon: ClipboardList },
         { name: "Trello", icon: KanbanSquare },
         { name: "Google Sheets", icon: Table2 },
+        { name: "GitHub", icon: Github },
       ],
     },
     {
-      title: t("Otomasi & Version Control", "Automation & Version Control"),
+      title: t("Otomasi, API & Debugging", "Automation, API & Debugging"),
       usage: t(
-        "Automation: latihan Playwright dengan Java (Page Object Model), kode dikelola di GitHub dan di-deploy via Vercel.",
-        "Automation: practicing Playwright with Java (Page Object Model), code managed on GitHub and deployed via Vercel."
+        "Otomasi Playwright (Java & JS), uji API dengan Postman, inspeksi DOM/network di DevTools, dan verifikasi data lewat SQL.",
+        "Playwright automation (Java & JS), API testing with Postman, DOM/network inspection in DevTools, and data verification via SQL."
       ),
       items: [
         { name: "Playwright", icon: TestTube2 },
         { name: "Java", icon: Coffee },
-        { name: "GitHub", icon: Github },
+        { name: "Postman", icon: Send },
+        { name: "SQL", icon: Database },
+        { name: "Chrome DevTools", icon: Bug },
         { name: "Vercel", icon: Rocket },
       ],
-    },
-    {
-      title: t("Alat Pengujian", "Testing Tools"),
-      usage: t(
-        "Inspeksi elemen, cek console error, dan verifikasi request saat pengujian manual.",
-        "Inspecting elements, checking console errors, and verifying requests during manual testing."
-      ),
-      items: [{ name: "Chrome DevTools", icon: Bug }],
     },
   ];
 

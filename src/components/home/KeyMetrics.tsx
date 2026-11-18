@@ -62,7 +62,7 @@ const KeyMetrics = () => {
     <section id="key-metrics" className="py-16 scroll-mt-28 border-y border-border/50 bg-muted/20">
       <div className="container mx-auto px-6 lg:px-8">
         <h2 className="sr-only">{t("Metrik Utama", "Key Metrics")}</h2>
-        <ScrollRevealGroup as="dl" className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <ScrollRevealGroup as="dl" className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-8">
           {metrics.map(({ icon: Icon, ...m }) => (
             <ScrollRevealItem key={m.label} className="text-center min-w-0">
               <dt className="sr-only">{m.label}</dt>

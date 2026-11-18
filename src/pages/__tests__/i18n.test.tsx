@@ -18,8 +18,8 @@ const pages: Page[] = [
   {
     name: "Home",
     Component: Home,
-    id: "“Mengungkap bug tersembunyi, memastikan pengalaman yang mulus.”",
-    en: "“Uncovering hidden bugs, ensuring seamless experiences.”",
+    id: "Menemukan bug kritis pada alur bisnis, batas nilai, dan konsistensi data sebelum kode menyentuh pengguna.",
+    en: "Catching critical bugs across business flows, boundary values, and data consistency before code reaches users.",
   },
   {
     name: "About",

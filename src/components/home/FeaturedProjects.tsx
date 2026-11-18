@@ -127,22 +127,30 @@ const FeaturedProjects = () => {
           </p>
         </ScrollReveal>
 
-        <ScrollRevealGroup as="ul" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
-            <ScrollRevealItem
-              as="li"
-              key={p.title}
-              className="flex flex-col min-w-0 overflow-hidden rounded-lg border border-border bg-card shadow-card transition-shadow hover:shadow-soft"
-            >
-              <img
-                src={p.image}
-                alt={p.imageAlt}
-                loading="lazy"
-                width={1024}
-                height={640}
-                className="aspect-[16/10] w-full border-b border-border object-cover"
-              />
-              <div className="flex flex-1 flex-col p-6">
+        <ScrollRevealGroup as="ul" className="grid md:grid-cols-2 gap-6">
+          {projects.map((p, index) => {
+            const isLead = index === 0;
+            return (
+              <ScrollRevealItem
+                as="li"
+                key={p.title}
+                className={`flex min-w-0 overflow-hidden rounded-xl border border-border bg-card shadow-card transition-colors hover:border-primary/50 ${
+                  isLead ? "md:col-span-2 flex-col lg:grid lg:grid-cols-[1.1fr_1.3fr]" : "flex-col"
+                }`}
+              >
+                <img
+                  src={p.image}
+                  alt={p.imageAlt}
+                  loading="lazy"
+                  width={1024}
+                  height={640}
+                  className={
+                    isLead
+                      ? "aspect-[16/10] w-full border-b border-border object-cover lg:h-full lg:aspect-auto lg:border-b-0 lg:border-r"
+                      : "aspect-[16/10] w-full border-b border-border object-cover"
+                  }
+                />
+                <div className="flex flex-1 flex-col p-6">
               {p.confidential && (
                 <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-2.5 py-1 text-xs font-semibold text-primary">
                   <Lock aria-hidden="true" className="h-3 w-3" />
@@ -207,7 +215,8 @@ const FeaturedProjects = () => {
               )}
               </div>
             </ScrollRevealItem>
-          ))}
+            );
+          })}
         </ScrollRevealGroup>
       </div>
     </section>

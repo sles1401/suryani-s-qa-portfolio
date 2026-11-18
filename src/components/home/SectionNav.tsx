@@ -27,17 +27,17 @@ const SectionNav = () => {
   return (
     <nav
       aria-label={t("Navigasi bagian halaman", "Page section navigation")}
-      className="sticky top-16 z-40 border-b border-border/50 bg-background/85 backdrop-blur-md"
+      className="sticky top-16 z-40 border-b border-border/50 bg-background/95"
     >
       <div className="container mx-auto px-6 lg:px-8">
-        <ul className="flex gap-1 overflow-x-auto py-2 text-sm">
+        <ul className="flex gap-1 overflow-x-auto py-1 text-sm">
           {SECTION_IDS.map((id) => (
             <li key={id} className="shrink-0">
               <a
                 href={`#${id}`}
                 aria-current={active === id ? "true" : undefined}
                 className={cn(
-                  "block rounded-md px-3 py-1.5 font-medium transition-colors",
+                  "inline-flex min-h-[44px] items-center rounded-md px-3 py-2 font-medium transition-colors",
                   active === id
                     ? "bg-accent text-primary"
                     : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"

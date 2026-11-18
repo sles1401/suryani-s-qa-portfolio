@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Bug, CheckCircle2, RotateCcw, Target } from "lucide-react";
+import { Bug, CheckCircle2, Copy, RotateCcw, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -100,6 +101,7 @@ const severityStyles: Record<Severity, string> = {
 
 const BugHunter = () => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [found, setFound] = useState<string[]>([]);
   const [active, setActive] = useState<Defect | null>(null);
 
@@ -347,6 +349,25 @@ const BugHunter = () => {
                   {t(active.expected.id, active.expected.en)}
                 </p>
               </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => {
+                  const md = [
+                    `### [${active.id}] ${t(active.title.id, active.title.en)}`,
+                    `- **Severity:** ${active.severity}`,
+                    `- **Actual:** ${t(active.description.id, active.description.en)}`,
+                    `- **Expected:** ${t(active.expected.id, active.expected.en)}`,
+                  ].join("\n");
+                  navigator.clipboard?.writeText(md);
+                  toast({ title: t("Laporan bug disalin", "Bug report copied") });
+                }}
+              >
+                <Copy className="mr-2 h-4 w-4" />
+                {t("Salin Laporan Bug (Markdown)", "Copy Bug Report (Markdown)")}
+              </Button>
             </>
           )}
         </DialogContent>

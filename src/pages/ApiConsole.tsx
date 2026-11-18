@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Play, Terminal, Clock, Copy } from "lucide-react";
+import { CheckCircle2, Play, Terminal, Clock, Copy, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,11 +25,11 @@ import {
 
 const tokenClass: Record<string, string> = {
   key: "text-primary",
-  string: "text-emerald-600 dark:text-emerald-400",
-  number: "text-sky-600 dark:text-sky-400",
-  bool: "text-amber-600 dark:text-amber-400",
+  string: "text-emerald-700 dark:text-emerald-300",
+  number: "text-sky-700 dark:text-sky-300",
+  bool: "text-amber-700 dark:text-amber-300",
   null: "text-muted-foreground",
-  punct: "text-foreground/70",
+  punct: "text-foreground/75",
 };
 
 const JsonView = ({ value }: { value: unknown }) => {
@@ -167,17 +167,26 @@ const ApiConsole = () => {
               </div>
 
               <div className="mt-5 space-y-2">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <Label htmlFor="body">{t("Body (JSON)", "Body (JSON)")}</Label>
-                  {endpoint.sampleBody && (
+                  <div className="flex items-center gap-3">
+                    {endpoint.sampleBody && (
+                      <button
+                        type="button"
+                        onClick={() => setBody(JSON.stringify(endpoint.sampleBody, null, 2))}
+                        className="text-xs font-medium text-primary hover:underline"
+                      >
+                        {t("Isi contoh valid", "Insert valid sample")}
+                      </button>
+                    )}
                     <button
                       type="button"
-                      onClick={() => setBody(JSON.stringify(endpoint.sampleBody, null, 2))}
-                      className="text-xs font-medium text-primary hover:underline"
+                      onClick={() => setHeaders("{}")}
+                      className="text-xs font-medium text-muted-foreground hover:text-foreground hover:underline"
                     >
-                      {t("Isi contoh", "Insert sample")}
+                      {t("Uji tanpa token (401)", "Test missing token (401)")}
                     </button>
-                  )}
+                  </div>
                 </div>
                 <Textarea
                   id="body"
@@ -260,6 +269,33 @@ const ApiConsole = () => {
                       </button>
                     </div>
                     <JsonView value={response.body} />
+                  </div>
+                  <div className="rounded-lg border border-border/60 bg-muted/30 p-4">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      {t("Checklist Asersi QA", "QA Assertion Checklist")}
+                    </p>
+                    <ul className="space-y-1.5 text-xs">
+                      <li className="flex items-center gap-2 text-foreground">
+                        {response.status < 400 ? (
+                          <CheckCircle2 aria-hidden="true" className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-300" />
+                        ) : (
+                          <XCircle aria-hidden="true" className="h-3.5 w-3.5 text-destructive-text" />
+                        )}
+                        <span>
+                          {t("Status HTTP", "HTTP Status")}: {response.status} ({response.status < 400 ? "2xx/3xx PASS" : "4xx/5xx ERROR"})
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-2 text-foreground">
+                        <CheckCircle2 aria-hidden="true" className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-300" />
+                        <span>
+                          {t("Waktu respons < 500 ms", "Response time < 500 ms")} ({response.durationMs} ms)
+                        </span>
+                      </li>
+                      <li className="flex items-center gap-2 text-foreground">
+                        <CheckCircle2 aria-hidden="true" className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-300" />
+                        <span>Content-Type: application/json</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               )}

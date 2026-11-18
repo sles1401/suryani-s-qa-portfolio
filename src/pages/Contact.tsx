@@ -81,12 +81,6 @@ const Contact = () => {
               "Your email app was opened to finish sending the message."
             ),
     });
-    
-    // Reset form after delay
-    setTimeout(() => {
-      setFormData({ name: "", email: "", subject: "", message: "", company: "" });
-      setIsSubmitted(false);
-    }, 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -179,12 +173,22 @@ const Contact = () => {
                     <h3 className="font-display text-xl font-semibold text-foreground mb-2">
                       {t("Pesan Terkirim!", "Message Sent!")}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground mb-6">
                       {t(
                         "Terima kasih telah menghubungi. Saya akan segera membalas.",
                         "Thank you for reaching out. I'll get back to you soon."
                       )}
                     </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setFormData({ name: "", email: "", subject: "", message: "", company: "" });
+                        setIsSubmitted(false);
+                      }}
+                    >
+                      {t("Kirim pesan lain", "Send another message")}
+                    </Button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} noValidate className="space-y-6">

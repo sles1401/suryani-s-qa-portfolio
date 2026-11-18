@@ -3,16 +3,12 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Code2,
-  Download,
+  FolderGit2,
   Layers,
-  Linkedin,
-  Mail,
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CV_URL, EMAIL, LINKEDIN_URL } from "@/lib/links";
-import { trackEvent } from "@/lib/analytics";
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 
 const RecruiterSnapshot = () => {
@@ -28,20 +24,20 @@ const RecruiterSnapshot = () => {
     {
       icon: Code2,
       label: t("Fokus", "Focus"),
-      value: t("Manual + Automation", "Manual + Automation"),
-      detail: "Playwright (Java & JavaScript) · Postman",
+      value: t("Manual & Automation", "Manual & Automation"),
+      detail: "Playwright (Java, JS), Postman, SQL",
     },
     {
       icon: Layers,
       label: t("Konteks", "Context"),
       value: t("Aplikasi web internal", "Internal web applications"),
-      detail: "Hauling · Marketing · PPIC",
+      detail: "Hauling, Marketing, PPIC",
     },
     {
       icon: MapPin,
       label: t("Lokasi", "Location"),
       value: "Bandung, Indonesia",
-      detail: t("Remote / on-site sesuai kebutuhan", "Remote / on-site as needed"),
+      detail: t("Remote atau on-site", "Remote or on-site"),
     },
   ];
 
@@ -50,55 +46,31 @@ const RecruiterSnapshot = () => {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1.4fr] lg:items-center">
           <ScrollReveal direction="up">
-            <span className="mb-3 inline-block rounded-full bg-accent px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
+            <p className="mb-2 text-sm font-medium text-primary">
               {t("Ringkasan 30 Detik", "30-Second Summary")}
-            </span>
+            </p>
             <h2 className="font-display text-2xl font-semibold text-foreground md:text-3xl">
               {t("Untuk rekruter dan tim teknis", "For recruiters and technical teams")}
             </h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               {t(
-                "QA Engineer junior dengan fokus manual testing dan otomasi Playwright. Terbuka untuk posisi penuh waktu, kontrak, maupun kolaborasi QA — remote atau on-site.",
-                "A junior QA Engineer focused on manual testing and Playwright automation. Open to full-time roles, contracts, or QA collaborations — remote or on-site."
+                "Fokus pada perancangan test case negatif, validasi integritas data, dan otomasi regresi dengan Playwright. Terbuka untuk posisi penuh waktu maupun kontrak QA.",
+                "Focused on negative test-case design, data-integrity validation, and Playwright regression automation. Open to full-time or contract QA roles."
               )}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg">
-                <a
-                  href={CV_URL}
-                  download="Suryani-Lestari-QA-CV.pdf"
-                  onClick={() => trackEvent("cv_download", { location: "snapshot" })}
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  {t("Unduh CV (PDF)", "Download CV (PDF)")}
-                </a>
+                <Link to="/projects">
+                  <FolderGit2 className="mr-2 h-4 w-4" />
+                  {t("Lihat Proyek & Bukti", "View Projects & Evidence")}
+                </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link to="/how-i-test">
-                  {t("Cara saya menguji", "How I test")}
+                  {t("Cara Saya Menguji", "How I Test")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </div>
-            <div className="mt-5 flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-5">
-              <a
-                href={`mailto:${EMAIL}`}
-                onClick={() => trackEvent("email_click", { location: "snapshot" })}
-                className="inline-flex min-w-0 items-center gap-2 text-foreground hover:text-primary"
-              >
-                <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
-                <span className="break-all">{EMAIL}</span>
-              </a>
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent("linkedin_click", { location: "snapshot" })}
-                className="inline-flex items-center gap-2 text-foreground hover:text-primary"
-              >
-                <Linkedin aria-hidden="true" className="h-4 w-4 text-primary" />
-                LinkedIn
-              </a>
             </div>
           </ScrollReveal>
 
