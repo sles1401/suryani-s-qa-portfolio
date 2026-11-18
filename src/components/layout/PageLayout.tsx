@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import PageTransition from "@/components/PageTransition";
+import ScrollProgress from "@/components/ScrollProgress";
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -10,6 +11,7 @@ interface PageLayoutProps {
 const PageLayout = ({ children }: PageLayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollProgress />
       <a
         href="#main-content"
         data-testid="skip-link"

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CV_URL, EMAIL, LINKEDIN_URL } from "@/lib/links";
 import { trackEvent } from "@/lib/analytics";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 
 const RecruiterSnapshot = () => {
   const { t } = useLanguage();
@@ -45,10 +46,10 @@ const RecruiterSnapshot = () => {
   ];
 
   return (
-    <section id="ringkasan" className="border-y border-border/50 bg-card py-14 scroll-mt-28">
+    <section id="ringkasan" className="border-y border-border/50 bg-card py-14 scroll-mt-28 overflow-x-clip">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1.4fr] lg:items-center">
-          <div>
+          <ScrollReveal direction="up">
             <span className="mb-3 inline-block rounded-full bg-accent px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
               {t("Ringkasan 30 Detik", "30-Second Summary")}
             </span>
@@ -99,11 +100,11 @@ const RecruiterSnapshot = () => {
                 LinkedIn
               </a>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <dl className="grid gap-4 sm:grid-cols-2">
+          <ScrollRevealGroup as="dl" className="grid gap-4 sm:grid-cols-2">
             {facts.map((fact) => (
-              <div
+              <ScrollRevealItem
                 key={fact.label}
                 className="rounded-2xl border border-border/60 bg-background p-5"
               >
@@ -115,9 +116,9 @@ const RecruiterSnapshot = () => {
                   {fact.value}
                 </dd>
                 <dd className="mt-1 text-sm text-muted-foreground">{fact.detail}</dd>
-              </div>
+              </ScrollRevealItem>
             ))}
-          </dl>
+          </ScrollRevealGroup>
         </div>
       </div>
     </section>

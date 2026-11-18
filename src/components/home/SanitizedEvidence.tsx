@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 import evidenceDashboard from "@/assets/evidence-dashboard.jpg";
 import evidenceBugReport from "@/assets/evidence-bugreport.jpg";
 import evidenceRegression from "@/assets/evidence-regression.jpg";
@@ -52,7 +53,7 @@ const SanitizedEvidence = () => {
       className="py-20 scroll-mt-28 border-y border-border/50 bg-muted/20"
     >
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="max-w-2xl mb-12">
+        <ScrollReveal direction="up" className="max-w-2xl mb-12">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
             <ShieldCheck aria-hidden="true" className="h-3.5 w-3.5 text-primary" />
             {t("Sanitized / Bebas Data Sensitif", "Sanitized / No Sensitive Data")}
@@ -66,11 +67,12 @@ const SanitizedEvidence = () => {
               "For internal projects without a public repository, these are the QA artifact formats I work with. Every sample is redacted of client names, test data, and other sensitive information."
             )}
           </p>
-        </div>
+        </ScrollReveal>
 
-        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ScrollRevealGroup as="ul" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item) => (
-            <li
+            <ScrollRevealItem
+              as="li"
               key={item.title}
               className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card"
             >
@@ -90,9 +92,9 @@ const SanitizedEvidence = () => {
                   {item.caption}
                 </p>
               </div>
-            </li>
+            </ScrollRevealItem>
           ))}
-        </ul>
+        </ScrollRevealGroup>
       </div>
     </section>
   );

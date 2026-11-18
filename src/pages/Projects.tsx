@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import PageLayout from "@/components/layout/PageLayout";
 import SectionHeader from "@/components/ui/section-header";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import {
@@ -264,11 +265,11 @@ const Projects = () => {
             label={t("Detail", "Details")}
             title={t("Proyek yang Saya Uji", "Projects I Tested")}
           />
-          <div className="grid gap-6 lg:grid-cols-2">
+          <ScrollRevealGroup className="grid gap-6 lg:grid-cols-2">
             {projects.map((p) => (
+              <ScrollRevealItem key={p.name}>
               <article
-                key={p.name}
-                className="rounded-2xl border border-border/50 bg-card p-6 shadow-card"
+                className="h-full rounded-2xl border border-border/50 bg-card p-6 shadow-card"
               >
                 <div className="mb-3 flex flex-wrap items-center gap-2">
                   <h3 className="font-display text-xl font-semibold text-foreground">{p.name}</h3>
@@ -321,8 +322,9 @@ const Projects = () => {
                   </div>
                 )}
               </article>
+              </ScrollRevealItem>
             ))}
-          </div>
+          </ScrollRevealGroup>
         </div>
       </section>
 
@@ -337,12 +339,12 @@ const Projects = () => {
               "Three case studies showing context, risks, approach, and the boundary between public claims and internal data."
             )}
           />
-          <div className="grid gap-6 md:grid-cols-3">
+          <ScrollRevealGroup className="grid gap-6 md:grid-cols-3">
             {CASE_STUDIES.map((study) => (
+              <ScrollRevealItem key={study.slug}>
               <Link
-                key={study.slug}
                 to={`/projects/${study.slug}`}
-                className="group flex flex-col rounded-2xl border border-border/50 bg-card p-6 shadow-card transition-colors hover:border-primary/40"
+                className="group flex h-full flex-col rounded-2xl border border-border/50 bg-card p-6 shadow-card transition-colors hover:border-primary/40"
               >
                 <span className="mb-3 inline-block self-start rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-primary">
                   {t(study.tag.id, study.tag.en)}
@@ -358,8 +360,9 @@ const Projects = () => {
                   <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>
+              </ScrollRevealItem>
             ))}
-          </div>
+          </ScrollRevealGroup>
         </div>
       </section>
 

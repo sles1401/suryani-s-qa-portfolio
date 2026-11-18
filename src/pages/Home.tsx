@@ -1,7 +1,10 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, CheckCircle, Download, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
+import ScrollReveal from "@/components/ScrollReveal";
 import RecruiterSnapshot from "@/components/home/RecruiterSnapshot";
 import KeyMetrics from "@/components/home/KeyMetrics";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
@@ -17,6 +20,20 @@ import { trackEvent } from "@/lib/analytics";
 
 const Home = () => {
   const { t } = useLanguage();
+  const shouldReduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -24]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.3]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 44]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const photoOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.35]);
+  const blobTopY = useTransform(scrollYProgress, [0, 1], [0, -36]);
+  const blobBottomY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   usePageMeta({
     title: "Suryani Lestari | QA Engineer — Manual & Automation Testing",
@@ -36,11 +53,25 @@ const Home = () => {
       {/* Hero Section */}
       <SectionNav />
 
-      <section id="hero" className="hero-gradient min-h-[calc(100vh-4rem)] flex items-center scroll-mt-28">
+      <section
+        ref={heroRef}
+        id="hero"
+        className="hero-gradient min-h-[calc(100vh-4rem)] flex items-center scroll-mt-28 overflow-x-clip"
+      >
         <div className="container mx-auto px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Content */}
-            <div className="order-2 lg:order-1 opacity-0 animate-fade-in-up">
+            <motion.div
+              className="order-2 lg:order-1"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.55, ease: [0.22, 1, 0.36, 1] }
+              }
+              style={shouldReduceMotion ? undefined : { y: textY, opacity: textOpacity }}
+            >
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-accent rounded-full">
                   {t("Junior QA Engineer", "Junior QA Engineer")}
@@ -132,10 +163,24 @@ const Home = () => {
                   LinkedIn
                 </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* Profile Photo */}
-            <div className="order-1 lg:order-2 flex justify-center opacity-0 animate-fade-in animate-delay-200">
+            <motion.div
+              className="order-1 lg:order-2 flex justify-center"
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }
+              }
+              style={
+                shouldReduceMotion
+                  ? undefined
+                  : { y: photoY, scale: photoScale, opacity: photoOpacity }
+              }
+            >
               <div className="relative">
                 <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-soft border-4 border-card">
                   <img
@@ -144,11 +189,19 @@ const Home = () => {
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-primary/20 rounded-full blur-2xl" />
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent rounded-full blur-3xl" />
+                {/* Decorative elements with layered parallax */}
+                <motion.div
+                  aria-hidden="true"
+                  className="absolute -top-4 -right-4 w-20 h-20 bg-primary/20 rounded-full blur-2xl"
+                  style={shouldReduceMotion ? undefined : { y: blobTopY }}
+                />
+                <motion.div
+                  aria-hidden="true"
+                  className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent rounded-full blur-3xl"
+                  style={shouldReduceMotion ? undefined : { y: blobBottomY }}
+                />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -163,7 +216,7 @@ const Home = () => {
       {/* Closing navigation */}
       <section className="py-20 bg-card">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center opacity-0 animate-fade-in-up animate-delay-300">
+          <ScrollReveal direction="up" className="max-w-3xl mx-auto text-center">
             <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-4">
               {t("Ingin melihat rekam jejak lengkap?", "Want to see the full track record?")}
             </h2>
@@ -174,7 +227,7 @@ const Home = () => {
               <Button asChild variant="outline"><Link to="/resume">{t("Buka Resume", "Open Resume")}</Link></Button>
               <Button asChild><Link to="/contact">{t("Hubungi Saya", "Contact Me")}<ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </PageLayout>

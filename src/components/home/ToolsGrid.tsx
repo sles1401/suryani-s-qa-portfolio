@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 
 const ToolsGrid = () => {
   const { t } = useLanguage();
@@ -55,9 +56,11 @@ const ToolsGrid = () => {
   return (
     <section id="tools-technologies" className="py-20 scroll-mt-28 bg-muted/20 border-y border-border/50">
       <div className="container mx-auto px-6 lg:px-8">
-        <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
-          {t("Tools & Teknologi", "Tools & Technologies")}
-        </h2>
+        <ScrollReveal direction="up">
+          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
+            {t("Tools & Teknologi", "Tools & Technologies")}
+          </h2>
+        </ScrollReveal>
 
         <div className="space-y-10">
           {groups.map((group) => (
@@ -68,9 +71,10 @@ const ToolsGrid = () => {
               <p className="mb-4 max-w-2xl text-sm text-muted-foreground leading-relaxed">
                 {group.usage}
               </p>
-              <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              <ScrollRevealGroup as="ul" stagger={0.06} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {group.items.map(({ name, icon: Icon }) => (
-                  <li
+                  <ScrollRevealItem
+                    as="li"
                     key={name}
                     className="group flex items-center gap-3 min-w-0 rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:border-primary/60 hover:bg-accent/60"
                   >
@@ -81,9 +85,9 @@ const ToolsGrid = () => {
                     <span className="truncate text-sm font-medium text-foreground">
                       {name}
                     </span>
-                  </li>
+                  </ScrollRevealItem>
                 ))}
-              </ul>
+              </ScrollRevealGroup>
             </div>
           ))}
         </div>

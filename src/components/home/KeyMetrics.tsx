@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Users, ListChecks, Bug, GitCompareArrows } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { TEST_CASE_DOCS_REPO_URL, TEST_CASE_SHEET_URL } from "@/lib/links";
+import { ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 
 const KeyMetrics = () => {
   const { t } = useLanguage();
@@ -61,9 +62,9 @@ const KeyMetrics = () => {
     <section id="key-metrics" className="py-16 scroll-mt-28 border-y border-border/50 bg-muted/20">
       <div className="container mx-auto px-6 lg:px-8">
         <h2 className="sr-only">{t("Metrik Utama", "Key Metrics")}</h2>
-        <dl className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <ScrollRevealGroup as="dl" className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {metrics.map(({ icon: Icon, ...m }) => (
-            <div key={m.label} className="text-center min-w-0">
+            <ScrollRevealItem key={m.label} className="text-center min-w-0">
               <dt className="sr-only">{m.label}</dt>
               <dd>
                 <Icon
@@ -101,9 +102,9 @@ const KeyMetrics = () => {
                   )
                 )}
               </dd>
-            </div>
+            </ScrollRevealItem>
           ))}
-        </dl>
+        </ScrollRevealGroup>
         <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-muted-foreground">
           {t(
             "Angka eksekusi berasal dari tracker internal HMS (NDA). Artefak yang dapat ditinjau publik: sampel test case, repo dokumentasi manual test, dan contoh laporan bug tersanitasi di halaman Projects.",

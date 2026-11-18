@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { CV_URL } from "@/lib/links";
@@ -198,14 +199,16 @@ const Resume = () => {
       {/* Timeline */}
       <section className="py-16">
         <div className="container mx-auto px-6 lg:px-8">
-          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
-            {t("Pengalaman & Pendidikan", "Experience & Education")}
-          </h2>
-          <ol className="relative max-w-3xl border-l border-border pl-6 space-y-10 sm:pl-8">
+          <ScrollReveal direction="up">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
+              {t("Pengalaman & Pendidikan", "Experience & Education")}
+            </h2>
+          </ScrollReveal>
+          <ScrollRevealGroup as="ol" stagger={0.1} className="relative max-w-3xl border-l border-border pl-6 space-y-10 sm:pl-8">
             {timeline.map((item) => {
               const Icon = item.kind === "work" ? Briefcase : GraduationCap;
               return (
-                <li key={item.role} className="relative min-w-0">
+                <ScrollRevealItem as="li" key={item.role} className="relative min-w-0">
                   <span
                     aria-hidden="true"
                     className="absolute -left-[2.15rem] flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card sm:-left-[2.65rem]"
@@ -230,21 +233,23 @@ const Resume = () => {
                       </li>
                     ))}
                   </ul>
-                </li>
+                </ScrollRevealItem>
               );
             })}
-          </ol>
+          </ScrollRevealGroup>
         </div>
       </section>
 
       {/* Skills */}
       <section className="py-16 border-y border-border/50 bg-muted/20">
         <div className="container mx-auto px-6 lg:px-8">
-          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
-            {t("Keahlian Utama", "Core Skills")}
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card">
+          <ScrollReveal direction="up">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
+              {t("Keahlian Utama", "Core Skills")}
+            </h2>
+          </ScrollReveal>
+          <ScrollRevealGroup className="grid gap-6 md:grid-cols-2">
+            <ScrollRevealItem className="rounded-xl border border-border bg-card p-6 shadow-card">
               <h3 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <FileText aria-hidden="true" className="h-5 w-5 text-primary" />
                 {t("Core Competencies", "Core Competencies")}
@@ -259,8 +264,8 @@ const Resume = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card">
+            </ScrollRevealItem>
+            <ScrollRevealItem className="rounded-xl border border-border bg-card p-6 shadow-card">
               <h3 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Wrench aria-hidden="true" className="h-5 w-5 text-primary" />
                 {t("Technical Stack", "Technical Stack")}
@@ -275,8 +280,8 @@ const Resume = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+            </ScrollRevealItem>
+          </ScrollRevealGroup>
         </div>
       </section>
 

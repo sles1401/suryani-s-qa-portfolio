@@ -1,6 +1,7 @@
 import { ExternalLink, FileText, Github, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 import hmsPreview from "@/assets/project-hms.jpg";
 import testCasesPreview from "@/assets/project-testcases.jpg";
 import qaHubPreview from "@/assets/project-qahub.jpg";
@@ -114,7 +115,7 @@ const FeaturedProjects = () => {
   return (
     <section id="featured-projects" className="py-20 scroll-mt-28">
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="max-w-2xl mb-12">
+        <ScrollReveal direction="up" className="max-w-2xl mb-12">
           <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-3">
             {t("Proyek Unggulan", "Featured Projects")}
           </h2>
@@ -124,11 +125,12 @@ const FeaturedProjects = () => {
               "Real projects with their testing evidence — what was tested and the impact."
             )}
           </p>
-        </div>
+        </ScrollReveal>
 
-        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ScrollRevealGroup as="ul" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
-            <li
+            <ScrollRevealItem
+              as="li"
               key={p.title}
               className="flex flex-col min-w-0 overflow-hidden rounded-lg border border-border bg-card shadow-card transition-shadow hover:shadow-soft"
             >
@@ -204,9 +206,9 @@ const FeaturedProjects = () => {
                 </Button>
               )}
               </div>
-            </li>
+            </ScrollRevealItem>
           ))}
-        </ul>
+        </ScrollRevealGroup>
       </div>
     </section>
   );

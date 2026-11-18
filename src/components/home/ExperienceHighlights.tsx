@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/ScrollReveal";
 
 const ExperienceHighlights = () => {
   const { t } = useLanguage();
@@ -82,13 +83,15 @@ const ExperienceHighlights = () => {
   return (
     <section id="experience-highlights" className="py-20 scroll-mt-28">
       <div className="container mx-auto px-6 lg:px-8">
-        <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
-          {t("Pengalaman & Sorotan", "Experience & Highlights")}
-        </h2>
+        <ScrollReveal direction="up">
+          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-10">
+            {t("Pengalaman & Sorotan", "Experience & Highlights")}
+          </h2>
+        </ScrollReveal>
 
-        <ol className="relative max-w-3xl border-l border-border pl-6 space-y-10">
+        <ScrollRevealGroup as="ol" stagger={0.1} className="relative max-w-3xl border-l border-border pl-6 space-y-10">
           {timeline.map((item) => (
-            <li key={item.role} className="relative min-w-0">
+            <ScrollRevealItem as="li" key={item.role} className="relative min-w-0">
               <span
                 aria-hidden="true"
                 className="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full bg-primary ring-4 ring-background"
@@ -126,9 +129,9 @@ const ExperienceHighlights = () => {
                   </ul>
                 </div>
               )}
-            </li>
+            </ScrollRevealItem>
           ))}
-        </ol>
+        </ScrollRevealGroup>
       </div>
     </section>
   );
